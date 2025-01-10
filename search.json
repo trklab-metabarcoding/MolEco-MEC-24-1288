@@ -1,0 +1,62 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Code Resources for MEC-24-1288",
+    "section": "",
+    "text": "Context\nThis resource contains the code used to generate and analyze data for publication MEC-24-1288.\n\nGlobal availability of plant DNA barcodes as genomic resources to support basic and policy-relevant biodiversity research\nAuthors: Tyler R. Kartzinel ^1,2,*^, Hannah K. Hoff 1,2 , Timothy Divoll 3 , Bethan L. Littleford- Colquhoun 1,2 , Heidi Anderson 4 , Mary K. Burak 1,2 , Maria Kuzmina 5 , Paul M. Musili 6 , Haldre Rogers 7 , Alejandra J. Troncoso 8,9 , Rebecca Y. Kartzinel 1,10 .\n\n\n1 Department of Ecology, Evolution, & Organismal Biology, Brown University, Providence, RI 02912, USA\n\n\n2 Institute at Brown for Environment and Society, Brown University, Providence, RI 02912, USA\n\n\n3 Center for Computation and Visualization, Brown University, Providence, RI 02912, USA\n\n\n4 Yellowstone Center for Resources, Yellowstone National Park, Mammoth Hot Springs, Wyoming, USA\n\n\n5 Centre for Biodiversity Genomics, University of Guelph, Guelph, Ontario, Canada, N1G 2W1\n\n\n6 Botany Department, National Museums of Kenya, Nairobi, Kenya 00100\n\n\n7 Department of Fish and Wildlife Conservation, Virginia Tech, Blacksburg, VA 24061, USA\n\n\n8 Instituto de Ecología y Biodiversidad (IEB), Santiago, Chile\n\n\n9 Departamento de Biología, Universidad de La Serena, La Serena, Chile\n\n\n10 Brown University Herbarium, Brown University, Providence, RI 02912, USA\n\n\n* Tyler R. Kartzinel\n\n\nEmail: tyler_kartzinel@brown.edu.\n\n\nData Availability: All data required to complete the analyses are included in Datasets S1-S3. Raw downloads from public data repositories will be archived as versions of record used in these analyses at Dryad.",
+    "crumbs": [
+      "Context"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Four code notebooks were used in the analyses for this publication.\n\nBuilding the BOLD dataset\nGeographic coverage\nTaxonomic coverage\nCase-study in geographic coverage of site-based reference data",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "building_bold.html",
+    "href": "building_bold.html",
+    "title": "1  Building the BOLD dataset",
+    "section": "",
+    "text": "Building the BOLD dataset\nAdd rest of code notebook here and update text",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Building the BOLD dataset</span>"
+    ]
+  },
+  {
+    "objectID": "geographic_coverage.html",
+    "href": "geographic_coverage.html",
+    "title": "2  Geographic Coverage",
+    "section": "",
+    "text": "Geographic Coverage\nAdd all the code here and instructions for downloading from GBIF",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Geographic Coverage</span>"
+    ]
+  },
+  {
+    "objectID": "taxonomic_coverage.html",
+    "href": "taxonomic_coverage.html",
+    "title": "3  Taxonomic Coverage",
+    "section": "",
+    "text": "Taxonomic Coverage\nAdd all code here and update text.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Taxonomic Coverage</span>"
+    ]
+  },
+  {
+    "objectID": "case_study.html",
+    "href": "case_study.html",
+    "title": "4  Case Study",
+    "section": "",
+    "text": "Case-study in geographic coverage\nAdd the code here and update text with comments.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Case Study</span>"
+    ]
+  }
+]
