@@ -1,0 +1,8 @@
+---
+title: "Geographic Coverage"
+format: html
+---
+
+# Geographic Coverage {.unnumbered}
+
+Add all the code here and instructions for downloading from GBIF

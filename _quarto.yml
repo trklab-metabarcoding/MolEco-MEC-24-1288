@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: ./_book
+
+book:
+  title: "Code Resources for MEC-24-1288"
+  author: ""
+  date: "1/10/2025"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - building_bold.qmd
+    - geographic_coverage.qmd
+    - taxonomic_coverage.qmd
+    - case_study.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: report
+
+editor: visual
+

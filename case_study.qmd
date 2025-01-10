@@ -1,0 +1,8 @@
+---
+title: "Case Study"
+format: html
+---
+
+# Case-study in geographic coverage {.unnumbered}
+
+Add the code here and update text with comments.
