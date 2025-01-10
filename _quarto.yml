@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: docs
+execute:
+  freeze: auto
 
 book:
   title: "Code Resources for MEC-24-1288"
