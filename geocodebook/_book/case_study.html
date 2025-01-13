@@ -263,17 +263,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We use <code>pacman</code> to mange the R packages and load libraries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: pacman</code></pre>
+<pre><code>Warning: package(s) not installed when version(s) same as or greater than current; use
+  `force = TRUE` to re-install: 'sangerseqR'</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, curl, zip, bold, readr, rgbif, usethis, stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, curl, zip, readr, rgbif, usethis, stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="read-in-bold-species-list-and-obtain-gbif-keys" class="level3" data-number="4.0.1">
 <h3 data-number="4.0.1" class="anchored" data-anchor-id="read-in-bold-species-list-and-obtain-gbif-keys"><span class="header-section-number">4.0.1</span> Read in BOLD species list and obtain GBIF keys</h3>
 <p>This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"./BOLD_spplist_20240109.csv"</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/BOLD_spplist_20240109.csv"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 319 Columns: 1
@@ -329,8 +336,10 @@ chr (1): Species
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>• Edit '/Users/tdivoll/.Renviron'
-• Restart R for changes to take effect</code></pre>
+<pre><code>☐ Edit '/Users/tdivoll/.Renviron'.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>☐ Restart R for changes to take effect.</code></pre>
 </div>
 </div>
 </section>
@@ -338,47 +347,47 @@ chr (1): Species
 <h3 data-number="4.0.4" class="anchored" data-anchor-id="request-the-occurence-data"><span class="header-section-number">4.0.4</span> Request the occurence data</h3>
 <p>We’ll further restrict the data returned to records that have reliable coordinate data, and use a simple CSV format to reduce the size of the data. The Darwin Core Archive format will include much more metadata, but we’re only interested in the locations for this analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="get-metadata-and-wait" class="level3" data-number="4.0.5">
 <h3 data-number="4.0.5" class="anchored" data-anchor-id="get-metadata-and-wait"><span class="header-section-number">4.0.5</span> Get metadata and wait</h3>
 <p>Get the metadata about the request.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;gbif download&gt;&gt;
   Your download is being processed by GBIF:
-  https://www.gbif.org/occurrence/download/0066939-241126133413365
+  https://www.gbif.org/occurrence/download/0066971-241126133413365
   Most downloads finish within 15 min.
   Check status with
-  occ_download_wait('0066939-241126133413365')
+  occ_download_wait('0066971-241126133413365')
   After it finishes, use
-  d &lt;- occ_download_get('0066939-241126133413365') %&gt;%
+  d &lt;- occ_download_get('0066971-241126133413365') %&gt;%
     occ_download_import()
   to retrieve your download.
 Download Info:
   Username: tdivoll
   E-mail: timothy_divoll@brown.edu
   Format: SIMPLE_CSV
-  Download key: 0066939-241126133413365
-  Created: 2025-01-13T17:50:02.365+00:00
+  Download key: 0066971-241126133413365
+  Created: 2025-01-13T18:20:26.471+00:00
 Citation Info:  
   Please always cite the download DOI when using this data.
   https://www.gbif.org/citation-guidelines
-  DOI: 10.15468/dl.48qedg
+  DOI: 10.15468/dl.qt39x8
   Citation:
-  GBIF Occurrence Download https://doi.org/10.15468/dl.48qedg Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-13</code></pre>
+  GBIF Occurrence Download https://doi.org/10.15468/dl.qt39x8 Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-13</code></pre>
 </div>
 </div>
 <p>Check the status of the download.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066932-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066939-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>status: succeeded</code></pre>
 </div>
@@ -388,12 +397,12 @@ Citation Info:
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;gbif download metadata&gt;&gt;
   Status: SUCCEEDED
-  DOI: 10.15468/dl.m4r5aq
+  DOI: 10.15468/dl.48qedg
   Format: SIMPLE_CSV
-  Download key: 0066932-241126133413365
-  Created: 2025-01-13T17:34:07.575+00:00
-  Modified: 2025-01-13T17:41:41.495+00:00
-  Download link: https://api.gbif.org/v1/occurrence/download/request/0066932-241126133413365.zip
+  Download key: 0066939-241126133413365
+  Created: 2025-01-13T17:50:02.365+00:00
+  Modified: 2025-01-13T18:02:18.702+00:00
+  Download link: https://api.gbif.org/v1/occurrence/download/request/0066939-241126133413365.zip
   Total records: 20510078</code></pre>
 </div>
 </div>

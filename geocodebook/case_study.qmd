@@ -7,10 +7,16 @@ This notebook contains code used to pull plant species occurrence records from t
 
 We use `pacman` to mange the R packages and load libraries.
 
-```{r install_pkgs}
+```{r install_pkgs, results='hide', message=FALSE}
 ## First check for the required packages, install if needed, and load the libraries.
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("sangerseqR")
+remotes::install_github("ropensci/bold")
+
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(dplyr, curl, zip, bold, readr, rgbif, usethis, stringr)
+pacman::p_load(dplyr, curl, zip, readr, rgbif, usethis, stringr)
 ```
 
 ### Read in BOLD species list and obtain GBIF keys
@@ -18,7 +24,7 @@ pacman::p_load(dplyr, curl, zip, bold, readr, rgbif, usethis, stringr)
 This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.
 
 ```{r retrieve_keys}
-species_list <- readr::read_csv("./BOLD_spplist_20240109.csv") %>%
+species_list <- readr::read_csv("../data/BOLD_spplist_20240109.csv") %>%
   pull("Species")
 
 # Get all backbone results (without filtering)
@@ -79,5 +85,5 @@ gbif_data_BOLDlist # this will print some info, including the download ID we nee
 Check the status of the download.
 
 ```{r check_dl}
-occ_download_wait('0066932-241126133413365')
+occ_download_wait('0066939-241126133413365')
 ```
