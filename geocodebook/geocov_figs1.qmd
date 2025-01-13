@@ -306,7 +306,7 @@ abline(h=precip95, v=temp95, lty=2, col="black", lwd=2)
 
 # Figure 1A. Map: Geography of plant barcodes.
 
-```{r}
+```{r warning= FALSE}
 # map for places inside or outside climate envelopes
 # make raster by thresholds
 threshtemp<-t.mean
@@ -358,13 +358,17 @@ threshtemp_df
 threshprecip_df_subset <- subset(threshprecip_df, layer > 0 )
 
 # Plot geography of plant DNA barcodes
+#ggplot wrapper of map()
+world_map <- map_data("world") 
+crs(world_map)
+
 ggmap4 <-ggplot()  + theme_classic() +
  geom_map(dat = world_map, map = world_map, aes(map_id = region), fill = "white", color = "#7f7f7f", size = 0.25)  +
   geom_raster(data = threshtemp_df, aes(x = x, y = y, fill = layer), alpha = 0.9) + 
   scale_fill_gradient(low = "transparent", high = "darkblue", aesthetics = 'fill') + 
   annotate(geom="raster", x=threshprecip_df_subset$x, y=threshprecip_df_subset$y, alpha=.9,
            fill = scales::colour_ramp(c("transparent","darkgreen"))(threshprecip_df_subset$layer)) + geom_point(data = combtab, aes(x = lon, y = lat), pch = 3, size = 0.05, stroke = 0.25, color = alpha("darkgray", 0.9)) + ylab("") + xlab("") + theme(legend.position = "none") +  scale_y_continuous(breaks=seq(-90,90,45), limits = c(-90, 90)) + scale_x_continuous(breaks=seq(-180,180,60), limits = c(-180, 180)) +  ylab("") + xlab("")+ theme(panel.background = element_blank(), axis.text = element_blank()) +
-  geom_hline(yintercept = 0, color = "black", size = 0.5) + # Equator line
+  geom_hline(yintercept = 0, color = "black", linewidth = 0.5) + # Equator line
   geom_hline(yintercept = 23.5, linetype = "dashed", color = "black", size = 0.5) + # Tropic of Cancer
   geom_hline(yintercept = -23.5, linetype = "dashed", color = "black", size = 0.5)  # Tropic of Capricorn
 ggmap4
