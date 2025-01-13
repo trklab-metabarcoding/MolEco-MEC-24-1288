@@ -1,8 +1,83 @@
 ---
-title: "Case Study"
+title: "Fetching plant occurrence records from GBIF"
 format: html
 ---
 
-# Case-study in geographic coverage {.unnumbered}
+This notebook contains code used to pull plant species occurrence records from the [GBIF API](https://techdocs.gbif.org/en/openapi/).
 
-Add the code here and update text with comments.
+We use `pacman` to mange the R packages and load libraries.
+
+```{r install_pkgs}
+## First check for the required packages, install if needed, and load the libraries.
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(dplyr, curl, zip, bold, readr, rgbif, usethis, stringr)
+```
+
+### Read in BOLD species list and obtain GBIF keys
+
+This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.
+
+```{r retrieve_keys}
+species_list <- readr::read_csv("./BOLD_spplist_20240109.csv") %>%
+  pull("Species")
+
+# Get all backbone results (without filtering)
+all_matches <- name_backbone_checklist(species_list, kingdom = "plants")
+
+exact_key_matches <- all_matches %>%
+  filter(matchType == "EXACT") %>%
+  select(usageKey) %>%
+  as.list()
+
+# Find taxa that didn't match at species level.
+not_exact_matches <- all_matches %>%
+  filter(matchType != "EXACT")
+```
+
+### Investigate taxon keys for fuzzy matches and higher rank matches
+
+Some keys may indicate that local species are sharing a taxon key, or the keys returned were backed off to higher taxonomic levels. Beware that these can result in many more occurrence records matched at higher taxonomic levels. This can happen for hyper-local species with no occurrence records in GBIF. For our purposes, we kept only exact species matches.
+
+```{r view_not_exact}
+# View results
+not_exact_matches
+```
+
+We had 6 species that did not match a species key, resulting in 98% of the species having data we can use from GBIF to explore global geographic coverage of these species.
+
+### Set GBIF credentials
+
+The following block will open your .Renviron file. Register an account with GBIF on their website and then add these environment variables to the .Renviron and save: GBIF_USER="user" GBIF_PWD="password" GBIF_EMAIL="email".
+
+After requesting the data based on our list of taxon keys, we will get millions of occurrence records that we can download; the data will be help in your GBIF portal.
+
+```{r set_credentials}
+usethis::edit_r_environ()
+```
+
+### Request the occurence data
+
+We'll further restrict the data returned to records that have reliable coordinate data, and use a simple CSV format to reduce the size of the data. The Darwin Core Archive format will include much more metadata, but we're only interested in the locations for this analysis.
+
+```{r dl_request}
+gbif_data_BOLDlist <- occ_download(
+  pred_in("taxonKey", exact_key_matches$usageKey),
+  pred("hasCoordinate", TRUE),
+  pred("hasGeospatialIssue", FALSE),
+  format = "SIMPLE_CSV"
+)
+```
+
+### Get metadata and wait
+
+Get the metadata about the request.
+
+```{r get_meta}
+gbif_data_BOLDlist # this will print some info, including the download ID we need to check on the job
+```
+
+Check the status of the download.
+
+```{r check_dl}
+occ_download_wait('0066932-241126133413365')
+```
