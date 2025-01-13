@@ -1,5 +1,4 @@
 ---
-title: "geocov_figs2"
+title: "Coverage by climate zone"
 format: html
 ---
-

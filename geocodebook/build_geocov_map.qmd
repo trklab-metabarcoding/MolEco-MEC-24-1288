@@ -1,5 +1,4 @@
 ---
-title: "build_geocov_map"
+title: "Mapping global coverage from local sampling"
 format: html
 ---
-

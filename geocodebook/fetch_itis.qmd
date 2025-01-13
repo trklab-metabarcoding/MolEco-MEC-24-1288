@@ -1,5 +1,4 @@
 ---
-title: "fetch_itis"
+title: "Fetching taxonomic data from ITIS"
 format: html
 ---
-

@@ -1,5 +1,4 @@
 ---
-title: "geocov_figs1"
+title: "Coverage by country"
 format: html
 ---
-

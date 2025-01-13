@@ -13,16 +13,16 @@ book:
     - part: "Building global BOLD data"
       chapters:    
       - building_bold.qmd
-    - part: "Geographic coverage - BOLD"
+    - part: "Geographic coverage"
       chapters:
       - geocov_figs1.qmd
       - geocov_figs2.qmd
       - geographic_coverage.qmd
-    - part: "Taxonomic coverage - ITIS"
+    - part: "Taxonomic coverage"
       chapters:
       - fetch_itis.qmd
       - taxonomic_coverage.qmd
-    - part: "Case-study -- Yellowstone -- BOLD + GBIF"
+    - part: "Case-study -- Yellowstone"
       chapters:
       - fetch_gbif.qmd
       - build_geocov_map.qmd
