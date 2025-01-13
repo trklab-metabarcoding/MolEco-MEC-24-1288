@@ -11,10 +11,18 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - building_bold.qmd
-    - geographic_coverage.qmd
-    - taxonomic_coverage.qmd
-    - case_study.qmd
+    - part: "Building BOLD data"
+      chapters:    
+      - building_bold.qmd
+    - part: "Geographic coverage"
+      chapters:
+      - geographic_coverage.qmd
+    - part: "Taxonomic coverage"
+      chapters:
+      - taxonomic_coverage.qmd
+    - part: "Case-study -- Yellowstone"
+      chapters:
+      - case_study.qmd
 
 bibliography: references.bib
 
