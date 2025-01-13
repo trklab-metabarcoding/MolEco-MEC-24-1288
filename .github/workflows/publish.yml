@@ -21,11 +21,13 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.3.2'
-      - uses: actions/checkout@v3
-      - uses: r-lib/actions/setup-r@v2
-      - run: |
-        R -e "library(renv); renv::init()"
-        R -e "library(renv); renv::snapshot()"
+        
+      - name: Initialize renv
+        uses: r-lib/actions/setup-r@v2
+        run: |
+          R -e "install.packages('renv')"
+          R -e "renv::init()"
+          R -e "renv::snapshot()"
           
       - name: Install R Dependencies
         uses: r-lib/actions/setup-renv@v2
