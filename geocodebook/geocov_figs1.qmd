@@ -12,7 +12,7 @@ BiocManager::install("sangerseqR")
 remotes::install_github("ropensci/bold")
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(taxize, maps, ggplot2, countrycode, rgbif, data.table, raster, maps, mapproj)
+pacman::p_load(taxize, maps, ggplot2, countrycode, rgbif, data.table, raster, maps, mapproj, sf)
 ```
 
 # Figure 1. Read in combtab dataset of global barcode data from BOLD and summarize.
@@ -249,8 +249,8 @@ sitepix<-unique(sitepix)
 
 # load worldclim data
 	# use 10 min for testing download directly from worldclim but here are some dropbox links: https://www.dropbox.com/scl/fo/9yl4dt2tli37qj24smitc/h?rlkey=z09vzcz1p6vg49pt48o92pyed&dl=0
-t.mean.files <- list.files("input_files/wc2.1_10m_tavg/", ".tif", full.names=TRUE)
-p.mean.files <- list.files("input_files/wc2.1_10m_prec/", ".tif", full.names=TRUE)
+t.mean.files <- list.files("../data/wc2.1_10m_tavg/", ".tif", full.names=TRUE)
+p.mean.files <- list.files("../data/wc2.1_10m_prec/", ".tif", full.names=TRUE)
 
 # temperature (using the raster package)
 t.mean <- stack(t.mean.files)
@@ -318,13 +318,13 @@ values(threshprecip)<-as.numeric(values(threshprecip>as.numeric(precip95)))
 class(threshprecip)
 
 # create ggplot-usable world map 
-world <- st_as_sf(map("world", plot = FALSE, fill = TRUE))
+world <- sf::st_as_sf(map("world", plot = FALSE, fill = TRUE))
 
 # transform all features to longlat and WGS84 - first, world
 st_crs(world)
 world <- st_transform(world,CRS("+proj=longlat +datum=WGS84")) # the goal here is to choose a projection and datum that every spatial object we add to the map will be converted to before plotting
-st_crs(world) #check coordinate system to ensure projection worked
-world # re-examine features
+st_crs(world) # check coordinate system to ensure projection worked
+world <- fortify(world) # re-examine features
 class(world)
 
 # transform all features to longlat and WGS84 - next, threshtemp
