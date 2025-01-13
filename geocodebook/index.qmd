@@ -2,20 +2,29 @@
 
 This resource contains the code used to generate and analyze data for publication MEC-24-1288.
 
-> ## *Global availability of plant DNA barcodes as genomic resources to support basic and policy-relevant biodiversity research* 
-#### **Authors:** Tyler R. Kartzinel \^1,2,\*\^, Hannah K. Hoff ^1,2^ , Timothy Divoll ^3^ , Bethan L. Littleford- Colquhoun ^1,2^ , Heidi Anderson ^4^ , Mary K. Burak ^1,2^ , Maria Kuzmina ^5^ , Paul M. Musili ^6^ , Haldre Rogers ^7^ , Alejandra J. Troncoso ^8,9^ , Rebecca Y. Kartzinel ^1,10^ .
+> ## *Global availability of plant DNA barcodes as genomic resources to support basic and policy-relevant biodiversity research*
+>
+> #### **Authors:** Tyler R. Kartzinel ^1,2^ , Hannah K. Hoff ^1,2^ , Timothy Divoll ^3^ , Bethan L. Littleford- Colquhoun ^1,2^ , Heidi Anderson ^4^ , Mary K. Burak ^1,2^ , Maria Kuzmina ^5^ , Paul M. Musili ^6^ , Haldre Rogers ^7^ , Alejandra J. Troncoso ^8,9^ , Rebecca Y. Kartzinel ^1,10^ .
 
 ###### ^1^ Department of Ecology, Evolution, & Organismal Biology, Brown University, Providence, RI 02912, USA
+
 ###### ^2^ Institute at Brown for Environment and Society, Brown University, Providence, RI 02912, USA
+
 ##### ^3^ Center for Computation and Visualization, Brown University, Providence, RI 02912, USA
+
 ##### ^4^ Yellowstone Center for Resources, Yellowstone National Park, Mammoth Hot Springs, Wyoming, USA
+
 ##### ^5^ Centre for Biodiversity Genomics, University of Guelph, Guelph, Ontario, Canada, N1G 2W1
+
 ##### ^6^ Botany Department, National Museums of Kenya, Nairobi, Kenya 00100
+
 ##### ^7^ Department of Fish and Wildlife Conservation, Virginia Tech, Blacksburg, VA 24061, USA
+
 ##### ^8^ Instituto de Ecología y Biodiversidad (IEB), Santiago, Chile
+
 ##### ^9^ Departamento de Biología, Universidad de La Serena, La Serena, Chile
+
 ##### ^10^ Brown University Herbarium, Brown University, Providence, RI 02912, USA
-##### ^\*^ Tyler R. Kartzinel
 
 ##### **Email:** tyler_kartzinel\@brown.edu.
 
