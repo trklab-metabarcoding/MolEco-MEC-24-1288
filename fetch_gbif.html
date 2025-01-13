@@ -181,13 +181,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./geocov_figs1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Coverage by country</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Coverage by climatic zones</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./geocov_figs2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Coverage by climate zone</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Coverage by country</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -291,22 +291,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package(s) not installed when version(s) same as or greater than current; use
-  `force = TRUE` to re-install: 'sangerseqR'</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, curl, zip, readr, rgbif, usethis, stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, curl, zip, readr, rgbif, usethis, stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="read-in-bold-species-list-and-obtain-gbif-keys" class="level3" data-number="7.0.1">
 <h3 data-number="7.0.1" class="anchored" data-anchor-id="read-in-bold-species-list-and-obtain-gbif-keys"><span class="header-section-number">7.0.1</span> Read in BOLD species list and obtain GBIF keys</h3>
 <p>This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/BOLD_spplist_20240109.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/BOLD_spplist_20240109.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 319 Columns: 1
 ── Column specification ────────────────────────────────────────────────────────
@@ -316,25 +312,25 @@ chr (1): Species
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all backbone results (without filtering)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>all_matches <span class="ot">&lt;-</span> <span class="fu">name_backbone_checklist</span>(species_list, <span class="at">kingdom =</span> <span class="st">"plants"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>exact_key_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">==</span> <span class="st">"EXACT"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(usageKey) <span class="sc">%&gt;%</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.list</span>()</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Find taxa that didn't match at species level.</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>not_exact_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">!=</span> <span class="st">"EXACT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all backbone results (without filtering)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>all_matches <span class="ot">&lt;-</span> <span class="fu">name_backbone_checklist</span>(species_list, <span class="at">kingdom =</span> <span class="st">"plants"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>exact_key_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">==</span> <span class="st">"EXACT"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(usageKey) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.list</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Find taxa that didn't match at species level.</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>not_exact_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">!=</span> <span class="st">"EXACT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" class="level3" data-number="7.0.2">
 <h3 data-number="7.0.2" class="anchored" data-anchor-id="investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches"><span class="header-section-number">7.0.2</span> Investigate taxon keys for fuzzy matches and higher rank matches</h3>
 <p>Some keys may indicate that local species are sharing a taxon key, or the keys returned were backed off to higher taxonomic levels. Beware that these can result in many more occurrence records matched at higher taxonomic levels. This can happen for hyper-local species with no occurrence records in GBIF. For our purposes, we kept only exact species matches.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>not_exact_matches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>not_exact_matches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 26
   usageKey scientificName        canonicalName rank  status confidence matchType
@@ -359,7 +355,7 @@ chr (1): Species
 <p>The following block will open your .Renviron file. Register an account with GBIF on their website and then add these environment variables to the .Renviron and save: GBIF_USER=“user” GBIF_PWD=“password” GBIF_EMAIL=“email”.</p>
 <p>After requesting the data based on our list of taxon keys, we will get millions of occurrence records that we can download; the data will be help in your GBIF portal.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>☐ Edit '/Users/tdivoll/.Renviron'.</code></pre>
 </div>
@@ -372,47 +368,47 @@ chr (1): Species
 <h3 data-number="7.0.4" class="anchored" data-anchor-id="request-the-occurence-data"><span class="header-section-number">7.0.4</span> Request the occurence data</h3>
 <p>We’ll further restrict the data returned to records that have reliable coordinate data, and use a simple CSV format to reduce the size of the data. The Darwin Core Archive format will include much more metadata, but we’re only interested in the locations for this analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="get-metadata-and-wait" class="level3" data-number="7.0.5">
 <h3 data-number="7.0.5" class="anchored" data-anchor-id="get-metadata-and-wait"><span class="header-section-number">7.0.5</span> Get metadata and wait</h3>
 <p>Get the metadata about the request.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;gbif download&gt;&gt;
   Your download is being processed by GBIF:
-  https://www.gbif.org/occurrence/download/0067141-241126133413365
+  https://www.gbif.org/occurrence/download/0067216-241126133413365
   Most downloads finish within 15 min.
   Check status with
-  occ_download_wait('0067141-241126133413365')
+  occ_download_wait('0067216-241126133413365')
   After it finishes, use
-  d &lt;- occ_download_get('0067141-241126133413365') %&gt;%
+  d &lt;- occ_download_get('0067216-241126133413365') %&gt;%
     occ_download_import()
   to retrieve your download.
 Download Info:
   Username: tdivoll
   E-mail: timothy_divoll@brown.edu
   Format: SIMPLE_CSV
-  Download key: 0067141-241126133413365
-  Created: 2025-01-13T20:13:04.023+00:00
+  Download key: 0067216-241126133413365
+  Created: 2025-01-13T21:36:39.215+00:00
 Citation Info:  
   Please always cite the download DOI when using this data.
   https://www.gbif.org/citation-guidelines
-  DOI: 10.15468/dl.sug2d9
+  DOI: 10.15468/dl.w9bwwx
   Citation:
-  GBIF Occurrence Download https://doi.org/10.15468/dl.sug2d9 Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-13</code></pre>
+  GBIF Occurrence Download https://doi.org/10.15468/dl.w9bwwx Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-13</code></pre>
 </div>
 </div>
 <p>Check the status of the download.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066939-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066939-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>status: succeeded</code></pre>
 </div>
