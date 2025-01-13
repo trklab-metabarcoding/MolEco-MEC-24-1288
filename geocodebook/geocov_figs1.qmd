@@ -1,9 +1,372 @@
 ---
-title: "Coverage by country"
+title: "Coverage by climatic zones"
 format: html
 ---
 
-```{r}
+```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
+## First check for the required packages, install if needed, and load the libraries.
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
 
+BiocManager::install("sangerseqR")
+remotes::install_github("ropensci/bold")
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(taxize, maps, ggplot2, countrycode, rgbif, data.table, raster, maps, mapproj)
 ```
 
+# Figure 1. Read in combtab dataset of global barcode data from BOLD and summarize.
+
+```{r}
+combtab <- read.csv("../data/BoldPhyla_to_Families_combtab_v4.csv")
+#View(combtab_20240624)
+
+combtab_2 <- (unique(combtab$family_name))
+combtab_2
+
+unique(combtab$family_name)
+
+combtab_subset_barcodes <- combtab %>% subset(multi != "---" & multi != "")
+combtab_subset_barcodes
+
+combtab_split_barcodes <- strsplit(combtab$multi, "-")
+combtab_split_barcodes
+
+unlist(combtab_split_barcodes)[which(unlist(combtab_split_barcodes)!="")]
+
+length(which(unlist(combtab_split_barcodes)!=""))
+
+# Convert blank cells to NA
+combtab[combtab == ""] <- NA
+
+# Count the number of barcodes per specimen
+combtab$barcode_count <- rowSums(!is.na(combtab[, c("rbcL", "matK", "trnL", "ITS2")]))
+
+# Calculate the total number of barcodes across all rows
+total_barcodes <- sum(combtab$barcode_count)
+
+# Display the results
+#View(combtab)
+total_barcodes
+
+# write combtab
+combtab <- combtab 
+write.csv(combtab, "combtab.csv")
+
+# write out combtab here for supplementary/supporting information 
+length(unique(combtab$species_name))
+length(unique(combtab$country))
+
+length(unique(combtab$family_name))
+length(unique(combtab$family_name))
+
+# calculate % north of tropic of cancer, south of tropic of capricorn, and between the two 
+combtab_north_of_tropic_of_cancer <- combtab %>% subset(lat > 23.4)
+combtab_north_of_tropic_of_cancer
+
+combtab_south_of_tropic_of_capricorn <- combtab %>% subset(lat < -23.4)
+combtab_south_of_tropic_of_capricorn
+
+combtab_between_cancer_capricorn <- combtab %>% subset(lat >= -23.4 & lat <= 23.4)
+combtab_between_cancer_capricorn
+
+# make container column 
+# overall
+head(combtab[grep("UHURU", combtab$processid),])
+combtab$container<-gsub("[0-9.-]", "", combtab$processid)
+length(unique(combtab$container))
+sort(table(combtab$container), decreasing=T) #PNG, YNPBP, UHURU
+
+# for trnL
+length(unique(combtab$container[which(combtab$trnL=="trnL")]))
+sort(table(combtab$container[which(combtab$trnL=="trnL")]), decreasing=T) #PNG, YNPBP, UHURU
+
+# percent of trnL sequences originating from top 5
+sum(sort(table(combtab$container[which(combtab$trnL=="trnL")]), decreasing=T)[1:5])/sum(sort(table(combtab$container[which(combtab$trnL=="trnL")]), decreasing=T)) 
+(sort(table(combtab$container[which(combtab$trnL=="trnL")]), decreasing=T)[1:5])/sum(sort(table(combtab$container[which(combtab$trnL=="trnL")]), decreasing=T)) 
+
+# number of specimen records mined from genbank 
+combtab_mined_from_genbank<- subset (combtab, institution_storing == "Mined from GenBank, NCBI")
+combtab_mined_from_genbank
+
+# number of specimens in combtab identified to species
+combtab_IDd_to_species <- subset(combtab, species_name != "")
+combtab_IDd_to_species
+
+# number of sequences mined from genbank 
+combtab_mined_from_genbank<- subset (combtab, institution_storing == "Mined from GenBank, NCBI")
+combtab_mined_from_genbank
+
+combtab_mined_from_genbank[combtab_mined_from_genbank == ""] <- NA # Convert blank cells to NA
+combtab_mined_from_genbank$barcode_count_mined <- rowSums(!is.na(combtab_mined_from_genbank[, c("rbcL", "matK", "trnL", "ITS2")])) # Count the number of barcodes per specimen
+total_barcodes_mined <- sum(combtab_mined_from_genbank$barcode_count_mined) # Calculate the total number of barcodes across all rows
+#View(combtab_mined_from_genbank)
+total_barcodes_mined
+
+# number of specimens in combtab with rbcL barcode 
+combtab_rbcL_barcodes <- subset(combtab, rbcL != "")
+combtab_rbcL_barcodes
+
+# number of specimens in combtab with matK barcode 
+combtab_matK_barcodes <- subset(combtab, matK != "")
+combtab_matK_barcodes
+
+# number of specimens in combtab with ITS barcode 
+combtab_ITS2_barcodes <- subset(combtab, ITS2 != "")
+combtab_ITS2_barcodes
+
+# number of specimens in combtab with trnL barcode 
+combtab_trnL_barcodes <- subset(combtab, trnL != "")
+combtab_trnL_barcodes
+
+# number of genbank accession numbers in combtab 
+combtab_for_genbank <- combtab
+combtab_for_genbank[combtab_for_genbank == ""] <- NA # Convert blank cells to NA
+
+# Count the number of barcodes per specimen (number of non-NA values per row in the specified columns)
+combtab_for_genbank$accession_count <- rowSums(!is.na(combtab_for_genbank[, c("gb_rbcL", "gb_matK", "gb_trnL", "gb_ITS")]))
+
+# Calculate the total number of barcodes across all rows (sum of accession_count)
+total_accessions <- sum(combtab_for_genbank$accession_count)
+
+# Display the results
+#View(combtab_for_genbank)
+total_accessions
+
+# number of specimens with country listed 
+combtab_countries <- subset(combtab, country != "")
+combtab_countries
+
+# number of specimens with lat/long listed 
+combtab_lat <- subset(combtab, lat != "")
+combtab_lat
+
+combtab_lon <- subset(combtab, lon != "")
+combtab_lon
+
+
+# number of matK sequences
+combtab_matK <- subset(combtab, matK == "matK")
+combtab_matK
+
+# number of matK sequences with lat/long data 
+combtab_matK_latlong <- subset(combtab_matK, lat != "")
+combtab_matK_latlong
+
+# number of rbcL sequences
+combtab_rbcL <- subset(combtab, rbcL == "rbcL")
+combtab_rbcL
+
+# number of rbcL sequences with lat/long data 
+combtab_rbcL_latlong <- subset(combtab_rbcL, lat != "")
+combtab_rbcL_latlong
+
+# number of ITS sequences
+combtab_ITS <- subset(combtab, ITS2 == "ITS")
+combtab_ITS
+
+# number of ITS sequences with lat/long data 
+combtab_ITS_latlong <- subset(combtab_ITS, lat != "")
+combtab_ITS_latlong
+
+# number of trnL sequences
+combtab_trnL <- subset(combtab, trnL == "trnL")
+combtab_trnL
+
+# number of ITS sequences with lat/long data 
+combtab_trnL_latlong <- subset(combtab_trnL, lat != "")
+combtab_trnL_latlong
+
+# number of overall sequences with lat/long data 
+combtab_latlong <- subset(combtab, lat != "")
+combtab_latlong
+
+table(combtab$trnL)
+levels(factor(combtab$trnL))
+```
+
+# Figure 1B-C. Plots for number of specimens across lat and lon for each barcode
+
+```{r warning=FALSE}
+# round lat and lon to nearest one degree
+latr <-round(combtab$lat)
+latr
+lonr<-round(combtab$lon)
+
+# create rounded data frame 
+combtab_rounded <- combtab %>% dplyr::mutate(dplyr::across(c('lat', 'lon'), round, 0))
+combtab_rounded
+combtab_rounded_38 <- subset(combtab_rounded, lat == 38)
+combtab_rounded_38
+
+# Plot longitude
+marker_count_by_long_plot2 <- ggplot(combtab_rounded, aes(x = lon)) +
+  theme_classic() +
+  geom_bar(stat = "count", position = "dodge", fill = "gray") +
+  scale_x_continuous(breaks = seq(-180, 180, 60), limits = c(-180, 180)) + scale_y_continuous(breaks = seq(0, 5000, 1000), limits = c(0, 5000)) +
+ geom_line(data = subset(combtab_rounded, matK == "matK"), aes(x = lon), stat = "count", col = "#62BAAC", lwd = 0.4) +
+  geom_line(data = subset(combtab_rounded, rbcL == "rbcL"), aes(x = lon), stat = "count", col = "#EDA247", lwd = 0.4) +
+  geom_line(data = subset(combtab_rounded, trnL == "trnL"), aes(x = lon), stat = "count", col = "#006B5F", lwd = 0.4) +
+  geom_line(data = subset(combtab_rounded, ITS2 == "ITS"), aes(x = lon), stat = "count", col = "#703900", lwd = 0.4) +
+  ylab("") + xlab("") #+ theme(panel.background = element_blank(), axis.text = element_blank())
+marker_count_by_long_plot2
+#ggsave("marker_count_by_long_plot2_20240624.pdf", marker_count_by_long_plot2, width = 13, height = 5, unit = "cm")
+
+# Plot latitude
+marker_count_by_lat_plot_alllines <- ggplot() +
+  theme_classic() +
+  scale_x_continuous(breaks = seq(-90, 90, 45), limits = c(-90, 90)) +  scale_y_continuous(breaks = seq(0, 5500, 2500), limits = c(0, 5500)) +
+  geom_area(data = combtab_rounded, aes(x = lat), stat = "count", fill = "lightgray", lwd = 0.4) + 
+  geom_line(data = subset(combtab_rounded, matK == "matK"), aes(x = lat), stat = "count", col = "#62BAAC", lwd = 0.4) +
+  geom_line(data = subset(combtab_rounded, rbcL == "rbcL"), aes(x = lat), stat = "count", col = "#EDA247", lwd = 0.4) +
+  geom_line(data = subset(combtab_rounded, trnL == "trnL"), aes(x = lat), stat = "count", col = "#006B5F", lwd = 0.4)+ 
+  geom_line(data = subset(combtab_rounded, ITS2 == "ITS"), aes(x = lat), stat = "count", col = "#703900", lwd = 0.4)+ 
+  ylab("") + xlab("") + theme(panel.background = element_blank(), axis.text = element_blank())
+marker_count_by_lat_plot_alllines
+#ggsave("marker_count_by_lat_plot_alllines_20240626_2.pdf", marker_count_by_lat_plot_alllines, width = 8.6, height = 5, unit = "cm")
+```
+
+```{r}
+combtab_matK <- sum(combtab$matK == "matK")
+combtab_rbcL <- combtab %>% subset(rbcL == "rbcL")
+combtab_rbcL
+
+matK <- subset(combtab_rounded, matK == "matK") 
+rbcL <- subset(combtab_rounded, rbcL == "rbcL") 
+trnL <- subset(combtab_rounded, trnL == "trnL") 
+ITS <- subset(combtab_rounded, ITS2 == "ITS") 
+```
+
+# Figure 1D. Plot MAT and MAP points with 95% confidence intervals
+
+```{r}
+#####
+# Worldclim connect lat lon specimen records (rounded to nearest degree and dereplicated) with temperature and precip
+#####
+# dereplicate sites rounded to nearest degree
+sitepix<-cbind(lonr, latr)
+sitepix<-unique(sitepix)
+
+# load worldclim data
+	# use 10 min for testing download directly from worldclim but here are some dropbox links: https://www.dropbox.com/scl/fo/9yl4dt2tli37qj24smitc/h?rlkey=z09vzcz1p6vg49pt48o92pyed&dl=0
+t.mean.files <- list.files("input_files/wc2.1_10m_tavg/", ".tif", full.names=TRUE)
+p.mean.files <- list.files("input_files/wc2.1_10m_prec/", ".tif", full.names=TRUE)
+
+# temperature (using the raster package)
+t.mean <- stack(t.mean.files)
+t.mean <-mean(t.mean)
+
+# make a 'samples' data frame to extract temp values from barcode localities
+samples <- data.frame(processid=seq(1,nrow(sitepix)), lon=sitepix[,1], lat=sitepix[,2], row.names="processid")
+samples
+samples <- samples[which(samples$lat!="NA"),]
+samples
+# Extract data from RasterLayer
+temp.data <- raster::extract(t.mean, samples)
+head(temp.data)
+sampletempMeans<-temp.data
+length(which(is.na(sampletempMeans))) 
+
+# precipitation
+p.mean <- stack(p.mean.files)
+p.mean <-sum(p.mean)/10 	# divide by 10 to convert from mm to cm
+
+# Extract data from RasterLayer
+precip.data <- raster::extract(p.mean, samples)
+head(precip.data)
+sampleprecipMeans<-precip.data
+length(which(is.na(sampleprecipMeans))) 
+
+# plot Figure 1d
+# get random points to plot as background
+set.seed(20140816)
+nrand<-100000
+
+randomtemp<-sampleRandom(mean(t.mean), nrand, xy=T)
+randomprecip<-extract(mean(p.mean), randomtemp[,1:2])
+
+randomtempMeans<-randomtemp[,3]
+randomprecipMeans<-randomprecip
+randompoints<-cbind(randomtempMeans, randomprecipMeans)
+
+# find the upper / lower 95 percentile for temp and precip to plot based on BOLD samples
+temp95<-quantile(sampletempMeans, c(0.05), na.rm=T)
+precip95<-quantile(sampleprecipMeans, c(0.95), na.rm=T) 
+
+# Plot figure 1D
+plot(randomprecipMeans ~ randomtempMeans, xlim=rev(range(randomtempMeans, na.rm=T)), pch=16, col="gray", ylab="Mean annual precipitation (cm)", xlab="mean annual temperature (°C)", type="n", ylim=c(0, max(c(max(randomprecipMeans), max(sampleprecipMeans, na.rm=T)))))
+	pointcols<-rep("gray", nrand)
+	pointcols[which(randompoints[,1]<=temp95)]<-"darkblue"
+	pointcols[which(randompoints[,2]>=precip95)]<-"darkgreen"
+	pointcols[which(randompoints[, 1] <= temp95 & randompoints[, 2] >= precip95)] <- "orange"
+points(randompoints[,1], randompoints[,2], pch=16, col= pointcols)
+points(x=sampletempMeans, y=sampleprecipMeans, pch=3, col=alpha("black", 0.2))
+abline(h=precip95, v=temp95, lty=2, col="black", lwd=2)
+```
+
+# Figure 1A. Map: Geography of plant barcodes.
+
+```{r}
+# map for places inside or outside climate envelopes
+# make raster by thresholds
+threshtemp<-t.mean
+values(threshtemp)<-as.numeric(values(threshtemp<as.numeric(temp95)))
+
+quantile(values(p.mean), na.rm=T)
+threshprecip<-p.mean
+values(threshprecip)<-as.numeric(values(threshprecip>as.numeric(precip95)))
+class(threshprecip)
+
+# create ggplot-usable world map 
+world <- st_as_sf(map("world", plot = FALSE, fill = TRUE))
+
+# transform all features to longlat and WGS84 - first, world
+st_crs(world)
+world <- st_transform(world,CRS("+proj=longlat +datum=WGS84")) # the goal here is to choose a projection and datum that every spatial object we add to the map will be converted to before plotting
+st_crs(world) #check coordinate system to ensure projection worked
+world # re-examine features
+class(world)
+
+# transform all features to longlat and WGS84 - next, threshtemp
+st_crs(threshtemp)
+newthreshtemp <- " +proj=longlat +datum=WGS84"
+# simplest approach
+threshtemp <- projectRaster(threshtemp, crs=newthreshtemp)
+st_crs(threshtemp) # check coordinate system to ensure projection worked
+threshtemp #re-examine features
+
+# transform all features to longlat and WGS84 - next, threshprecip
+st_crs(threshprecip)
+newthreshprecip <- " +proj=longlat +datum=WGS84"
+# simplest approach
+threshprecip <- projectRaster(threshprecip, crs=newthreshprecip)
+st_crs(threshprecip) # check coordinate system to ensure projection worked
+threshprecip # re-examine features
+
+# Create a data frame for ggplot purposes - threshtemp
+threshtemp_df <- as.data.frame(threshtemp, xy = TRUE, na.rm = TRUE)
+threshtemp_df
+threshtemp_df_subset <- subset(threshtemp_df, layer > 0)
+
+# Create a data frame for ggplot purposes - threshprecip
+threshprecip_df <- as.data.frame(threshprecip, xy = TRUE, na.rm = TRUE)
+threshprecip_df
+
+# Create a data frame for ggplot purposes - threshtemp
+threshtemp_df <- as.data.frame(threshtemp, xy = TRUE, na.rm = TRUE)
+threshtemp_df
+threshprecip_df_subset <- subset(threshprecip_df, layer > 0 )
+
+# Plot geography of plant DNA barcodes
+ggmap4 <-ggplot()  + theme_classic() +
+ geom_map(dat = world_map, map = world_map, aes(map_id = region), fill = "white", color = "#7f7f7f", size = 0.25)  +
+  geom_raster(data = threshtemp_df, aes(x = x, y = y, fill = layer), alpha = 0.9) + 
+  scale_fill_gradient(low = "transparent", high = "darkblue", aesthetics = 'fill') + 
+  annotate(geom="raster", x=threshprecip_df_subset$x, y=threshprecip_df_subset$y, alpha=.9,
+           fill = scales::colour_ramp(c("transparent","darkgreen"))(threshprecip_df_subset$layer)) + geom_point(data = combtab, aes(x = lon, y = lat), pch = 3, size = 0.05, stroke = 0.25, color = alpha("darkgray", 0.9)) + ylab("") + xlab("") + theme(legend.position = "none") +  scale_y_continuous(breaks=seq(-90,90,45), limits = c(-90, 90)) + scale_x_continuous(breaks=seq(-180,180,60), limits = c(-180, 180)) +  ylab("") + xlab("")+ theme(panel.background = element_blank(), axis.text = element_blank()) +
+  geom_hline(yintercept = 0, color = "black", size = 0.5) + # Equator line
+  geom_hline(yintercept = 23.5, linetype = "dashed", color = "black", size = 0.5) + # Tropic of Cancer
+  geom_hline(yintercept = -23.5, linetype = "dashed", color = "black", size = 0.5)  # Tropic of Capricorn
+ggmap4
+#ggsave("ggmap4_20240626_1.pdf", ggmap4,  width = 13, height = 8.6, unit = "cm")
+```

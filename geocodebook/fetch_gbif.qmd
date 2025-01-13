@@ -7,7 +7,7 @@ This notebook contains code used to pull plant species occurrence records from t
 
 We use `pacman` to mange the R packages and load libraries.
 
-```{r install_pkgs, results='hide', message=FALSE}
+```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
 ## First check for the required packages, install if needed, and load the libraries.
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
