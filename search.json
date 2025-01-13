@@ -26,6 +26,7 @@
     "section": "",
     "text": "Building the BOLD dataset\nAdd rest of code notebook here and update text",
     "crumbs": [
+      "Building BOLD data",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Building the BOLD dataset</span>"
     ]
   },
@@ -36,6 +37,7 @@
     "section": "",
     "text": "Geographic Coverage\nAdd all the code here and instructions for downloading from GBIF",
     "crumbs": [
+      "Geographic coverage",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Geographic Coverage</span>"
     ]
   },
@@ -46,6 +48,7 @@
     "section": "",
     "text": "Taxonomic Coverage\nAdd all code here and update text.",
     "crumbs": [
+      "Taxonomic coverage",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Taxonomic Coverage</span>"
     ]
   },
@@ -56,6 +59,7 @@
     "section": "",
     "text": "Case-study in geographic coverage\nAdd the code here and update text with comments.",
     "crumbs": [
+      "Case-study -- Yellowstone",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Case Study</span>"
     ]
   }
