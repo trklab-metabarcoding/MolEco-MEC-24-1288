@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction – Code Resources for MEC-24-1288</title>
+<title>7&nbsp; Fetching plant occurrence records from GBIF – Code Resources for MEC-24-1288</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./building_bold.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./build_geocov_map.html" rel="next">
+<link href="./taxonomic_coverage.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_gbif.html">Case-study – Yellowstone – BOLD + GBIF</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -198,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fetch_gbif.html" class="sidebar-item-text sidebar-link">
+  <a href="./fetch_gbif.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fetching plant occurrence records from GBIF</span></span></a>
   </div>
 </li>
@@ -215,15 +249,25 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#read-in-bold-species-list-and-obtain-gbif-keys" id="toc-read-in-bold-species-list-and-obtain-gbif-keys" class="nav-link active" data-scroll-target="#read-in-bold-species-list-and-obtain-gbif-keys"><span class="header-section-number">7.0.1</span> Read in BOLD species list and obtain GBIF keys</a></li>
+  <li><a href="#investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" id="toc-investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" class="nav-link" data-scroll-target="#investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches"><span class="header-section-number">7.0.2</span> Investigate taxon keys for fuzzy matches and higher rank matches</a></li>
+  <li><a href="#set-gbif-credentials" id="toc-set-gbif-credentials" class="nav-link" data-scroll-target="#set-gbif-credentials"><span class="header-section-number">7.0.3</span> Set GBIF credentials</a></li>
+  <li><a href="#request-the-occurence-data" id="toc-request-the-occurence-data" class="nav-link" data-scroll-target="#request-the-occurence-data"><span class="header-section-number">7.0.4</span> Request the occurence data</a></li>
+  <li><a href="#get-metadata-and-wait" id="toc-get-metadata-and-wait" class="nav-link" data-scroll-target="#get-metadata-and-wait"><span class="header-section-number">7.0.5</span> Get metadata and wait</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_gbif.html">Case-study – Yellowstone – BOLD + GBIF</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fetching plant occurrence records from GBIF</span></h1>
 </div>
 
 
@@ -240,15 +284,156 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Four code notebooks were used in the analyses for this publication.</p>
-<ol type="1">
-<li><a href="./building_bold.html">Building the BOLD dataset</a></li>
-<li><a href="./geographic_coverage.html">Geographic coverage</a></li>
-<li><a href="./taxonomic_coverage.html">Taxonomic coverage</a></li>
-<li><a href="case_study.qmd">Case-study in geographic coverage of site-based reference data</a></li>
-</ol>
+<p>This notebook contains code used to pull plant species occurrence records from the <a href="https://techdocs.gbif.org/en/openapi/">GBIF API</a>.</p>
+<p>We use <code>pacman</code> to mange the R packages and load libraries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package(s) not installed when version(s) same as or greater than current; use
+  `force = TRUE` to re-install: 'sangerseqR'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, curl, zip, readr, rgbif, usethis, stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="read-in-bold-species-list-and-obtain-gbif-keys" class="level3" data-number="7.0.1">
+<h3 data-number="7.0.1" class="anchored" data-anchor-id="read-in-bold-species-list-and-obtain-gbif-keys"><span class="header-section-number">7.0.1</span> Read in BOLD species list and obtain GBIF keys</h3>
+<p>This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/BOLD_spplist_20240109.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 319 Columns: 1
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): Species
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all backbone results (without filtering)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>all_matches <span class="ot">&lt;-</span> <span class="fu">name_backbone_checklist</span>(species_list, <span class="at">kingdom =</span> <span class="st">"plants"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>exact_key_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">==</span> <span class="st">"EXACT"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(usageKey) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.list</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Find taxa that didn't match at species level.</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>not_exact_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">!=</span> <span class="st">"EXACT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" class="level3" data-number="7.0.2">
+<h3 data-number="7.0.2" class="anchored" data-anchor-id="investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches"><span class="header-section-number">7.0.2</span> Investigate taxon keys for fuzzy matches and higher rank matches</h3>
+<p>Some keys may indicate that local species are sharing a taxon key, or the keys returned were backed off to higher taxonomic levels. Beware that these can result in many more occurrence records matched at higher taxonomic levels. This can happen for hyper-local species with no occurrence records in GBIF. For our purposes, we kept only exact species matches.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>not_exact_matches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 26
+  usageKey scientificName        canonicalName rank  status confidence matchType
+     &lt;int&gt; &lt;chr&gt;                 &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;    
+1  3171742 Erythranthe Spach     Erythranthe   GENUS ACCEP…         99 HIGHERRA…
+2  2704858 Calamagrostis Adans.  Calamagrostis GENUS ACCEP…         96 HIGHERRA…
+3     3064 Amaranthaceae         Amaranthaceae FAMI… ACCEP…         99 HIGHERRA…
+4  8148051 Bistorta (L.) Scop.   Bistorta      GENUS ACCEP…         99 HIGHERRA…
+5  3033620 Pulsatilla Mill.      Pulsatilla    GENUS ACCEP…         99 HIGHERRA…
+6  3087061 Oreostemma alpigenum… Oreostemma a… SPEC… ACCEP…         98 FUZZY    
+# ℹ 19 more variables: kingdom &lt;chr&gt;, phylum &lt;chr&gt;, order &lt;chr&gt;, family &lt;chr&gt;,
+#   genus &lt;chr&gt;, species &lt;chr&gt;, kingdomKey &lt;int&gt;, phylumKey &lt;int&gt;,
+#   classKey &lt;int&gt;, orderKey &lt;int&gt;, familyKey &lt;int&gt;, genusKey &lt;int&gt;,
+#   speciesKey &lt;int&gt;, synonym &lt;lgl&gt;, class &lt;chr&gt;, acceptedUsageKey &lt;int&gt;,
+#   verbatim_name &lt;chr&gt;, verbatim_index &lt;dbl&gt;, verbatim_kingdom &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>We had 6 species that did not match a species key, resulting in 98% of the species having data we can use from GBIF to explore global geographic coverage of these species.</p>
+</section>
+<section id="set-gbif-credentials" class="level3" data-number="7.0.3">
+<h3 data-number="7.0.3" class="anchored" data-anchor-id="set-gbif-credentials"><span class="header-section-number">7.0.3</span> Set GBIF credentials</h3>
+<p>The following block will open your .Renviron file. Register an account with GBIF on their website and then add these environment variables to the .Renviron and save: GBIF_USER=“user” GBIF_PWD=“password” GBIF_EMAIL=“email”.</p>
+<p>After requesting the data based on our list of taxon keys, we will get millions of occurrence records that we can download; the data will be help in your GBIF portal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>☐ Edit '/Users/tdivoll/.Renviron'.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>☐ Restart R for changes to take effect.</code></pre>
+</div>
+</div>
+</section>
+<section id="request-the-occurence-data" class="level3" data-number="7.0.4">
+<h3 data-number="7.0.4" class="anchored" data-anchor-id="request-the-occurence-data"><span class="header-section-number">7.0.4</span> Request the occurence data</h3>
+<p>We’ll further restrict the data returned to records that have reliable coordinate data, and use a simple CSV format to reduce the size of the data. The Darwin Core Archive format will include much more metadata, but we’re only interested in the locations for this analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="get-metadata-and-wait" class="level3" data-number="7.0.5">
+<h3 data-number="7.0.5" class="anchored" data-anchor-id="get-metadata-and-wait"><span class="header-section-number">7.0.5</span> Get metadata and wait</h3>
+<p>Get the metadata about the request.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;gbif download&gt;&gt;
+  Your download is being processed by GBIF:
+  https://www.gbif.org/occurrence/download/0067141-241126133413365
+  Most downloads finish within 15 min.
+  Check status with
+  occ_download_wait('0067141-241126133413365')
+  After it finishes, use
+  d &lt;- occ_download_get('0067141-241126133413365') %&gt;%
+    occ_download_import()
+  to retrieve your download.
+Download Info:
+  Username: tdivoll
+  E-mail: timothy_divoll@brown.edu
+  Format: SIMPLE_CSV
+  Download key: 0067141-241126133413365
+  Created: 2025-01-13T20:13:04.023+00:00
+Citation Info:  
+  Please always cite the download DOI when using this data.
+  https://www.gbif.org/citation-guidelines
+  DOI: 10.15468/dl.sug2d9
+  Citation:
+  GBIF Occurrence Download https://doi.org/10.15468/dl.sug2d9 Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-13</code></pre>
+</div>
+</div>
+<p>Check the status of the download.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066939-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>status: succeeded</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>download is done, status: succeeded</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;gbif download metadata&gt;&gt;
+  Status: SUCCEEDED
+  DOI: 10.15468/dl.48qedg
+  Format: SIMPLE_CSV
+  Download key: 0066939-241126133413365
+  Created: 2025-01-13T17:50:02.365+00:00
+  Modified: 2025-01-13T18:02:18.702+00:00
+  Download link: https://api.gbif.org/v1/occurrence/download/request/0066939-241126133413365.zip
+  Total records: 20510078</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -670,13 +855,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Context">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Context</span>
+      <a href="./taxonomic_coverage.html" class="pagination-link" aria-label="Taxonomic Coverage">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Taxonomic Coverage</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./building_bold.html" class="pagination-link" aria-label="Building the BOLD dataset">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Building the BOLD dataset</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./build_geocov_map.html" class="pagination-link" aria-label="build_geocov_map">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">build_geocov_map</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
