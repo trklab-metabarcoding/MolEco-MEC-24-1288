@@ -254,7 +254,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#figure-1.-read-in-combtab-dataset-of-global-barcode-data-from-bold-and-summarize." id="toc-figure-1.-read-in-combtab-dataset-of-global-barcode-data-from-bold-and-summarize." class="nav-link active" data-scroll-target="#figure-1.-read-in-combtab-dataset-of-global-barcode-data-from-bold-and-summarize."><span class="header-section-number">3</span> Figure 1. Read in combtab dataset of global barcode data from BOLD and summarize.</a></li>
+  <li><a href="#figure-1.-read-in-combtab-dataset-of-global-barcode-data-from-bold-and-summarize." id="toc-figure-1.-read-in-combtab-dataset-of-global-barcode-data-from-bold-and-summarize." class="nav-link active" data-scroll-target="#figure-1.-read-in-combtab-dataset-of-global-barcode-data-from-bold-and-summarize."><span class="header-section-number">3</span> Figure 1. Read in combtab dataset of global barcode data from BOLD and summarize.</a>
+  <ul class="collapse">
+  <li><a href="#assess-project-contibutions." id="toc-assess-project-contibutions." class="nav-link" data-scroll-target="#assess-project-contibutions."><span class="header-section-number">3.1</span> Assess Project contibutions.</a></li>
+  </ul></li>
   <li><a href="#figure-1b-c.-plots-for-number-of-specimens-across-lat-and-lon-for-each-barcode" id="toc-figure-1b-c.-plots-for-number-of-specimens-across-lat-and-lon-for-each-barcode" class="nav-link" data-scroll-target="#figure-1b-c.-plots-for-number-of-specimens-across-lat-and-lon-for-each-barcode"><span class="header-section-number">4</span> Figure 1B-C. Plots for number of specimens across lat and lon for each barcode</a></li>
   <li><a href="#figure-1d.-plot-mat-and-map-points-with-95-confidence-intervals" id="toc-figure-1d.-plot-mat-and-map-points-with-95-confidence-intervals" class="nav-link" data-scroll-target="#figure-1d.-plot-mat-and-map-points-with-95-confidence-intervals"><span class="header-section-number">5</span> Figure 1D. Plot MAT and MAP points with 95% confidence intervals</a></li>
   <li><a href="#figure-1a.-map-geography-of-plant-barcodes." id="toc-figure-1a.-map-geography-of-plant-barcodes." class="nav-link" data-scroll-target="#figure-1a.-map-geography-of-plant-barcodes."><span class="header-section-number">6</span> Figure 1A. Map: Geography of plant barcodes.</a></li>
@@ -283,6 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>This notebook will generate plots of geographic coverage of barcodes available on BOLD, in relation to climatic zones, and for several genetic markers. It also assesses contributions to BOLD by Project ID.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
@@ -472,6 +476,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 49 KX641599    &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;             1
 50 KJ535203    &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;             1</code></pre>
 </div>
+</div>
+<section id="assess-project-contibutions." class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="assess-project-contibutions."><span class="header-section-number">3.1</span> Assess Project contibutions.</h2>
+<p>This block will assess the localized sampling projects’ contributions to the overall BOLD database.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make container column </span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># overall</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combtab[<span class="fu">grep</span>(<span class="st">"UHURU"</span>, combtab<span class="sc">$</span>processid),], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1190,6 +1199,7 @@ trnL
 </div>
 </div>
 </section>
+</section>
 <section id="figure-1b-c.-plots-for-number-of-specimens-across-lat-and-lon-for-each-barcode" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Figure 1B-C. Plots for number of specimens across lat and lon for each barcode</h1>
 <div class="cell">
@@ -1267,7 +1277,7 @@ trnL
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="geocov_figs1_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="geocov_figs1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1287,7 +1297,7 @@ trnL
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="geocov_figs1_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="geocov_figs1_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1414,7 +1424,7 @@ trnL
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="geocov_figs1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="geocov_figs1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
