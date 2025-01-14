@@ -32,7 +32,7 @@ head(combtab_subset_barcodes, 2)
 combtab_split_barcodes <- strsplit(combtab$multi, "-")
 head(combtab_split_barcodes, 2)
 
-unlist(combtab_split_barcodes)[which(unlist(combtab_split_barcodes)!="")]
+head(unlist(combtab_split_barcodes)[which(unlist(combtab_split_barcodes)!="")], 2)
 
 length(which(unlist(combtab_split_barcodes)!=""))
 
@@ -346,16 +346,13 @@ threshprecip # re-examine features
 
 # Create a data frame for ggplot purposes - threshtemp
 threshtemp_df <- as.data.frame(threshtemp, xy = TRUE, na.rm = TRUE)
-threshtemp_df
+head(threshtemp_df, 2)
 threshtemp_df_subset <- subset(threshtemp_df, layer > 0)
 
 # Create a data frame for ggplot purposes - threshprecip
 threshprecip_df <- as.data.frame(threshprecip, xy = TRUE, na.rm = TRUE)
-threshprecip_df
+head(threshprecip_df, 2)
 
-# Create a data frame for ggplot purposes - threshtemp
-threshtemp_df <- as.data.frame(threshtemp, xy = TRUE, na.rm = TRUE)
-threshtemp_df
 threshprecip_df_subset <- subset(threshprecip_df, layer > 0 )
 ```
 
