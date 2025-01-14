@@ -2,3 +2,7 @@
 *.Rmd
 .Rprofile
 .DS_store
+*.zip
+wc2.1_10m_prec/
+wc2.1_10m_tavg/
+combtab*
