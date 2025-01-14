@@ -30,7 +30,7 @@ combtab_subset_barcodes <- combtab %>% subset(multi != "---" & multi != "")
 head(combtab_subset_barcodes)
 
 combtab_split_barcodes <- strsplit(combtab$multi, "-")
-heaD(combtab_split_barcodes)
+head(combtab_split_barcodes)
 
 unlist(combtab_split_barcodes)[which(unlist(combtab_split_barcodes)!="")]
 
@@ -357,7 +357,9 @@ threshprecip_df
 threshtemp_df <- as.data.frame(threshtemp, xy = TRUE, na.rm = TRUE)
 threshtemp_df
 threshprecip_df_subset <- subset(threshprecip_df, layer > 0 )
+```
 
+```{r plot-geocov, warning = FALSE, message = FALSE}
 # Plot geography of plant DNA barcodes
 #ggplot wrapper of map()
 world_map <- map_data("world") 
@@ -369,7 +371,7 @@ ggmap4 <-ggplot()  + theme_classic() +
   scale_fill_gradient(low = "transparent", high = "darkblue", aesthetics = 'fill') + 
   annotate(geom="raster", x=threshprecip_df_subset$x, y=threshprecip_df_subset$y, alpha=.9,
            fill = scales::colour_ramp(c("transparent","darkgreen"))(threshprecip_df_subset$layer)) + geom_point(data = combtab, aes(x = lon, y = lat), pch = 3, size = 0.05, stroke = 0.25, color = alpha("darkgray", 0.9)) + ylab("") + xlab("") + theme(legend.position = "none") +  scale_y_continuous(breaks=seq(-90,90,45), limits = c(-90, 90)) + scale_x_continuous(breaks=seq(-180,180,60), limits = c(-180, 180)) +  ylab("") + xlab("")+ theme(panel.background = element_blank(), axis.text = element_blank()) +
-  geom_hline(yintercept = 0, color = "black", linewidth = 0.5) + # Equator line
+  geom_hline(yintercept = 0, color = "black", size = 0.5) + # Equator line
   geom_hline(yintercept = 23.5, linetype = "dashed", color = "black", size = 0.5) + # Tropic of Cancer
   geom_hline(yintercept = -23.5, linetype = "dashed", color = "black", size = 0.5)  # Tropic of Capricorn
 ggmap4
