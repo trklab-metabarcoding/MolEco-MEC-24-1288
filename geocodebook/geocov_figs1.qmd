@@ -3,6 +3,8 @@ title: "Coverage by climatic zones"
 format: html
 ---
 
+This notebook will generate plots of geographic coverage of barcodes available on BOLD, in relation to climatic zones, and for several genetic markers. It also assesses contributions to BOLD by Project ID.
+
 ```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
 ## First check for the required packages, install if needed, and load the libraries.
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -69,7 +71,11 @@ head(combtab_south_of_tropic_of_capricorn, 2)
 
 combtab_between_cancer_capricorn <- combtab %>% subset(lat >= -23.4 & lat <= 23.4)
 head(combtab_between_cancer_capricorn, 2)
+```
 
+## Assess Project contibutions.
+This block will assess the localized sampling projects' contributions to the overall BOLD database.
+```{r}
 # make container column 
 # overall
 head(combtab[grep("UHURU", combtab$processid),], 2)
