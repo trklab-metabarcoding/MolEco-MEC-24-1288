@@ -22,15 +22,15 @@ combtab <- read.csv("../data/BoldPhyla_to_Families_combtab_v4.csv")
 #View(combtab_20240624)
 
 combtab_2 <- (unique(combtab$family_name))
-head(combtab_2)
+head(combtab_2, 2)
 
-head(unique(combtab$family_name))
+head(unique(combtab$family_name), 2)
 
 combtab_subset_barcodes <- combtab %>% subset(multi != "---" & multi != "")
-head(combtab_subset_barcodes)
+head(combtab_subset_barcodes, 2)
 
 combtab_split_barcodes <- strsplit(combtab$multi, "-")
-head(combtab_split_barcodes)
+head(combtab_split_barcodes, 2)
 
 unlist(combtab_split_barcodes)[which(unlist(combtab_split_barcodes)!="")]
 
@@ -62,17 +62,17 @@ length(unique(combtab$family_name))
 
 # calculate % north of tropic of cancer, south of tropic of capricorn, and between the two 
 combtab_north_of_tropic_of_cancer <- combtab %>% subset(lat > 23.4)
-head(combtab_north_of_tropic_of_cancer)
+head(combtab_north_of_tropic_of_cancer, 2)
 
 combtab_south_of_tropic_of_capricorn <- combtab %>% subset(lat < -23.4)
-head(combtab_south_of_tropic_of_capricorn)
+head(combtab_south_of_tropic_of_capricorn, 2)
 
 combtab_between_cancer_capricorn <- combtab %>% subset(lat >= -23.4 & lat <= 23.4)
-head(combtab_between_cancer_capricorn)
+head(combtab_between_cancer_capricorn, 2)
 
 # make container column 
 # overall
-head(combtab[grep("UHURU", combtab$processid),])
+head(combtab[grep("UHURU", combtab$processid),], 2)
 combtab$container<-gsub("[0-9.-]", "", combtab$processid)
 length(unique(combtab$container))
 sort(table(combtab$container), decreasing=T) #PNG, YNPBP, UHURU
@@ -87,15 +87,15 @@ sum(sort(table(combtab$container[which(combtab$trnL=="trnL")]), decreasing=T)[1:
 
 # number of specimen records mined from genbank 
 combtab_mined_from_genbank<- subset (combtab, institution_storing == "Mined from GenBank, NCBI")
-head(combtab_mined_from_genbank)
+head(combtab_mined_from_genbank, 2)
 
 # number of specimens in combtab identified to species
 combtab_IDd_to_species <- subset(combtab, species_name != "")
-head(combtab_IDd_to_species)
+head(combtab_IDd_to_species, 2)
 
 # number of sequences mined from genbank 
 combtab_mined_from_genbank<- subset (combtab, institution_storing == "Mined from GenBank, NCBI")
-(combtab_mined_from_genbank)
+head(combtab_mined_from_genbank, 2)
 
 combtab_mined_from_genbank[combtab_mined_from_genbank == ""] <- NA # Convert blank cells to NA
 combtab_mined_from_genbank$barcode_count_mined <- rowSums(!is.na(combtab_mined_from_genbank[, c("rbcL", "matK", "trnL", "ITS2")])) # Count the number of barcodes per specimen
@@ -105,19 +105,19 @@ total_barcodes_mined
 
 # number of specimens in combtab with rbcL barcode 
 combtab_rbcL_barcodes <- subset(combtab, rbcL != "")
-head(combtab_rbcL_barcodes)
+head(combtab_rbcL_barcodes, 2)
 
 # number of specimens in combtab with matK barcode 
 combtab_matK_barcodes <- subset(combtab, matK != "")
-head(combtab_matK_barcodes)
+head(combtab_matK_barcodes, 2)
 
 # number of specimens in combtab with ITS barcode 
 combtab_ITS2_barcodes <- subset(combtab, ITS2 != "")
-head(combtab_ITS2_barcodes)
+head(combtab_ITS2_barcodes, 2)
 
 # number of specimens in combtab with trnL barcode 
 combtab_trnL_barcodes <- subset(combtab, trnL != "")
-head(combtab_trnL_barcodes)
+head(combtab_trnL_barcodes, 2)
 
 # number of genbank accession numbers in combtab 
 combtab_for_genbank <- combtab
@@ -135,51 +135,51 @@ total_accessions
 
 # number of specimens with country listed 
 combtab_countries <- subset(combtab, country != "")
-head(combtab_countries)
+head(combtab_countries, 2)
 
 # number of specimens with lat/long listed 
 combtab_lat <- subset(combtab, lat != "")
-head(combtab_lat)
+head(combtab_lat, 2)
 
 combtab_lon <- subset(combtab, lon != "")
-head(combtab_lon)
+head(combtab_lon, 2)
 
 
 # number of matK sequences
 combtab_matK <- subset(combtab, matK == "matK")
-head(combtab_matK)
+head(combtab_matK, 2)
 
 # number of matK sequences with lat/long data 
 combtab_matK_latlong <- subset(combtab_matK, lat != "")
-head(combtab_matK_latlong)
+head(combtab_matK_latlong, 2)
 
 # number of rbcL sequences
 combtab_rbcL <- subset(combtab, rbcL == "rbcL")
-head(combtab_rbcL)
+head(combtab_rbcL, 2)
 
 # number of rbcL sequences with lat/long data 
 combtab_rbcL_latlong <- subset(combtab_rbcL, lat != "")
-head(combtab_rbcL_latlong)
+head(combtab_rbcL_latlong, 2)
 
 # number of ITS sequences
 combtab_ITS <- subset(combtab, ITS2 == "ITS")
-head(combtab_ITS)
+head(combtab_ITS, 2)
 
 # number of ITS sequences with lat/long data 
 combtab_ITS_latlong <- subset(combtab_ITS, lat != "")
-head(combtab_ITS_latlong)
+head(combtab_ITS_latlong, 2)
 
 # number of trnL sequences
 combtab_trnL <- subset(combtab, trnL == "trnL")
-head(combtab_trnL)
+head(combtab_trnL, 2)
 
 # number of ITS sequences with lat/long data 
 combtab_trnL_latlong <- subset(combtab_trnL, lat != "")
-head(combtab_trnL_latlong)
+head(combtab_trnL_latlong, 2)
 
 # number of overall sequences with lat/long data 
 combtab_latlong <- subset(combtab, lat != "")
-head(combtab_latlong)
+head(combtab_latlong, 2)
 
 table(combtab$trnL)
 levels(factor(combtab$trnL))
@@ -196,9 +196,9 @@ lonr <- round(combtab$lon)
 
 # create rounded data frame 
 combtab_rounded <- combtab %>% dplyr::mutate(dplyr::across(c('lat', 'lon'), round, 0))
-head(combtab_rounded)
+head(combtab_rounded, 2)
 combtab_rounded_38 <- subset(combtab_rounded, lat == 38)
-head(combtab_rounded_38)
+head(combtab_rounded_38, 2)
 
 # Plot longitude
 marker_count_by_long_plot2 <- ggplot(combtab_rounded, aes(x = lon)) +
@@ -230,7 +230,7 @@ marker_count_by_lat_plot_alllines
 ```{r}
 combtab_matK <- sum(combtab$matK == "matK")
 combtab_rbcL <- combtab %>% subset(rbcL == "rbcL")
-head(combtab_rbcL)
+head(combtab_rbcL, 2)
 
 matK <- subset(combtab_rounded, matK == "matK") 
 rbcL <- subset(combtab_rounded, rbcL == "rbcL") 
@@ -259,13 +259,13 @@ t.mean <-mean(t.mean)
 
 # make a 'samples' data frame to extract temp values from barcode localities
 samples <- data.frame(processid=seq(1,nrow(sitepix)), lon=sitepix[,1], lat=sitepix[,2], row.names="processid")
-samples
+head(samples, 2)
 samples <- samples[which(samples$lat!="NA"),]
-samples
+head(samples, 2)
 # Extract data from RasterLayer
 temp.data <- raster::extract(t.mean, samples)
-head(temp.data)
-sampletempMeans<-temp.data
+head(temp.data, 2)
+sampletempMeans <- temp.data
 length(which(is.na(sampletempMeans))) 
 
 # precipitation
@@ -275,7 +275,7 @@ p.mean <-sum(p.mean)/10 	# divide by 10 to convert from mm to cm
 # Extract data from RasterLayer
 precip.data <- raster::extract(p.mean, samples)
 head(precip.data)
-sampleprecipMeans<-precip.data
+sampleprecipMeans <- precip.data
 length(which(is.na(sampleprecipMeans))) 
 
 # plot Figure 1d
@@ -283,16 +283,16 @@ length(which(is.na(sampleprecipMeans)))
 set.seed(20140816)
 nrand<-100000
 
-randomtemp<-sampleRandom(mean(t.mean), nrand, xy=T)
-randomprecip<-extract(mean(p.mean), randomtemp[,1:2])
+randomtemp <- sampleRandom(mean(t.mean), nrand, xy=T)
+randomprecip <- extract(mean(p.mean), randomtemp[,1:2])
 
-randomtempMeans<-randomtemp[,3]
-randomprecipMeans<-randomprecip
-randompoints<-cbind(randomtempMeans, randomprecipMeans)
+randomtempMeans <- randomtemp[,3]
+randomprecipMeans <- randomprecip
+randompoints <- cbind(randomtempMeans, randomprecipMeans)
 
 # find the upper / lower 95 percentile for temp and precip to plot based on BOLD samples
-temp95<-quantile(sampletempMeans, c(0.05), na.rm=T)
-precip95<-quantile(sampleprecipMeans, c(0.95), na.rm=T) 
+temp95 <- quantile(sampletempMeans, c(0.05), na.rm=T)
+precip95 <- quantile(sampleprecipMeans, c(0.95), na.rm=T) 
 
 # Plot figure 1D
 plot(randomprecipMeans ~ randomtempMeans, xlim=rev(range(randomtempMeans, na.rm=T)), pch=16, col="gray", ylab="Mean annual precipitation (cm)", xlab="mean annual temperature (°C)", type="n", ylim=c(0, max(c(max(randomprecipMeans), max(sampleprecipMeans, na.rm=T)))))
@@ -310,12 +310,12 @@ abline(h=precip95, v=temp95, lty=2, col="black", lwd=2)
 ```{r warning= FALSE}
 # map for places inside or outside climate envelopes
 # make raster by thresholds
-threshtemp<-t.mean
-values(threshtemp)<-as.numeric(values(threshtemp<as.numeric(temp95)))
+threshtemp <- t.mean
+values(threshtemp) <- as.numeric(values(threshtemp<as.numeric(temp95)))
 
 quantile(values(p.mean), na.rm=T)
-threshprecip<-p.mean
-values(threshprecip)<-as.numeric(values(threshprecip>as.numeric(precip95)))
+threshprecip <- p.mean
+values(threshprecip) <- as.numeric(values(threshprecip>as.numeric(precip95)))
 class(threshprecip)
 
 # create ggplot-usable world map 
