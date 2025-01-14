@@ -34,6 +34,7 @@ format:
     theme:
       - cosmo
       - brand
+    number-sections: false
 
 editor: visual
 
