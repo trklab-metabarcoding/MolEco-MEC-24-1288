@@ -243,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." id="toc-step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." class="nav-link active" data-scroll-target="#step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database.">Step 1: Retrieve taxonomic information for families within the plant clade Embryophyta (multicellular plants, excluding green algae) using the ITIS database.</a>
   <ul class="collapse">
-  <li><a href="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis." id="toc-next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis." class="nav-link" data-scroll-target="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis.">Next we can loop over these families and generate CSV files with all the species in these familis.</a></li>
+  <li><a href="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families." id="toc-next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families." class="nav-link" data-scroll-target="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families.">Next we can loop over these families and generate CSV files with all the species in these families.</a></li>
   <li><a href="#reassemble-data-from-saved-csv-files" id="toc-reassemble-data-from-saved-csv-files" class="nav-link" data-scroll-target="#reassemble-data-from-saved-csv-files">Reassemble data from saved CSV files:</a></li>
   <li><a href="#combine-all-data-into-a-single-data-frame" id="toc-combine-all-data-into-a-single-data-frame" class="nav-link" data-scroll-target="#combine-all-data-into-a-single-data-frame">Combine all data into a single data frame</a></li>
   </ul></li>
@@ -289,20 +289,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database.">Step 1: Retrieve taxonomic information for families within the plant clade Embryophyta (multicellular plants, excluding green algae) using the ITIS database.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve families under "Embryophyta"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>famnames <span class="ot">&lt;-</span> taxize<span class="sc">::</span><span class="fu">downstream</span>(<span class="st">"Embryophyta"</span>, <span class="at">db =</span> <span class="st">"itis"</span>, <span class="at">downto =</span> <span class="st">"family"</span>) <span class="co">#Embryophyta is multicellular plants (excluding green algae)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fams <span class="ot">&lt;-</span> famnames<span class="sc">$</span>Embryophyta<span class="sc">$</span>taxonname</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize data structures</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>famlist <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(fams))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>famout <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(fams), <span class="at">ncol =</span> <span class="dv">3</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>famout[,<span class="dv">1</span>] <span class="ot">&lt;-</span> fams</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>num_fams <span class="ot">&lt;-</span> <span class="fu">length</span>(fams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>famnames <span class="ot">&lt;-</span> taxize<span class="sc">::</span><span class="fu">downstream</span>(<span class="st">"Embryophyta"</span>, <span class="at">db =</span> <span class="st">"itis"</span>, <span class="at">downto =</span> <span class="st">"family"</span>) </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Embryophyta is multicellular plants (excluding green algae)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fams <span class="ot">&lt;-</span> famnames<span class="sc">$</span>Embryophyta<span class="sc">$</span>taxonname</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove family with problematic records</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fams <span class="ot">&lt;-</span> fams[fams <span class="sc">!=</span> <span class="st">"Kahukaloaceae"</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize data structures</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>famlist <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(fams))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>famout <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(fams), <span class="at">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>famout[,<span class="dv">1</span>] <span class="ot">&lt;-</span> fams</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(fams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="we-found-730-families-returned-from-itis." class="level4">
 <h4 class="anchored" data-anchor-id="we-found-730-families-returned-from-itis.">We found 730 families returned from ITIS.</h4>
 </section>
-<section id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis." class="level3">
-<h3 class="anchored" data-anchor-id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis.">Next we can loop over these families and generate CSV files with all the species in these familis.</h3>
+<section id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families." class="level3">
+<h3 class="anchored" data-anchor-id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families.">Next we can loop over these families and generate CSV files with all the species in these families.</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over families and save a CSV for each</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fams)){</span>
