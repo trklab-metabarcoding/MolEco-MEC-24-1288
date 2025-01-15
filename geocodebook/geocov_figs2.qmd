@@ -23,19 +23,18 @@ Start with some data cleaning.
 combtab <- read.csv("../data/BoldPhyla_to_Families_combtab_v4.csv")
 head(combtab, 2)
 
-#round coordiantes to nearest 1 degree
+# Round coordiantes to nearest 1 degree
 combtab$lat <- as.numeric(as.character(combtab$lat))
 combtab$lon <- as.numeric(as.character(combtab$lon))
 
-#ggplot wrapper of map()
+# ggplot wrapper of map()
 world_map <- map_data("world") 
-crs(world_map)
 
-#build a dataframe / matrix of country counts to plot
+# Build a dataframe / matrix of country counts to plot
 myCodes <- data.frame(table(combtab$country))
 colnames(myCodes)<-c("country", "n")
 
-#Convert country names to "Getty Thesaurus" names for BOLD
+# Convert country names to "Getty Thesaurus" names for BOLD
 myCodes$country <- countrycode(myCodes$country, "country.name", "country.name") 
 myCodes$country[which(myCodes$country=="United States")]<-"USA"
 myCodes$country[which(myCodes$country=="United Kingdom")]<-"UK"
@@ -54,9 +53,9 @@ myCodes$country[which(myCodes$country=="St. Helena")]<-"Saint Helena"
 myCodes$country[which(myCodes$country=="Eswatini")]<-"Swaziland" 
 ```
 
-Map country-level barcode intensity.
+#### Map country-level barcode intensity.
 ```{r}
-#map for country-level intensity
+# Map for country-level intensity
 myCodes <- myCodes[is.na(myCodes$country)==F,]
 
 ggpoliticalboundaries <- ggplot(myCodes) + geom_map(dat = world_map, map = world_map, aes(map_id = region), fill = "white", color = "#7f7f7f", size = 0.25)  +
@@ -69,27 +68,28 @@ ggpoliticalboundaries
 #ggsave("ggpoliticalboundaries_20240626_1.pdf", ggpoliticalboundaries, width = 13, height = 8.6, units = "cm")
 ```
 
-Distribution of country bias - barplot.
+#### Distribution of country bias - barplot.
 ```{r}
-#barplot with country counts
+# Barplot with country counts
 countrycounts_bar <- ggplot(myCodes, aes(x = reorder(country, -n), y = n)) +
   geom_bar(stat = "identity", width = 0.9) + theme_classic() + xlab("") + ylab("") +  theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 countrycounts_bar
 #ggsave("countrycounts_20240626.pdf", countrycounts, width = 13, height = 4, units = "cm")
 ```
-Distribution of country bias - lineplot.
+#### Distribution of country bias - lineplot.
 ```{r}
-#line plot with country counts
+# Line plot with country counts
 countrycounts_line <- ggplot(myCodes, aes(x = reorder(country, -n), y = n, group = 1)) +
   geom_line() + theme_classic() + xlab("") + ylab("") +  theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
 countrycounts_line
 #ggsave("countrycounts_20240626.pdf", countrycounts, width = 8, height = 4, units = "cm")
 ```
 
-Print dataframe with countries having less than 10 barcodes. We only print the first 10, but there are 38 countries total.
+#### Print dataframe with countries having less than 10 barcodes. 
+We only print the first 10, but there are 38 countries total.
 ```{r}
-#summarize number of countries with <10 
+# Summarize number of countries with <10 
 myCodes_less_than_10 <- subset(myCodes, n <10) %>%
   arrange(desc(n))
-head(myCodes_less_than_10, 10) 
+myCodes_less_than_10
 ```

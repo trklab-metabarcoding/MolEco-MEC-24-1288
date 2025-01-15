@@ -1,6 +1,7 @@
 /.quarto/
 *.Rmd
 .Rprofile
+.RData
 .DS_store
 *.zip
 wc2.1_10m_prec/
