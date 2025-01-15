@@ -21,19 +21,22 @@ pacman::p_load(maps, ggplot2, dplyr, countrycode, data.table, raster)
 
 ```{r eval=FALSE}
 # Retrieve families under "Embryophyta"
-famnames <- taxize::downstream("Embryophyta", db = "itis", downto = "family") #Embryophyta is multicellular plants (excluding green algae)
+famnames <- taxize::downstream("Embryophyta", db = "itis", downto = "family") 
+# Embryophyta is multicellular plants (excluding green algae)
 fams <- famnames$Embryophyta$taxonname
+# Remove family with problematic records
+fams <- fams[fams != "Kahukaloaceae"]
 
 # Initialize data structures
 famlist <- vector("list", length(fams))
 famout <- matrix(nrow = length(fams), ncol = 3)
 famout[,1] <- fams
-num_fams <- length(fams)
+length(fams)
 ```
 
 #### We found 730 families returned from ITIS.
 
-### Next we can loop over these families and generate CSV files with all the species in these familis.
+### Next we can loop over these families and generate CSV files with all the species in these families.
 
 ```{r eval=FALSE}
 # Loop over families and save a CSV for each
