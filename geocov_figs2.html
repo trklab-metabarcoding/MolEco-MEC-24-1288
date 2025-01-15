@@ -308,54 +308,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1        rbcL---                               
 2 rbcL-matK--ITS                               </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#round coordiantes to nearest 1 degree</span></span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Round coordiantes to nearest 1 degree</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>lat <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(combtab<span class="sc">$</span>lat))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>lon <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(combtab<span class="sc">$</span>lon))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot wrapper of map()</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot wrapper of map()</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>world_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>) </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(world_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NA</code></pre>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a dataframe / matrix of country counts to plot</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>myCodes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>country))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(myCodes)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"n"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert country names to "Getty Thesaurus" names for BOLD</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">countrycode</span>(myCodes<span class="sc">$</span>country, <span class="st">"country.name"</span>, <span class="st">"country.name"</span>) </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"United States"</span>)]<span class="ot">&lt;-</span><span class="st">"USA"</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"United Kingdom"</span>)]<span class="ot">&lt;-</span><span class="st">"UK"</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Congo - Kinshasa"</span>)]<span class="ot">&lt;-</span><span class="st">"Democratic Republic of the Congo"</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Congo - Brazzaville"</span>)]<span class="ot">&lt;-</span><span class="st">"Republic of Congo"</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"British Virgin Islands"</span>)]<span class="ot">&lt;-</span><span class="st">"Virgin Islands"</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Bosnia &amp; Herzegovina"</span>)]<span class="ot">&lt;-</span><span class="st">"Bosnia and Herzegovina"</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"São Tomé &amp; Príncipe"</span>)]<span class="ot">&lt;-</span><span class="st">"Sao Tome and Principe"</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Trinidad &amp; Tobago"</span>)]<span class="ot">&lt;-</span><span class="st">"Trinidad"</span> <span class="co">#Tobago is a separate entity in maps</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"North Macedonia"</span>)]<span class="ot">&lt;-</span><span class="st">"Macedonia"</span> </span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Myanmar (Burma)"</span>)]<span class="ot">&lt;-</span><span class="st">"Myanmar"</span> </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Côte d’Ivoire"</span>)]<span class="ot">&lt;-</span><span class="st">"Ivory Coast"</span> </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Czechia"</span>)]<span class="ot">&lt;-</span><span class="st">"Czech Republic"</span> </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Réunion"</span>)]<span class="ot">&lt;-</span><span class="st">"Reunion"</span> </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"St. Helena"</span>)]<span class="ot">&lt;-</span><span class="st">"Saint Helena"</span> </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Eswatini"</span>)]<span class="ot">&lt;-</span><span class="st">"Swaziland"</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#build a dataframe / matrix of country counts to plot</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>myCodes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>country))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(myCodes)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"n"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert country names to "Getty Thesaurus" names for BOLD</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">countrycode</span>(myCodes<span class="sc">$</span>country, <span class="st">"country.name"</span>, <span class="st">"country.name"</span>) </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"United States"</span>)]<span class="ot">&lt;-</span><span class="st">"USA"</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"United Kingdom"</span>)]<span class="ot">&lt;-</span><span class="st">"UK"</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Congo - Kinshasa"</span>)]<span class="ot">&lt;-</span><span class="st">"Democratic Republic of the Congo"</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Congo - Brazzaville"</span>)]<span class="ot">&lt;-</span><span class="st">"Republic of Congo"</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"British Virgin Islands"</span>)]<span class="ot">&lt;-</span><span class="st">"Virgin Islands"</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Bosnia &amp; Herzegovina"</span>)]<span class="ot">&lt;-</span><span class="st">"Bosnia and Herzegovina"</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"São Tomé &amp; Príncipe"</span>)]<span class="ot">&lt;-</span><span class="st">"Sao Tome and Principe"</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Trinidad &amp; Tobago"</span>)]<span class="ot">&lt;-</span><span class="st">"Trinidad"</span> <span class="co">#Tobago is a separate entity in maps</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"North Macedonia"</span>)]<span class="ot">&lt;-</span><span class="st">"Macedonia"</span> </span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Myanmar (Burma)"</span>)]<span class="ot">&lt;-</span><span class="st">"Myanmar"</span> </span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Côte d’Ivoire"</span>)]<span class="ot">&lt;-</span><span class="st">"Ivory Coast"</span> </span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Czechia"</span>)]<span class="ot">&lt;-</span><span class="st">"Czech Republic"</span> </span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Réunion"</span>)]<span class="ot">&lt;-</span><span class="st">"Reunion"</span> </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"St. Helena"</span>)]<span class="ot">&lt;-</span><span class="st">"Saint Helena"</span> </span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Eswatini"</span>)]<span class="ot">&lt;-</span><span class="st">"Swaziland"</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Map country-level barcode intensity.</p>
+<section id="map-country-level-barcode-intensity." class="level4">
+<h4 class="anchored" data-anchor-id="map-country-level-barcode-intensity.">Map country-level barcode intensity.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#map for country-level intensity</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>myCodes <span class="ot">&lt;-</span> myCodes[<span class="fu">is.na</span>(myCodes<span class="sc">$</span>country)<span class="sc">==</span>F,]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ggpoliticalboundaries <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes) <span class="sc">+</span> <span class="fu">geom_map</span>(<span class="at">dat =</span> world_map, <span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> region), <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"#7f7f7f"</span>, <span class="at">size =</span> <span class="fl">0.25</span>)  <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> country, <span class="at">fill =</span> n), <span class="at">size =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fff7bc"</span>, <span class="at">high =</span> <span class="st">"#cc4c02"</span>, <span class="at">name =</span> <span class="st">"Worldwide specimens"</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">60</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">45</span>)) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> world_map<span class="sc">$</span>long, <span class="at">y =</span> world_map<span class="sc">$</span>lat) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">23.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="sc">-</span><span class="fl">23.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map for country-level intensity</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>myCodes <span class="ot">&lt;-</span> myCodes[<span class="fu">is.na</span>(myCodes<span class="sc">$</span>country)<span class="sc">==</span>F,]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ggpoliticalboundaries <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes) <span class="sc">+</span> <span class="fu">geom_map</span>(<span class="at">dat =</span> world_map, <span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> region), <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"#7f7f7f"</span>, <span class="at">size =</span> <span class="fl">0.25</span>)  <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> country, <span class="at">fill =</span> n), <span class="at">size =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fff7bc"</span>, <span class="at">high =</span> <span class="st">"#cc4c02"</span>, <span class="at">name =</span> <span class="st">"Worldwide specimens"</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">60</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">45</span>)) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> world_map<span class="sc">$</span>long, <span class="at">y =</span> world_map<span class="sc">$</span>lat) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">23.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="sc">-</span><span class="fl">23.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ggpoliticalboundaries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ggpoliticalboundaries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -363,14 +361,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("ggpoliticalboundaries_20240626_1.pdf", ggpoliticalboundaries, width = 13, height = 8.6, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("ggpoliticalboundaries_20240626_1.pdf", ggpoliticalboundaries, width = 13, height = 8.6, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Distribution of country bias - barplot.</p>
+</section>
+<section id="distribution-of-country-bias---barplot." class="level4">
+<h4 class="anchored" data-anchor-id="distribution-of-country-bias---barplot.">Distribution of country bias - barplot.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#barplot with country counts</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>countrycounts_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(country, <span class="sc">-</span>n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.9</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>countrycounts_bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Barplot with country counts</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>countrycounts_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(country, <span class="sc">-</span>n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.9</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>countrycounts_bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -378,14 +378,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("countrycounts_20240626.pdf", countrycounts, width = 13, height = 4, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("countrycounts_20240626.pdf", countrycounts, width = 13, height = 4, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Distribution of country bias - lineplot.</p>
+</section>
+<section id="distribution-of-country-bias---lineplot." class="level4">
+<h4 class="anchored" data-anchor-id="distribution-of-country-bias---lineplot.">Distribution of country bias - lineplot.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#line plot with country counts</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>countrycounts_line <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(country, <span class="sc">-</span>n), <span class="at">y =</span> n, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>countrycounts_line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Line plot with country counts</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>countrycounts_line <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(country, <span class="sc">-</span>n), <span class="at">y =</span> n, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>countrycounts_line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -393,14 +395,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("countrycounts_20240626.pdf", countrycounts, width = 8, height = 4, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("countrycounts_20240626.pdf", countrycounts, width = 8, height = 4, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Print dataframe with countries having less than 10 barcodes. We only print the first 10, but there are 38 countries total.</p>
+</section>
+<section id="print-dataframe-with-countries-having-less-than-10-barcodes." class="level4">
+<h4 class="anchored" data-anchor-id="print-dataframe-with-countries-having-less-than-10-barcodes.">Print dataframe with countries having less than 10 barcodes.</h4>
+<p>We only print the first 10, but there are 38 countries total.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summarize number of countries with &lt;10 </span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>myCodes_less_than_10 <span class="ot">&lt;-</span> <span class="fu">subset</span>(myCodes, n <span class="sc">&lt;</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myCodes_less_than_10, <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize number of countries with &lt;10 </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>myCodes_less_than_10 <span class="ot">&lt;-</span> <span class="fu">subset</span>(myCodes, n <span class="sc">&lt;</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>myCodes_less_than_10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                  country n
 1                              Cape Verde 9
@@ -412,11 +417,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 7  South Georgia &amp; South Sandwich Islands 8
 8                          Virgin Islands 7
 9                        Falkland Islands 7
-10                            North Korea 7</code></pre>
+10                            North Korea 7
+11                           Cook Islands 6
+12                   United Arab Emirates 6
+13                                 Kosovo 5
+14                                Belarus 4
+15                                   Chad 4
+16                          Guinea-Bissau 4
+17                                 Kuwait 4
+18                                  Palau 4
+19                                Bermuda 3
+20                          Faroe Islands 3
+21                           Saint Helena 3
+22                                  Tonga 3
+23                               Djibouti 2
+24                                 Gambia 2
+25                                Grenada 2
+26                              Lithuania 2
+27                               Maldives 2
+28                                  Niger 2
+29               Northern Mariana Islands 2
+30                              St. Lucia 2
+31                             San Marino 2
+32                      Antigua &amp; Barbuda 1
+33                                  Aruba 1
+34                             Mauritania 1
+35                                Moldova 1
+36                                   Niue 1
+37               St. Vincent &amp; Grenadines 1
+38                            South Sudan 1</code></pre>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
