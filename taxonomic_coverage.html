@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Taxonomic Coverage – Code Resources for MEC-24-1288</title>
+<title>Correlations between plant species and DNA barcode availability – Code Resources for MEC-24-1288</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_itis.html">Taxonomic coverage</a></li><li class="breadcrumb-item"><a href="./taxonomic_coverage.html"><span class="chapter-title">Taxonomic Coverage</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_itis.html">Taxonomic coverage</a></li><li class="breadcrumb-item"><a href="./taxonomic_coverage.html"><span class="chapter-title">Correlations between plant species and DNA barcode availability</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -171,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./taxonomic_coverage.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Taxonomic Coverage</span></a>
+  <a href="./taxonomic_coverage.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Correlations between plant species and DNA barcode availability</span></a>
   </div>
 </li>
       </ul>
@@ -207,16 +241,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#taxonomic-coverage" id="toc-taxonomic-coverage" class="nav-link active" data-scroll-target="#taxonomic-coverage">Taxonomic Coverage</a></li>
+  <li><a href="#si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-a-b." id="toc-si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-a-b." class="nav-link active" data-scroll-target="#si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-a-b.">SI Appendix Figure 2A-D: Read in files and summarize for panels A-B.</a></li>
+  <li><a href="#si-appendix-figure-2a-d-plot-panels-a-b" id="toc-si-appendix-figure-2a-d-plot-panels-a-b" class="nav-link" data-scroll-target="#si-appendix-figure-2a-d-plot-panels-a-b">SI Appendix Figure 2A-D: Plot panels A-B</a></li>
+  <li><a href="#si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-c-d." id="toc-si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-c-d." class="nav-link" data-scroll-target="#si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-c-d.">SI Appendix Figure 2A-D: Read in files and summarize for panels C-D.</a></li>
+  <li><a href="#si-appendix-figure-2a-d-plot-panels-c-d" id="toc-si-appendix-figure-2a-d-plot-panels-c-d" class="nav-link" data-scroll-target="#si-appendix-figure-2a-d-plot-panels-c-d">SI Appendix Figure 2A-D: Plot panels C-D</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_itis.html">Taxonomic coverage</a></li><li class="breadcrumb-item"><a href="./taxonomic_coverage.html"><span class="chapter-title">Taxonomic Coverage</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_itis.html">Taxonomic coverage</a></li><li class="breadcrumb-item"><a href="./taxonomic_coverage.html"><span class="chapter-title">Correlations between plant species and DNA barcode availability</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Taxonomic Coverage</span></h1>
+<h1 class="title"><span class="chapter-title">Correlations between plant species and DNA barcode availability</span></h1>
 </div>
 
 
@@ -233,9 +270,1001 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="taxonomic-coverage" class="level1 unnumbered">
-<h1 class="unnumbered">Taxonomic Coverage</h1>
-<p>Add all code here and update text.</p>
+<p>This notebook pulls in data from various sources and makes plots to compare plants species per family to availability of DNA barcodes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/taxize"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-a-b." class="level2">
+<h2 class="anchored" data-anchor-id="si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-a-b.">SI Appendix Figure 2A-D: Read in files and summarize for panels A-B.</h2>
+<section id="first-we-read-in-the-data-and-make-some-quick-plots." class="level4">
+<h4 class="anchored" data-anchor-id="first-we-read-in-the-data-and-make-some-quick-plots.">First we read in the data and make some quick plots.</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>combtab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/BoldPhyla_to_Families_combtab_v4.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combtab, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X.1 X   processid               institution_storing phylum_taxID
+1   1 1   API120-12 Sri Ramaswamy Memorial University           12
+2   2 2 CANGI002-17      Museu Paraense Emilio Goeldi           12
+    phylum_name class_taxID    class_name order_taxID order_name family_taxID
+1 Magnoliophyta          41 Magnoliopsida      121216   Lamiales       148533
+2 Magnoliophyta          41 Magnoliopsida      121216   Lamiales       148533
+  family_name subfamily_taxID subfamily_name genus_taxID  genus_name
+1 Acanthaceae              NA                     415894 Peristrophe
+2 Acanthaceae          264310   Acanthoideae      148534     Ruellia
+  species_taxID             species_name subspecies_taxID subspecies_name
+1        494465 Peristrophe bicalyculata               NA                
+2        632816          Ruellia inflata               NA                
+  collectiondate_start collectiondate_end lat lon coord_source coord_accuracy
+1                   NA                 NA  NA  NA                          NA
+2                   NA                 NA  NA  NA                          NA
+  elev country province_state region sector exactsite rbcL matK trnL ITS2
+1   NA                                                rbcL               
+2   NA  Brazil           Para                         rbcL matK       ITS
+           multi gb_rbcL gb_matK gb_trnL gb_ITS
+1        rbcL---                               
+2 rbcL-matK--ITS                               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Round coordiantes to nearest 1 degree</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>lat <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(combtab<span class="sc">$</span>lat))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>lon <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(combtab<span class="sc">$</span>lon))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Phylum rank</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">sort</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>phylum_name), <span class="at">decreasing=</span>T), <span class="at">main =</span> <span class="st">"Most barcoded Phyla"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Family rank</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>family_name), <span class="at">decreasing=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+             Fabaceae               Poaceae           Orchidaceae 
+                17808                 15624                 14575 
+           Asteraceae              Rosaceae             Rubiaceae 
+                14410                  6802                  6690 
+           Cyperaceae             Lamiaceae         Euphorbiaceae 
+                 6214                  5325                  4863 
+            Ericaceae             Malvaceae          Brassicaceae 
+                 4057                  3419                  3354 
+           Solanaceae         Ranunculaceae           Apocynaceae 
+                 3157                  3105                  3068 
+      Caryophyllaceae             Lauraceae             Myrtaceae 
+                 2893                  2802                  2667 
+        Orobanchaceae          Polygonaceae        Convolvulaceae 
+                 2666                  2493                  2403 
+           Salicaceae             Iridaceae               Araceae 
+                 2401                  2396                  2335 
+             Apiaceae            Annonaceae        Plantaginaceae 
+                 2332                  2306                  2213 
+             Pinaceae             Cactaceae           Sapindaceae 
+                 2209                  2199                  2154 
+             Rutaceae          Boraginaceae              Moraceae 
+                 2152                  2135                  2135 
+         Asparagaceae           Primulaceae             Arecaceae 
+                 2065                  1960                  1892 
+        Zingiberaceae          Celastraceae              Fagaceae 
+                 1873                  1711                  1708 
+         Gesneriaceae         Cucurbitaceae       Melastomataceae 
+                 1690                  1671                  1617 
+        Amaranthaceae         Campanulaceae        Phyllanthaceae 
+                 1602                  1558                  1553 
+            Liliaceae         Saxifragaceae           Acanthaceae 
+                 1453                  1452                  1440 
+           Araliaceae          Crassulaceae       Dryopteridaceae 
+                 1429                  1410                  1396 
+         Gentianaceae          Bromeliaceae              Oleaceae 
+                 1385                  1314                  1310 
+       Amaryllidaceae             Ebenaceae            Piperaceae 
+                 1296                  1254                  1232 
+        Dioscoreaceae        Caprifoliaceae             Meliaceae 
+                 1224                  1195                  1154 
+           Sapotaceae            Proteaceae        Passifloraceae 
+                 1142                  1126                  1078 
+            Adoxaceae            Pottiaceae         Polypodiaceae 
+                 1053                  1040                  1034 
+         Lejeuneaceae           Dicranaceae           Sphagnaceae 
+                  982                   978                   952 
+           Urticaceae            Rhamnaceae            Betulaceae 
+                  941                   930                   918 
+      Amblystegiaceae         Podostemaceae         Anacardiaceae 
+                  907                   907                   899 
+         Cupressaceae           Burseraceae           Pteridaceae 
+                  893                   867                   867 
+       Chenopodiaceae         Malpighiaceae           Grimmiaceae 
+                  818                   817                   813 
+     Brachytheciaceae         Asphodelaceae         Frullaniaceae 
+                  800                   798                   790 
+            Violaceae              Bryaceae      Dipterocarpaceae 
+                  761                   757                   751 
+          Begoniaceae         Podocarpaceae         Aquifoliaceae 
+                  722                   721                   701 
+         Polygalaceae          Papaveraceae          Combretaceae 
+                  701                   697                   695 
+        Hydrangeaceae            Onagraceae         Melanthiaceae 
+                  663                   663                   646 
+        Thymelaeaceae             Zamiaceae             Cornaceae 
+                  633                   629                   618 
+         Magnoliaceae          Aspleniaceae              Theaceae 
+                  614                   600                   600 
+             Vitaceae        Menispermaceae        Plumbaginaceae 
+                  595                   589                   580 
+     Scrophulariaceae           Geraniaceae             Alliaceae 
+                  572                   570                   566 
+        Polemoniaceae      Aristolochiaceae           Smilacaceae 
+                  564                   542                   540 
+      Plagiochilaceae          Hypericaceae         Berberidaceae 
+                  536                   525                   522 
+            Juncaceae       Orthotrichaceae              Musaceae 
+                  519                   516                   515 
+          Verbenaceae             Hypnaceae          Bignoniaceae 
+                  510                   495                   489 
+     Hydrocharitaceae            Clusiaceae      Hymenophyllaceae 
+                  489                   484                   482 
+       Polytrichaceae            Aneuraceae           Oxalidaceae 
+                  481                   450                   432 
+         Symplocaceae              Mniaceae      Potamogetonaceae 
+                  425                   424                   416 
+          Marantaceae           Santalaceae             Aizoaceae 
+                  413                   403                   399 
+            Ochnaceae          Restionaceae            Lythraceae 
+                  397                   394                   393 
+          Cannabaceae        Hamamelidaceae              Taxaceae 
+                  391                   391                   388 
+        Myristicaceae      Plagiotheciaceae      Lentibulariaceae 
+                  364                   363                   357 
+        Hylocomiaceae             Cistaceae         Balsaminaceae 
+                  351                   348                   341 
+        Lecythidaceae      Sematophyllaceae              Linaceae 
+                  338                   336                   325 
+         Colchicaceae        Zygophyllaceae          Haloragaceae 
+                  324                   322                   321 
+       Rhizophoraceae      Thelypteridaceae           Capparaceae 
+                  313                   313                   310 
+          Achariaceae         Simaroubaceae         Actinidiaceae 
+                  304                   304                   280 
+     Xanthorrhoeaceae             Ruscaceae         Molluginaceae 
+                  280                   273                   272 
+     Chrysobalanaceae          Alismataceae            Montiaceae 
+                  271                   268                   268 
+         Nepenthaceae          Ditrichaceae         Nyctaginaceae 
+                  266                   262                   259 
+            Loasaceae      Alstroemeriaceae          Tamaricaceae 
+                  257                   252                   252 
+          Blechnaceae        Elaeocarpaceae        Grammitidaceae 
+                  250                   250                   244 
+           Cleomaceae           Styracaceae         Eriocaulaceae 
+                  238                   238                   232 
+         Juglandaceae      Pentaphylacaceae          Scapaniaceae 
+                  232                   232                   231 
+         Nymphaeaceae           Adiantaceae           Loganiaceae 
+                  230                   229                   223 
+          Ephedraceae           Pandanaceae       Selaginellaceae 
+                  218                   218                   216 
+      Lembophyllaceae         Commelinaceae          Elaeagnaceae 
+                  212                   211                   210 
+         Loranthaceae         Araucariaceae        Calophyllaceae 
+                  210                   206                   206 
+        Menyanthaceae           Cyatheaceae              Ulmaceae 
+                  206                   205                   205 
+      Grossulariaceae          Goodeniaceae            Cycadaceae 
+                  204                   198                   195 
+         Dilleniaceae        Schisandraceae      Jungermanniaceae 
+                  193                   193                   188 
+           Phrymaceae           Paeoniaceae         Metzgeriaceae 
+                  188                   179                   178 
+        Tofieldiaceae         Casuarinaceae           Thuidiaceae 
+                  175                   174                   173 
+          Droseraceae           Zosteraceae       Amblistegiaceae 
+                  171                   170                   165 
+        Heliconiaceae           Monimiaceae             Acoraceae 
+                  165                   165                   163 
+            Typhaceae        Chloranthaceae        Cephaloziaceae 
+                  163                   161                   160 
+         Marsileaceae           Neckeraceae         Lycopodiaceae 
+                  160                   160                   158 
+     Rhabdoweisiaceae            Caricaceae           Porellaceae 
+                  155                   153                   153 
+        Haemodoraceae             Sabiaceae       Ophioglossaceae 
+                  152                   152                   150 
+     Dennstaedtiaceae            Leskeaceae         Lepidoziaceae 
+                  147                   146                   144 
+       Pittosporaceae          Splachnaceae       Gymnomitriaceae 
+                  143                   141                   135 
+         Marattiaceae           Aytoniaceae          Equisetaceae 
+                  135                   133                   133 
+          Athyriaceae         Portulacaceae             Agavaceae 
+                  131                   130                   128 
+        Bartramiaceae       Cephalotaxaceae            Ruppiaceae 
+                  128                   128                   128 
+      Lardizabalaceae             Olacaceae            Isoetaceae 
+                  124                   122                   118 
+       Leucodontaceae           Taxodiaceae       Anthocerotaceae 
+                  117                   117                   115 
+            Costaceae     Anastrophyllaceae        Phytolaccaceae 
+                  114                   113                   113 
+       Fissidentaceae         Staphyleaceae            Myricaceae 
+                  109                   109                   108 
+            Gnetaceae           Canellaceae           Winteraceae 
+                  107                   105                   102 
+         Hypoxidaceae              Buxaceae            Bruniaceae 
+                  100                    99                    97 
+          Cunoniaceae        Putranjivaceae         Seligeriaceae 
+                   97                    97                    97 
+     Fossombroniaceae         Linderniaceae        Marchantiaceae 
+                   95                    95                    95 
+          Osmundaceae         Adelanthaceae       Erythropalaceae 
+                   94                    92                    91 
+           Resedaceae          Schizaeaceae           Funariaceae 
+                   90                    89                    88 
+        Geocalycaceae            Ricciaceae      Cystopteridaceae 
+                   88                    87                    86 
+        Juncaginaceae         Hyacinthaceae           Moringaceae 
+                   85                    84                    84 
+      Calceolariaceae         Diapensiaceae          Hedwigiaceae 
+                   83                    83                    83 
+            Taccaceae         Nartheciaceae         Hydatellaceae 
+                   83                    82                    81 
+          Elatinaceae        Calypogeiaceae         Cymodoceaceae 
+                   80                    79                    79 
+         Climaciaceae            Penaeaceae          Herbertaceae 
+                   78                    78                    76 
+      Erythroxylaceae           Ginkgoaceae        Lophocoleaceae 
+                   75                    74                    73 
+      Tecophilaeaceae        Calycanthaceae        Aulacomniaceae 
+                   73                    72                    71 
+         Krameriaceae            Meesiaceae         Burmanniaceae 
+                   70                    70                    69 
+     Ptychomitriaceae         Stachyuraceae          Vittariaceae 
+                   68                    68                    68 
+         Meteoriaceae           Icacinaceae     Cephaloziellaceae 
+                   67                    66                    65 
+    Ancistrocladaceae           Clethraceae           Woodsiaceae 
+                   64                    64                    64 
+         Davalliaceae           Gisekiaceae         Calymperaceae 
+                   63                    63                    62 
+          Connaraceae            Opiliaceae         Acrobolbaceae 
+                   62                    61                    60 
+         Fabroniaceae          Andreaeaceae      Ceratophyllaceae 
+                   60                    59                    59 
+     Dendrocerotaceae         Nothofagaceae          Coriariaceae 
+                   59                    59                    58 
+       Gleicheniaceae             Pandaceae           Cabombaceae 
+                   58                    58                    57 
+         Siparunaceae      Anisophylleaceae           Myrsinaceae 
+                   57                    56                    56 
+    Pterigynandraceae        Sarraceniaceae         Fontinalaceae 
+                   56                    55                    54 
+        Tropaeolaceae         Entodontaceae             Viscaceae 
+                   54                    53                    53 
+    Solenostomataceae        Pontederiaceae           Saururaceae 
+                   52                    51                    51 
+        Stemonuraceae          Calyceraceae      Daphniphyllaceae 
+                   51                    50                    50 
+          Gunneraceae         Schoepfiaceae       Aponogetonaceae 
+                   49                    49                    48 
+           Garryaceae      Hypopterygiaceae           Psilotaceae 
+                   48                    48                    48 
+     Trochodendraceae         Dicksoniaceae        Myodocarpaceae 
+                   48                    46                    46 
+         Nitrariaceae          Salviniaceae             Cannaceae 
+                   46                    46                    45 
+        Nelumbonaceae     Cercidiphyllaceae      Pallaviciniaceae 
+                   44                    42                    42 
+         Stylidiaceae           Pedaliaceae          Vochysiaceae 
+                   42                    41                    41 
+      Picrodendraceae     Cardiopteridaceae         Cyclanthaceae 
+                   40                    39                    39 
+             Iteaceae      Lomariopsidaceae          Pylaisiaceae 
+                   39                    39                    39 
+       Sarcolaenaceae            Xyridaceae       Dichapetalaceae 
+                   39                    39                    38 
+            Boryaceae        Leptodontaceae           Platanaceae 
+                   37                    37                    37 
+     Schistochilaceae           Stemonaceae            Stilbaceae 
+                   37                    37                    37 
+      Flagellariaceae        Ptychomniaceae          Velloziaceae 
+                   35                    35                    35 
+   Atherospermataceae              Peraceae            Pelliaceae 
+                   34                    34                    33 
+       Escalloniaceae        Marcgraviaceae            Talinaceae 
+                   32                    32                    32 
+         Altingiaceae          Irvingiaceae         Encalyptaceae 
+                   31                    31                    30 
+        Helwingiaceae       Trichocoleaceae              Bixaceae 
+                   30                    30                    29 
+       Bryoxiphiaceae         Hernandiaceae         Buxbaumiaceae 
+                   29                    29                    28 
+      Conocephalaceae          Eupteleaceae          Daltoniaceae 
+                   28                    28                    27 
+            Lowiaceae        Dasypogonaceae           Dipsacaceae 
+                   27                    26                    26 
+            Limeaceae         Melianthaceae          Philesiaceae 
+                   26                    26                    26 
+          Rapateaceae        Rhizogoniaceae         Salvadoraceae 
+                   26                    26                    26 
+          Humiriaceae          Martyniaceae         Pterobryaceae 
+                   25                    25                    25 
+       Strelitziaceae           Basellaceae       Hypnodendraceae 
+                   25                    24                    24 
+         Hanguanaceae            Radulaceae           Byblidaceae 
+                   23                    23                    22 
+            Myliaceae       Achatocarpaceae          Gelsemiaceae 
+                   22                    21                    21 
+         Oleandraceae        Spiridentaceae        Tetraphidaceae 
+                   21                    21                    21 
+         Bonnetiaceae       Corynocarpaceae       Ecdeiocoleaceae 
+                   20                    20                    20 
+        Targioniaceae           Asteliaceae      Centrolepidaceae 
+                   20                    19                    19 
+      Centroplacaceae          Didiereaceae               Huaceae 
+                   19                    19                    19 
+      Lepidolaenaceae       Lepyrodontaceae      Scheuchzeriaceae 
+                   19                    19                    19 
+          Themidaceae         Catagoniaceae          Hookeriaceae 
+                   19                    18                    18 
+         Philydraceae        Fouquieriaceae         Ixioliriaceae 
+                   18                    17                    17 
+          Rousseaceae         Stangeriaceae            Theliaceae 
+                   17                    17                    17 
+      Balantiopsaceae         Ixonanthaceae         Anarthriaceae 
+                   16                    16                    15 
+          Bruchiaceae            Butomaceae         Caryocaraceae 
+                   15                    15                    15 
+         Cryphaeaceae       Crypteroniaceae         Dipteridaceae 
+                   15                    15                    15 
+     Hydrostachyaceae            Jubulaceae         Limnanthaceae 
+                   15                    15                    15 
+           Timmiaceae          Trigoniaceae        Cinclidotaceae 
+                   15                    15                    14 
+      Haplomitriaceae        Myrothamnaceae       Plagiogyriaceae 
+                   14                    14                    14 
+         Ptilidiaceae         Tetramelaceae          Balanopaceae 
+                   14                    14                    13 
+      Blandfordiaceae      Crossosomataceae           Cyrillaceae 
+                   13                    13                    13 
+        Doryanthaceae         Frankeniaceae          Montiniaceae 
+                   13                    13                    13 
+        Muntingiaceae         Rhipogonaceae           Surianaceae 
+                   13                    13                    13 
+  Blepharostomataceae      Circaeasteraceae        Joinvilleaceae 
+                   12                    12                    12 
+      Lacistemataceae       Lophiocarpaceae          Moerckiaceae 
+                   12                    12                    12 
+            Coulaceae            Mayacaceae       Paracryphiaceae 
+                   11                    11                    11 
+        Pennantiaceae         Peridiscaceae          Pilaisiaceae 
+                   11                    11                    11 
+        Pleuroziaceae    Pylaisiadelphaceae      Tetrameristaceae 
+                   11                    11                    11 
+          Datiscaceae          Eucommiaceae         Eupomatiaceae 
+                   10                    10                    10 
+     Mastigophoraceae         Paulowniaceae          Vivianiaceae 
+                   10                    10                    10 
+      Welwitschiaceae     Austrobaileyaceae         Brunelliaceae 
+                   10                     9                     9 
+           Cleveaceae      Dipentodontaceae       Hymenophytaceae 
+                    9                     9                     9 
+       Misodendraceae        Petrosaviaceae         Posidoniaceae 
+                    9                     9                     9 
+        Scorpidiaceae           Takakiaceae       Torricelliaceae 
+                    9                     9                     9 
+        Valerianaceae            Akaniaceae        Alseuosmiaceae 
+                    9                     8                     8 
+        Euphroniaceae        Griseliniaceae            Kirkiaceae 
+                    8                     8                     8 
+         Monocleaceae          Penthoraceae          Racopilaceae 
+                    8                     8                     8 
+       Schlegeliaceae        Simmondsiaceae          Tapisciaceae 
+                    8                     8                     8 
+           Blasiaceae       Campynemataceae      Dioncophyllaceae 
+                    7                     7                     7 
+        Harpanthaceae              Kewaceae         Lepicoleaceae 
+                    7                     7                     7 
+          Onocleaceae          Roridulaceae    Stegnospermataceae 
+                    7                     7                     7 
+     Stereophyllaceae           Treubiaceae         Amborellaceae 
+                    7                     7                     6 
+      Amphorogynaceae          Antheliaceae      Aphanopetalaceae 
+                    6                     6                     6 
+         Archidiaceae        Argophyllaceae          Arnelliaceae 
+                    6                     6                     6 
+   Berberidopsidaceae           Bombacaceae       Carlemanniaceae 
+                    6                     6                     6 
+        Cyrtopodaceae       Gyrostemonaceae           Lanariaceae 
+                    6                     6                     6 
+        Lunulariaceae           Metaxyaceae           Myriniaceae 
+                    6                     6                     6 
+           Myuriaceae       Notothyladaceae         Oedipodiaceae 
+                    6                     6                     6 
+  Pseudolepicoleaceae          Sladeniaceae          Triuridaceae 
+                    6                     6                     6 
+           Vahliaceae        Xeronemataceae         Allisoniaceae 
+                    6                     6                     5 
+          Aphloiaceae       Drosophyllaceae        Gigaspermaceae 
+                    5                     5                     5 
+        Halophytaceae       Himantandraceae      Lepidobotryaceae 
+                    5                     5                     5 
+      Lophopyxidaceae    Neotrichocoleaceae       Orthodontiaceae 
+                    5                     5                     5 
+     Rhabdodendraceae     Sphaerosepalaceae     Strasburgeriaceae 
+                    5                     5                     5 
+         Tectariaceae      Thomandersiaceae           Thurniaceae 
+                    5                     5                     5 
+       Ticodendraceae         Aextoxicaceae        Asteropeiaceae 
+                    5                     4                     4 
+      Balanophoraceae           Barbeyaceae     Biebersteiniaceae 
+                    4                     4                     4 
+  Chaetophyllopsaceae        Columelliaceae      Ctenolophonaceae 
+                    4                     4                     4 
+         Curtisiaceae         Degeneriaceae           Erpodiaceae 
+                    4                     4                     4 
+     Geissolomataceae            Goupiaceae           Grubbiaceae 
+                    4                     4                     4 
+         Hydroleaceae         Jackiellaceae         Lactoridaceae 
+                    4                     4                     4 
+         Loxomataceae           Neuradaceae      Petalophyllaceae 
+                    4                     4                     4 
+      Petermanniaceae          Phellinaceae     Plocospermataceae 
+                    4                     4                     4 
+     Sphaerocarpaceae      Tetrachondraceae           Tovariaceae 
+                    4                     4                     4 
+         Trimeniaceae     Anacampserotaceae              Bataceae 
+                    4                     3                     3 
+       Brevianthaceae          Calomniaceae        Catoscopiaceae 
+                    3                     3                     3 
+         Dirachmaceae          Disceliaceae         Echinodiaceae 
+                    3                     3                     3 
+        Gomortegaceae         Gyrothyraceae           Makinoaceae 
+                    3                     3                     3 
+          Matoniaceae         Mizutaniaceae         Oncothecaceae 
+                    3                     3                     3 
+   Pentaphragmataceae        Phyllonomaceae         Picramniaceae 
+                    3                     3                     3 
+         Quillajaceae        Rhacocarpaceae            Riellaceae 
+                    3                     3                     3 
+      Rutenbergiaceae         Sarcobataceae      Schistostegaceae 
+                    3                     3                     3 
+     Tetracarpaeaceae            Thesiaceae      Andreaeobryaceae 
+                    3                     3                     2 
+         Aptandraceae          Barbeuiaceae  Blepharidophyllaceae 
+                    2                     2                     2 
+        Cephalotaceae          Corsiniaceae         Emblingiaceae 
+                    2                     2                     2 
+         Ephemeraceae        Flacourtiaceae       Flexitrichaceae 
+                    2                     2                     2 
+      Goebeliellaceae Hymenophyllopsidaceae         Jubulopsaceae 
+                    2                     2                     2 
+      Koeberliniaceae         Laxmanniaceae           Nanodeaceae 
+                    2                     2                     2 
+         Petenaeaceae     Phyllothalliaceae        Sphenocleaceae 
+                    2                     2                     2 
+     Symphyodontaceae        Trachypodaceae   Trichotemnomataceae 
+                    2                     2                     2 
+      Wiesnerellaceae         Eustichiaceae       Exormothecaceae 
+                    2                     1                     1 
+         Leucomiaceae        Metteniusaceae          Mitteniaceae 
+                    1                     1                     1 
+      Monosoleniaceae          Oxymitraceae    Pentadiplandraceae 
+                    1                     1                     1 
+   Phyllodrepaniaceae       Phyllogoniaceae           Physenaceae 
+                    1                     1                     1 
+     Regmatodontaceae      Rhachitheciaceae     Setchellanthaceae 
+                    1                     1                     1 
+       Thamnobryaceae       Vandiemeniaceae         Vetaformaceae 
+                    1                     1                     1 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">sort</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>family_name), <span class="at">decreasing=</span>T), <span class="at">main =</span> <span class="st">"Most barcoded Families"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>family_name, combtab<span class="sc">$</span>multi), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+              --trnL- -matK-- -matK-trnL- #NAME? rbcL--- rbcL---ITS rbcL--trnL-
+  Acanthaceae       2     130          10    626     192          6          25
+  Achariaceae       1      25           0      2     132          0           0
+             
+              rbcL--trnL-ITS rbcL-matK-- rbcL-matK--ITS rbcL-matK-trnL-
+  Acanthaceae              1         285             70              77
+  Achariaceae              0         136              6               1
+             
+              rbcL-matK-trnL-ITS
+  Acanthaceae                 16
+  Achariaceae                  1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the most barcoded plant species in the world</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>species_name), <span class="at">decreasing=</span>T)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># by specimens</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                                          Bryum argenteum 
+                        7495                          551 
+         Scorpidium cossonii Acanthorrhynchium papillatum 
+                         354                          195 
+              Aneura pinguis 
+                         195 </code></pre>
+</div>
+</div>
+</section>
+<section id="plot-family-abundances-in-itis-and-compare-with-barcodes-this-section-gives-us-panels-a-and-b-of-the-figure" class="level4">
+<h4 class="anchored" data-anchor-id="plot-family-abundances-in-itis-and-compare-with-barcodes-this-section-gives-us-panels-a-and-b-of-the-figure">Plot family abundances in ITIS and compare with barcodes: this section gives us panels A and B of the figure</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>infam <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/allFamNames.csv"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ITISfamcount <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">table</span>(infam<span class="sc">$</span>family), <span class="at">decreasing=</span>T)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a useful matrix for summarizing the BOLD counts with respect to ITIS matches</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>famcountmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">length</span>(ITISfamcount), <span class="at">ncol =</span> <span class="dv">6</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(famcountmat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rank"</span>, <span class="st">"ITISfamname"</span>, <span class="st">"ITISfamcount"</span>, <span class="st">"BOLDspecimencount"</span>, <span class="st">"BOLDspeccount"</span>, <span class="st">"trnLcount"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>famcountmat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(famcountmat)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>famcountmat[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(ITISfamcount))</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>famcountmat[,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">names</span>(ITISfamcount)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>famcountmat[,<span class="dv">3</span>] <span class="ot">&lt;-</span> ITISfamcount</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of specimens by family </span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>combtabfamilycount <span class="ot">&lt;-</span> <span class="fu">table</span>(combtab<span class="sc">$</span>family_name)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>famcountmat[,<span class="dv">4</span>] <span class="ot">&lt;-</span> combtabfamilycount[<span class="fu">match</span>(famcountmat[,<span class="dv">2</span>], <span class="fu">names</span>(combtabfamilycount))]</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of species by family</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>combtabspeciescount <span class="ot">&lt;-</span> <span class="fu">tapply</span>(combtab<span class="sc">$</span>species_name, combtab<span class="sc">$</span>family_name, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>famcountmat[,<span class="dv">5</span>] <span class="ot">&lt;-</span> combtabspeciescount[<span class="fu">match</span>(famcountmat[,<span class="dv">2</span>], <span class="fu">names</span>(combtabspeciescount))]</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of trnL by family</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>combtabtrnLcount <span class="ot">&lt;-</span> <span class="fu">tapply</span>(combtab<span class="sc">$</span>trnL, combtab<span class="sc">$</span>family_name, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">which</span>(x <span class="sc">==</span> <span class="st">"trnL"</span>)))</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>famcountmat[,<span class="dv">6</span>] <span class="ot">&lt;-</span> combtabtrnLcount[<span class="fu">match</span>(famcountmat[,<span class="dv">2</span>], <span class="fu">names</span>(combtabtrnLcount))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="summarize-the-data" class="level4">
+<h4 class="anchored" data-anchor-id="summarize-the-data">Summarize the data:</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of taxa</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(famcountmat)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(famcountmat<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(famcountmat<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(famcountmat<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(famcountmat<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names in ITIS with barcodes</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmat<span class="sc">$</span>BOLDspecimencount) <span class="sc">==</span> F))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmat<span class="sc">$</span>BOLDspecimencount) <span class="sc">==</span> F))<span class="sc">/</span><span class="fu">nrow</span>(famcountmat)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names ITIS without barcodes</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmat<span class="sc">$</span>BOLDspecimencount)))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmat<span class="sc">$</span>BOLDspecimencount)))<span class="sc">/</span><span class="fu">nrow</span>(famcountmat)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Characterize the no-barcode families (i.e., "nbc" families)</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>nbcfams <span class="ot">&lt;-</span> famcountmat[<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmat<span class="sc">$</span>BOLDspecimencount)),]</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>nbcfams <span class="ot">&lt;-</span> nbcfams[<span class="fu">order</span>(nbcfams<span class="sc">$</span>ITISfamcount),] <span class="co"># reorder by ITIS fam size</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>nbcfams</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(nbcfams)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(nbcfams[,<span class="dv">3</span>])</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfams)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(nbcfams<span class="sc">$</span>ITISfamname) </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(nbcfams<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nbcfams<span class="sc">$</span>ITISfamcount)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(nbcfams<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>nbcfams[<span class="fu">order</span>(nbcfams[,<span class="dv">3</span>]),]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>nbcfams[<span class="fu">which</span>(nbcfams[,<span class="dv">3</span>] <span class="sc">==</span> <span class="dv">1</span>),]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfams[<span class="fu">which</span>(nbcfams[,<span class="dv">3</span>] <span class="sc">==</span> <span class="dv">1</span>),])</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfams[<span class="fu">which</span>(nbcfams[,<span class="dv">3</span>] <span class="sc">==</span> <span class="dv">1</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfams)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>nbcfams[<span class="fu">which</span>(nbcfams[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfams[<span class="fu">which</span>(nbcfams[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfams[<span class="fu">which</span>(nbcfams[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfams)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>nbcfams[<span class="fu">which</span>(nbcfams<span class="sc">$</span>ITISfamname <span class="sc">==</span> <span class="st">"Heliophytaceae"</span>),]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>nbcfams[<span class="fu">which</span>(nbcfams<span class="sc">$</span>ITISfamname <span class="sc">==</span> <span class="st">"Calliergonaceae"</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize families in BOLD not in ITIS</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>boldfamnames <span class="ot">&lt;-</span> <span class="fu">levels</span>(combtab<span class="sc">$</span>family_name)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(boldfamnames) <span class="co">#651</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Families in BOLD not matched by ITIS</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>nomatchnames <span class="ot">&lt;-</span> boldfamnames[<span class="fu">which</span>(boldfamnames <span class="sc">%in%</span> famcountmat<span class="sc">$</span>ITISfamname <span class="sc">==</span> F)]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>nomatchnames <span class="ot">&lt;-</span> nomatchnames[<span class="fu">which</span>(nomatchnames <span class="sc">!=</span> <span class="st">""</span>)]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnames) <span class="co">#42</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnames)<span class="sc">/</span><span class="fu">length</span>(boldfamnames) <span class="co">#0.06451613</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NaN</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of specimens in families in BOLD not matched by ITIS</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>family_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(combtab<span class="sc">$</span>family_name)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>integer(0)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))<span class="sc">/</span><span class="fu">nrow</span>(combtab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of specimens not identified to family</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">==</span> <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="si-appendix-figure-2a-d-plot-panels-a-b" class="level2">
+<h2 class="anchored" data-anchor-id="si-appendix-figure-2a-d-plot-panels-a-b">SI Appendix Figure 2A-D: Plot panels A-B</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot family count by specimens: Panel A</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plotcorrs <span class="ot">&lt;-</span> famcountmat[<span class="fu">complete.cases</span>(famcountmat[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]),]    </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plot</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>BOLDspecimencount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount)))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>BOLDspecimencount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>                <span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>BOLDspecimencount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(as.numeric(plotcorrs$BOLDspecimencount)) ~ log(as.numeric(plotcorrs$ITISfamcount)))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.1891 -0.8690  0.1937  0.8946  4.4466 
+
+Coefficients:
+                                        Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                              2.36350    0.07568   31.23   &lt;2e-16
+log(as.numeric(plotcorrs$ITISfamcount))  0.82924    0.02606   31.82   &lt;2e-16
+                                           
+(Intercept)                             ***
+log(as.numeric(plotcorrs$ITISfamcount)) ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.301 on 607 degrees of freedom
+Multiple R-squared:  0.6251,    Adjusted R-squared:  0.6245 
+F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecimen_ITISfamily <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(BOLDspecimencount))) <span class="sc">+</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Log of BOLD specimen count"</span>) <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>        plotcorrs_ggplot_BOLDspecimen_ITISfamily</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggsave</span>(<span class="st">"plotcorrs_ggplot_BOLDspecimen_ITISfamily.pdf"</span>, plotcorrs_ggplot_BOLDspecimen_ITISfamily, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">units =</span> <span class="st">"cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary stats for panel A</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">sumspecimens =</span> <span class="fu">sum</span>(BOLDspecimencount))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sumspecimens
+1       277770</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot family count by species: PANEL B</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>        plotcorrs_ggplot_BOLDspecies_ITISfamily <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(BOLDspeccount))) <span class="sc">+</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Log of BOLD species count"</span>)<span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        plotcorrs_ggplot_BOLDspecies_ITISfamily </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggsave</span>(<span class="st">"plotcorrs_ggplot_BOLDspecies_ITISfamily.pdf"</span>, plotcorrs_ggplot_BOLDspecies_ITISfamily, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">units =</span> <span class="st">"cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary stats for panel B</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sumspecies =</span> <span class="fu">sum</span>(BOLDspeccount))</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sumspecies
+1     101674</code></pre>
+</div>
+</div>
+</section>
+<section id="si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-c-d." class="level2">
+<h2 class="anchored" data-anchor-id="si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-c-d.">SI Appendix Figure 2A-D: Read in files and summarize for panels C-D.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>emblp6 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/glob_ref_lib_edit_P6.csv"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(emblp6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 86192</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the same kind of matrix as above</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>famcountmatp6 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">length</span>(ITISfamcount), <span class="at">ncol =</span> <span class="dv">5</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(famcountmatp6) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rank"</span>, <span class="st">"ITISfamname"</span>, <span class="st">"ITISfamcount"</span>, <span class="st">"p6seqcount"</span>, <span class="st">"p6speccount"</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>famcountmatp6 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(famcountmatp6)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(ITISfamcount))</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">names</span>(ITISfamcount)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">3</span>] <span class="ot">&lt;-</span> ITISfamcount</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of specimens by family</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>emblp6count <span class="ot">&lt;-</span> <span class="fu">table</span>(emblp6<span class="sc">$</span>family_name)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">4</span>] <span class="ot">&lt;-</span> emblp6count[<span class="fu">match</span>(famcountmatp6[,<span class="dv">2</span>], <span class="fu">names</span>(emblp6count))]</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(emblp6count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 633</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(emblp6count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 86192</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of species by family</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>emblp6speciescount <span class="ot">&lt;-</span> <span class="fu">tapply</span>(emblp6<span class="sc">$</span>species_name, emblp6<span class="sc">$</span>family_name, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">5</span>] <span class="ot">&lt;-</span> emblp6speciescount[<span class="fu">match</span>(famcountmatp6[,<span class="dv">2</span>], <span class="fu">names</span>(emblp6speciescount))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="summarize-the-data-1" class="level4">
+<h4 class="anchored" data-anchor-id="summarize-the-data-1">Summarize the data:</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of taxa</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(famcountmatp6)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names in ITIS with barcodes</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount) <span class="sc">==</span> F))</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount) <span class="sc">==</span> F))<span class="sc">/</span><span class="fu">nrow</span>(famcountmatp6)</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names ITIS without barcodes</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)))</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)))<span class="sc">/</span><span class="fu">nrow</span>(famcountmatp6)</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Characterize the no-barcode families</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>nbcfamsp6 <span class="ot">&lt;-</span> famcountmatp6[<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)),]</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>nbcfamsp6 <span class="ot">&lt;-</span> nbcfamsp6[<span class="fu">order</span>(nbcfamsp6<span class="sc">$</span>ITISfamcount),] <span class="co"># reorder by ITIS fam size</span></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>nbcfamsp6</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(nbcfamsp6)</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(nbcfamsp6[,<span class="dv">3</span>])</span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6)</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname) </span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">order</span>(nbcfamsp6[,<span class="dv">3</span>]),]</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),]</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),])</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfamsp6)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),]</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfamsp6)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname<span class="sc">==</span><span class="st">"Heliophytaceae"</span>),]</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname<span class="sc">==</span><span class="st">"Calliergonaceae"</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize families in embl not in ITIS</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>p6famnames <span class="ot">&lt;-</span> <span class="fu">levels</span>(emblp6<span class="sc">$</span>family_name)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(p6famnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Families in embl not matched by ITIS</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>nomatchnamesp6 <span class="ot">&lt;-</span> p6famnames[<span class="fu">which</span>(p6famnames <span class="sc">%in%</span> famcountmatp6<span class="sc">$</span>ITISfamname <span class="sc">==</span> F)]</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>nomatchnamesp6 <span class="ot">&lt;-</span> nomatchnamesp6[<span class="fu">which</span>(nomatchnamesp6 <span class="sc">!=</span> <span class="st">""</span>)]</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnamesp6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnamesp6)<span class="sc">/</span><span class="fu">length</span>(p6famnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NaN</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of specimens in families in embl not matched by ITIS</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>emblp6<span class="sc">$</span>family_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(emblp6<span class="sc">$</span>family_name)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>integer(0)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))<span class="sc">/</span><span class="fu">nrow</span>(combtab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of specimens not identified to family</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(emblp6<span class="sc">$</span>family_name <span class="sc">==</span> <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="si-appendix-figure-2a-d-plot-panels-c-d" class="level2">
+<h2 class="anchored" data-anchor-id="si-appendix-figure-2a-d-plot-panels-c-d">SI Appendix Figure 2A-D: Plot panels C-D</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot correlations - family count by specimens: Panel C</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>plotcorrs <span class="ot">&lt;-</span> famcountmatp6[<span class="fu">complete.cases</span>(famcountmatp6[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]),]</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>p6seqcount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount)))</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>p6seqcount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>p6seqcount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(as.numeric(plotcorrs$p6seqcount)) ~ log(as.numeric(plotcorrs$ITISfamcount)))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.3604 -1.0394  0.0019  1.0250  4.4207 
+
+Coefficients:
+                                        Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                              1.09673    0.08965   12.23   &lt;2e-16
+log(as.numeric(plotcorrs$ITISfamcount))  0.77044    0.03021   25.51   &lt;2e-16
+                                           
+(Intercept)                             ***
+log(as.numeric(plotcorrs$ITISfamcount)) ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.471 on 582 degrees of freedom
+Multiple R-squared:  0.5278,    Adjusted R-squared:  0.527 
+F-statistic: 650.5 on 1 and 582 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequences <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(p6seqcount))) <span class="sc">+</span> </span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Log of trnL-P6 sequence count"</span>) <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>        plotcorrs_ggplot_family_sequences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"plotcorrs_ggplot_family_sequences.pdf"</span>, plotcorrs_ggplot_family_sequences, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">units =</span> <span class="st">"cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize for panel C</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">sumP6sequences =</span> <span class="fu">sum</span>(p6seqcount))</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sumP6sequences
+1          84837</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Family count by species: Panel D</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>plotcorrs <span class="ot">&lt;-</span> famcountmatp6[<span class="fu">complete.cases</span>(famcountmatp6[,<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>]),]</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>p6speccount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount)))</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>p6speccount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>p6speccount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(as.numeric(plotcorrs$p6speccount)) ~ log(as.numeric(plotcorrs$ITISfamcount)))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.7416 -0.6094  0.0826  0.8784  4.8501 
+
+Coefficients:
+                                        Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                              0.60944    0.07993   7.625    1e-13
+log(as.numeric(plotcorrs$ITISfamcount))  0.74484    0.02693  27.657   &lt;2e-16
+                                           
+(Intercept)                             ***
+log(as.numeric(plotcorrs$ITISfamcount)) ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.311 on 582 degrees of freedom
+Multiple R-squared:  0.5679,    Adjusted R-squared:  0.5672 
+F-statistic: 764.9 on 1 and 582 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequencespecies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(p6speccount))) <span class="sc">+</span> </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Log of trnL-P6 species count"</span>)<span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>)  <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>        plotcorrs_ggplot_family_sequencespecies         </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="taxonomic_coverage_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"plotcorrs_ggplot_family_sequencespecies.pdf"</span>, plotcorrs_ggplot_family_sequencespecies, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">units =</span> <span class="st">"cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize for panel D</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sump6speccount =</span> <span class="fu">sum</span>(p6speccount))</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>                plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sump6speccount
+1          45659</code></pre>
+</div>
+</div>
 
 
 </section>

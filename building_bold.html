@@ -205,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./taxonomic_coverage.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Taxonomic Coverage</span></a>
+  <a href="./taxonomic_coverage.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Correlations between plant species and DNA barcode availability</span></a>
   </div>
 </li>
       </ul>
@@ -300,17 +300,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-1-obtain-a-list-of-plant-phyla-in-bold-from-which-to-pull-records" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-obtain-a-list-of-plant-phyla-in-bold-from-which-to-pull-records">Step 1: Obtain a list of plant phyla in BOLD from which to pull records</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#determine name of highest level to download from</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># x&lt;-downstream("Magnoliophyta", db="bold", downto="class")</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># nms&lt;-sort(x$Magnoliophyta$name)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#drop nms that are evidently in ITIS but not in BOLD, causing the loop to hang up when zooming in from Embryophyta</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># nms&lt;-nms[which(nms!="Leiosporocerotopsida")]</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># nms&lt;-nms[which(nms!="Tetraphidopsida")]</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># name BOLD plant phyla</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>boldphyla <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Anthocerotophyta"</span>, <span class="st">"Bryophyta"</span>, <span class="st">"Cycadophyta"</span>, <span class="st">"Ginkgophyta"</span>,  <span class="st">"Magnoliophyta"</span>, <span class="st">"Marchantiophyta"</span>, <span class="st">"Pinophyta"</span>, <span class="st">"Pteridophyta"</span>, <span class="st">"Tracheophyta"</span>) <span class="co">#"Gnetophyta", "Psilophyta", "Lycopodiophyta" # these were previously listed a families but are now nested under otehr families</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(boldphyla)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Name BOLD plant phyla</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>boldphyla <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Anthocerotophyta"</span>, <span class="st">"Bryophyta"</span>, <span class="st">"Cycadophyta"</span>, <span class="st">"Ginkgophyta"</span>,  <span class="st">"Magnoliophyta"</span>, <span class="st">"Marchantiophyta"</span>, <span class="st">"Pinophyta"</span>, <span class="st">"Pteridophyta"</span>, <span class="st">"Tracheophyta"</span>) <span class="co">#"Gnetophyta", "Psilophyta", "Lycopodiophyta" # these were previously listed a families but are now nested under otehr families</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(boldphyla)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-2-retrieve-all-families-descending-from-a-vector-of-phyla." class="level2">
