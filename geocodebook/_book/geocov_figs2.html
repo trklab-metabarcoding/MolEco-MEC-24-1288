@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./geographic_coverage.html" rel="next">
+<link href="./fetch_itis.html" rel="next">
 <link href="./geocov_figs1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -153,11 +187,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="./geocov_figs2.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Coverage by country</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./geographic_coverage.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Geographic Coverage</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -207,8 +236,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#si-figure-s1-map-of-country-counts" id="toc-si-figure-s1-map-of-country-counts" class="nav-link active" data-scroll-target="#si-figure-s1-map-of-country-counts">SI Figure S1: Map of country counts</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -232,8 +267,157 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>This notebook analyzes the counts of barcodes by country and plots the results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(taxize, maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, maps, mapproj, sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="si-figure-s1-map-of-country-counts" class="level1">
+<h1>SI Figure S1: Map of country counts</h1>
+<p>Start with some data cleaning.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>combtab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/BoldPhyla_to_Families_combtab_v4.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combtab, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X.1 X   processid               institution_storing phylum_taxID
+1   1 1   API120-12 Sri Ramaswamy Memorial University           12
+2   2 2 CANGI002-17      Museu Paraense Emilio Goeldi           12
+    phylum_name class_taxID    class_name order_taxID order_name family_taxID
+1 Magnoliophyta          41 Magnoliopsida      121216   Lamiales       148533
+2 Magnoliophyta          41 Magnoliopsida      121216   Lamiales       148533
+  family_name subfamily_taxID subfamily_name genus_taxID  genus_name
+1 Acanthaceae              NA                     415894 Peristrophe
+2 Acanthaceae          264310   Acanthoideae      148534     Ruellia
+  species_taxID             species_name subspecies_taxID subspecies_name
+1        494465 Peristrophe bicalyculata               NA                
+2        632816          Ruellia inflata               NA                
+  collectiondate_start collectiondate_end lat lon coord_source coord_accuracy
+1                   NA                 NA  NA  NA                          NA
+2                   NA                 NA  NA  NA                          NA
+  elev country province_state region sector exactsite rbcL matK trnL ITS2
+1   NA                                                rbcL               
+2   NA  Brazil           Para                         rbcL matK       ITS
+           multi gb_rbcL gb_matK gb_trnL gb_ITS
+1        rbcL---                               
+2 rbcL-matK--ITS                               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#round coordiantes to nearest 1 degree</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>lat <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(combtab<span class="sc">$</span>lat))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>lon <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(combtab<span class="sc">$</span>lon))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot wrapper of map()</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>world_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>) </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(world_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#build a dataframe / matrix of country counts to plot</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>myCodes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">table</span>(combtab<span class="sc">$</span>country))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(myCodes)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"n"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert country names to "Getty Thesaurus" names for BOLD</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">countrycode</span>(myCodes<span class="sc">$</span>country, <span class="st">"country.name"</span>, <span class="st">"country.name"</span>) </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"United States"</span>)]<span class="ot">&lt;-</span><span class="st">"USA"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"United Kingdom"</span>)]<span class="ot">&lt;-</span><span class="st">"UK"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Congo - Kinshasa"</span>)]<span class="ot">&lt;-</span><span class="st">"Democratic Republic of the Congo"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Congo - Brazzaville"</span>)]<span class="ot">&lt;-</span><span class="st">"Republic of Congo"</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"British Virgin Islands"</span>)]<span class="ot">&lt;-</span><span class="st">"Virgin Islands"</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Bosnia &amp; Herzegovina"</span>)]<span class="ot">&lt;-</span><span class="st">"Bosnia and Herzegovina"</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"São Tomé &amp; Príncipe"</span>)]<span class="ot">&lt;-</span><span class="st">"Sao Tome and Principe"</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Trinidad &amp; Tobago"</span>)]<span class="ot">&lt;-</span><span class="st">"Trinidad"</span> <span class="co">#Tobago is a separate entity in maps</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"North Macedonia"</span>)]<span class="ot">&lt;-</span><span class="st">"Macedonia"</span> </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Myanmar (Burma)"</span>)]<span class="ot">&lt;-</span><span class="st">"Myanmar"</span> </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Côte d’Ivoire"</span>)]<span class="ot">&lt;-</span><span class="st">"Ivory Coast"</span> </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Czechia"</span>)]<span class="ot">&lt;-</span><span class="st">"Czech Republic"</span> </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Réunion"</span>)]<span class="ot">&lt;-</span><span class="st">"Reunion"</span> </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"St. Helena"</span>)]<span class="ot">&lt;-</span><span class="st">"Saint Helena"</span> </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>myCodes<span class="sc">$</span>country[<span class="fu">which</span>(myCodes<span class="sc">$</span>country<span class="sc">==</span><span class="st">"Eswatini"</span>)]<span class="ot">&lt;-</span><span class="st">"Swaziland"</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Map country-level barcode intensity.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#map for country-level intensity</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>myCodes <span class="ot">&lt;-</span> myCodes[<span class="fu">is.na</span>(myCodes<span class="sc">$</span>country)<span class="sc">==</span>F,]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ggpoliticalboundaries <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes) <span class="sc">+</span> <span class="fu">geom_map</span>(<span class="at">dat =</span> world_map, <span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> region), <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"#7f7f7f"</span>, <span class="at">size =</span> <span class="fl">0.25</span>)  <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> country, <span class="at">fill =</span> n), <span class="at">size =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fff7bc"</span>, <span class="at">high =</span> <span class="st">"#cc4c02"</span>, <span class="at">name =</span> <span class="st">"Worldwide specimens"</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">180</span>, <span class="dv">180</span>, <span class="at">by =</span> <span class="dv">60</span>)) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">90</span>, <span class="dv">90</span>, <span class="at">by =</span> <span class="dv">45</span>)) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> world_map<span class="sc">$</span>long, <span class="at">y =</span> world_map<span class="sc">$</span>lat) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">23.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="sc">-</span><span class="fl">23.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ggpoliticalboundaries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="geocov_figs2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("ggpoliticalboundaries_20240626_1.pdf", ggpoliticalboundaries, width = 13, height = 8.6, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Distribution of country bias - barplot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#barplot with country counts</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>countrycounts_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(country, <span class="sc">-</span>n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.9</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>countrycounts_bar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="geocov_figs2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("countrycounts_20240626.pdf", countrycounts, width = 13, height = 4, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Distribution of country bias - lineplot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#line plot with country counts</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>countrycounts_line <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(myCodes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(country, <span class="sc">-</span>n), <span class="at">y =</span> n, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span>  <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(), <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>countrycounts_line</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="geocov_figs2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("countrycounts_20240626.pdf", countrycounts, width = 8, height = 4, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Print dataframe with countries having less than 10 barcodes. We only print the first 10, but there are 38 countries total.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summarize number of countries with &lt;10 </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>myCodes_less_than_10 <span class="ot">&lt;-</span> <span class="fu">subset</span>(myCodes, n <span class="sc">&lt;</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(myCodes_less_than_10, <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                  country n
+1                              Cape Verde 9
+2                                 Eritrea 9
+3                            Sierra Leone 9
+4                                Trinidad 9
+5                                    Guam 8
+6                                 Mayotte 8
+7  South Georgia &amp; South Sandwich Islands 8
+8                          Virgin Islands 7
+9                        Falkland Islands 7
+10                            North Korea 7</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -660,8 +844,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./geographic_coverage.html" class="pagination-link" aria-label="Geographic Coverage">
-        <span class="nav-page-text"><span class="chapter-title">Geographic Coverage</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./fetch_itis.html" class="pagination-link" aria-label="Fetching taxonomic data from ITIS">
+        <span class="nav-page-text"><span class="chapter-title">Fetching taxonomic data from ITIS</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

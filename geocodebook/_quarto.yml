@@ -17,7 +17,6 @@ book:
       chapters:
       - geocov_figs1.qmd
       - geocov_figs2.qmd
-      - geographic_coverage.qmd
     - part: "Taxonomic coverage"
       chapters:
       - fetch_itis.qmd
