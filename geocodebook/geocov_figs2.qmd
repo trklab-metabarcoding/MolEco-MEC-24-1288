@@ -12,9 +12,10 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 
 BiocManager::install("sangerseqR")
 remotes::install_github("ropensci/bold")
+remotes::install_github("ropensci/taxize")
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(taxize, maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf)
+pacman::p_load(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf)
 ```
 
 # SI Figure S1: Map of country counts

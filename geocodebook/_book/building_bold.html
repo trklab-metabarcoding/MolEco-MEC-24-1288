@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -207,7 +241,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#building-the-bold-dataset" id="toc-building-the-bold-dataset" class="nav-link active" data-scroll-target="#building-the-bold-dataset">Building the BOLD dataset</a></li>
+  <li><a href="#set-up-directory" id="toc-set-up-directory" class="nav-link active" data-scroll-target="#set-up-directory">Set up directory</a></li>
+  <li><a href="#step-1-obtain-a-list-of-plant-phyla-in-bold-from-which-to-pull-records" id="toc-step-1-obtain-a-list-of-plant-phyla-in-bold-from-which-to-pull-records" class="nav-link" data-scroll-target="#step-1-obtain-a-list-of-plant-phyla-in-bold-from-which-to-pull-records">Step 1: Obtain a list of plant phyla in BOLD from which to pull records</a></li>
+  <li><a href="#step-2-retrieve-all-families-descending-from-a-vector-of-phyla." id="toc-step-2-retrieve-all-families-descending-from-a-vector-of-phyla." class="nav-link" data-scroll-target="#step-2-retrieve-all-families-descending-from-a-vector-of-phyla.">Step 2: retrieve all families descending from a vector of phyla.</a></li>
+  <li><a href="#step-3.-run-a-loop-that-outputs-in-each-iteration-a-separate-.csv-file-for-each-family-included-in-the-boldfamilies-vector.-we-first-split-the-boldfamilies-object-into-three-lists-to-stay-within-the-request-limits-for-the-bold-api." id="toc-step-3.-run-a-loop-that-outputs-in-each-iteration-a-separate-.csv-file-for-each-family-included-in-the-boldfamilies-vector.-we-first-split-the-boldfamilies-object-into-three-lists-to-stay-within-the-request-limits-for-the-bold-api." class="nav-link" data-scroll-target="#step-3.-run-a-loop-that-outputs-in-each-iteration-a-separate-.csv-file-for-each-family-included-in-the-boldfamilies-vector.-we-first-split-the-boldfamilies-object-into-three-lists-to-stay-within-the-request-limits-for-the-bold-api.">Step 3. Run a loop that outputs in each iteration a separate .csv file for each family included in the “boldfamilies” vector. We first split the boldfamilies object into three lists to stay within the request limits for the BOLD API.</a></li>
+  <li><a href="#step-4-write-bold-search-term-lists-to-keep-track-of-what-was-included-in-this-batch-effort." id="toc-step-4-write-bold-search-term-lists-to-keep-track-of-what-was-included-in-this-batch-effort." class="nav-link" data-scroll-target="#step-4-write-bold-search-term-lists-to-keep-track-of-what-was-included-in-this-batch-effort.">Step 4: Write BOLD search term lists to keep track of what was included in this batch effort.</a></li>
+  <li><a href="#step-5-read-in-the-files-that-were-output-to-make-the-composite-combtab-dataset-across-all-families." id="toc-step-5-read-in-the-files-that-were-output-to-make-the-composite-combtab-dataset-across-all-families." class="nav-link" data-scroll-target="#step-5-read-in-the-files-that-were-output-to-make-the-composite-combtab-dataset-across-all-families.">Step 5: Read in the files that were output to make the composite “combtab” dataset across all families.</a></li>
+  <li><a href="#step-6-obtain-list-of-families-that-downloaded-with-zero-entries." id="toc-step-6-obtain-list-of-families-that-downloaded-with-zero-entries." class="nav-link" data-scroll-target="#step-6-obtain-list-of-families-that-downloaded-with-zero-entries.">Step 6: Obtain list of families that downloaded with zero entries.</a></li>
+  <li><a href="#step-7-load-and-merge-out-files-of-interest-dereplicate-and-combine-them-in-ways-that-list-the-markers" id="toc-step-7-load-and-merge-out-files-of-interest-dereplicate-and-combine-them-in-ways-that-list-the-markers" class="nav-link" data-scroll-target="#step-7-load-and-merge-out-files-of-interest-dereplicate-and-combine-them-in-ways-that-list-the-markers">Step 7: load and merge “out” files of interest, dereplicate, and combine them in ways that list the markers</a></li>
+  <li><a href="#step-8.-annotate-combtab-to-include-barcodes-associated-with-each-specimen---rbcl-matk-trnl-its." id="toc-step-8.-annotate-combtab-to-include-barcodes-associated-with-each-specimen---rbcl-matk-trnl-its." class="nav-link" data-scroll-target="#step-8.-annotate-combtab-to-include-barcodes-associated-with-each-specimen---rbcl-matk-trnl-its.">Step 8. Annotate combtab to include barcodes associated with each specimen - rbcL, matK, trnL, ITS.</a></li>
+  <li><a href="#step-9.-save-genbank-information-and-combine-markers-list-to-combtab-object" id="toc-step-9.-save-genbank-information-and-combine-markers-list-to-combtab-object" class="nav-link" data-scroll-target="#step-9.-save-genbank-information-and-combine-markers-list-to-combtab-object">Step 9. Save GENBANK information and combine markers list to combtab object</a></li>
+  <li><a href="#step-10.-filter-columns-that-make-the-file-unnecessarily-large-and-write-combtab-object" id="toc-step-10.-filter-columns-that-make-the-file-unnecessarily-large-and-write-combtab-object" class="nav-link" data-scroll-target="#step-10.-filter-columns-that-make-the-file-unnecessarily-large-and-write-combtab-object">Step 10. Filter columns that make the file unnecessarily large and write combtab object</a></li>
   </ul>
 </nav>
     </div>
@@ -233,9 +277,208 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="building-the-bold-dataset" class="level1 unnumbered">
-<h1 class="unnumbered">Building the BOLD dataset</h1>
-<p>Add rest of code notebook here and update text</p>
+<p>This notebook queries the BOLD API to fetch all the plant specimen data, including metadata and sequences. We clean as we go to correct for errors in the data on BOLD and adjust for some data being held in private projects on BOLD.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/taxize"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(maps, ggplot2, dplyr, countrycode, data.table, raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="set-up-directory" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-directory">Set up directory</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="fu">file.path</span>(<span class="st">"./family_csvs"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setDTthreads</span>(<span class="at">threads =</span> <span class="dv">6</span>) <span class="co"># if you are working on cluster, this will allow data.table to multithread</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-1-obtain-a-list-of-plant-phyla-in-bold-from-which-to-pull-records" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-obtain-a-list-of-plant-phyla-in-bold-from-which-to-pull-records">Step 1: Obtain a list of plant phyla in BOLD from which to pull records</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#determine name of highest level to download from</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># x&lt;-downstream("Magnoliophyta", db="bold", downto="class")</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># nms&lt;-sort(x$Magnoliophyta$name)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#drop nms that are evidently in ITIS but not in BOLD, causing the loop to hang up when zooming in from Embryophyta</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># nms&lt;-nms[which(nms!="Leiosporocerotopsida")]</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># nms&lt;-nms[which(nms!="Tetraphidopsida")]</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># name BOLD plant phyla</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>boldphyla <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Anthocerotophyta"</span>, <span class="st">"Bryophyta"</span>, <span class="st">"Cycadophyta"</span>, <span class="st">"Ginkgophyta"</span>,  <span class="st">"Magnoliophyta"</span>, <span class="st">"Marchantiophyta"</span>, <span class="st">"Pinophyta"</span>, <span class="st">"Pteridophyta"</span>, <span class="st">"Tracheophyta"</span>) <span class="co">#"Gnetophyta", "Psilophyta", "Lycopodiophyta" # these were previously listed a families but are now nested under otehr families</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(boldphyla)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-2-retrieve-all-families-descending-from-a-vector-of-phyla." class="level2">
+<h2 class="anchored" data-anchor-id="step-2-retrieve-all-families-descending-from-a-vector-of-phyla.">Step 2: retrieve all families descending from a vector of phyla.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>out0 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(boldphyla))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(boldphyla)){</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    tempx<span class="ot">&lt;-</span><span class="fu">downstream</span>(boldphyla[i], <span class="at">db =</span> <span class="st">"bold"</span>, <span class="at">downto =</span> <span class="st">"family"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    out0[[i]] <span class="ot">&lt;-</span> tempx[[<span class="dv">1</span>]]<span class="sc">$</span>name</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>boldfamilies <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unlist</span>(out0))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove classes that return errors (private entries exist in BOLD so they can be found "downstream" of their respective phyla, but don't permit downloads of any barcode data and need to be excluded before the next phase</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>boldfamilies <span class="ot">&lt;-</span> boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Chonecoleaceae"</span>)]   <span class="co"># in BOLD but nothing public</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>boldfamilies <span class="ot">&lt;-</span> boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Cytinaceae"</span>)]   <span class="co"># in BOLD but nothing public </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>boldfamilies <span class="ot">&lt;-</span> boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Eropodiaceae"</span>)] <span class="co"># in BOLD but nothing public</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>boldfamilies <span class="ot">&lt;-</span> boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Hydnoraceae"</span>)]  <span class="co"># in BOLD but nothing public</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>boldfamilies<span class="ot">&lt;-</span>boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Labiatae"</span>)]   <span class="co"># in BOLD but nothing public</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>boldfamilies<span class="ot">&lt;-</span>boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Leucobryaceae"</span>)]  <span class="co"># in BOLD but nothing public</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>boldfamilies<span class="ot">&lt;-</span>boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Scrophularaceae"</span>)]    <span class="co"># misspelling in BOLD but nothing public</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>boldfamilies<span class="ot">&lt;-</span>boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Sterculiaceae"</span>)]  <span class="co"># in BOLD but nothing public</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>boldfamilies<span class="ot">&lt;-</span>boldfamilies[<span class="fu">which</span>(boldfamilies <span class="sc">!=</span> <span class="st">"Kahakuloaceae"</span>)]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Length of boldfamilies plus those that have no public data (hashed out above) is how many land plant families BOLD recognizes</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>nopublicrecords <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Chonecoleaceae"</span>, <span class="st">"Cytinaceae"</span>, <span class="st">"Eropodiaceae"</span>, <span class="st">"Hydnoraceae"</span>, <span class="st">"Labiatae"</span>, <span class="st">"Leucobryaceae"</span>, <span class="st">"Scrophularaceae"</span>, <span class="st">"Sterculiaceae"</span>, <span class="st">"Kahakuloaceae"</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># This is where we can download the barcode data, for all families, in batches, knowing that there are public records</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>out1 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(boldfamilies))</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>outnames <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(boldfamilies), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>outnames[,<span class="dv">1</span>] <span class="ot">&lt;-</span> boldfamilies</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>markernames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"trnL-F"</span>, <span class="st">"rbcL"</span>, <span class="st">"matK"</span>, <span class="st">"ITS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-3.-run-a-loop-that-outputs-in-each-iteration-a-separate-.csv-file-for-each-family-included-in-the-boldfamilies-vector.-we-first-split-the-boldfamilies-object-into-three-lists-to-stay-within-the-request-limits-for-the-bold-api." class="level2">
+<h2 class="anchored" data-anchor-id="step-3.-run-a-loop-that-outputs-in-each-iteration-a-separate-.csv-file-for-each-family-included-in-the-boldfamilies-vector.-we-first-split-the-boldfamilies-object-into-three-lists-to-stay-within-the-request-limits-for-the-bold-api.">Step 3. Run a loop that outputs in each iteration a separate .csv file for each family included in the “boldfamilies” vector. We first split the boldfamilies object into three lists to stay within the request limits for the BOLD API.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>first_third <span class="ot">&lt;-</span> <span class="fu">floor</span>((<span class="fu">length</span>(boldfamilies)<span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>second_third <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">length</span>(boldfamilies) <span class="sc">-</span> <span class="fu">floor</span>((<span class="fu">length</span>(boldfamilies)<span class="sc">/</span><span class="dv">3</span>)))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>last_third <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">length</span>(boldfamilies))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>boldfamilies1 <span class="ot">&lt;-</span> boldfamilies[<span class="dv">1</span><span class="sc">:</span>first_third]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>boldfamilies2 <span class="ot">&lt;-</span> boldfamilies[first_third<span class="sc">:</span>second_third]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>boldfamilies3 <span class="ot">&lt;-</span> boldfamilies[second_third<span class="sc">:</span>last_third]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Download data for the first third of families</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(boldfamilies1)){</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        out1[[i]] <span class="ot">&lt;-</span> <span class="fu">bold_seqspec</span>(boldfamilies1[i], <span class="at">marker =</span> markernames)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        filename<span class="ot">&lt;-</span><span class="fu">paste</span>(<span class="st">"./family_csvs/"</span>,boldfamilies1[i],<span class="st">".csv"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        outnames[i,<span class="dv">2</span>] <span class="ot">&lt;-</span> filename</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">write.csv</span>(<span class="at">file =</span> filename, out1[[i]])</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Download data for the second third of families</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(boldfamilies2)){</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        out1[[i]] <span class="ot">&lt;-</span> <span class="fu">bold_seqspec</span>(boldfamilies2[i], <span class="at">marker =</span> markernames)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        filename <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"./family_csvs/"</span>,boldfamilies2[i],<span class="st">".csv"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        outnames[i,<span class="dv">2</span>] <span class="ot">&lt;-</span> filename</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">write.csv</span>(<span class="at">file =</span> filename, out1[[i]])</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Download data for the last third of families</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(boldfamilies3)){</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        out1[[i]] <span class="ot">&lt;-</span> <span class="fu">bold_seqspec</span>(boldfamilies3[i], <span class="at">marker =</span> markernames)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        filename <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"./family_csvs/"</span>,boldfamilies3[i],<span class="st">".csv"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        outnames[i,<span class="dv">2</span>] <span class="ot">&lt;-</span> filename</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">write.csv</span>(<span class="at">file =</span> filename, out1[[i]])</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-4-write-bold-search-term-lists-to-keep-track-of-what-was-included-in-this-batch-effort." class="level2">
+<h2 class="anchored" data-anchor-id="step-4-write-bold-search-term-lists-to-keep-track-of-what-was-included-in-this-batch-effort.">Step 4: Write BOLD search term lists to keep track of what was included in this batch effort.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">file =</span> <span class="st">"ListofBoldPhyla_to_Families"</span>, boldfamilies)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>boldfamilies <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"ListofBoldPhyla_to_Families"</span>)<span class="sc">$</span>x</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">file =</span> <span class="st">"ListofBoldPhyla_to_Families_nopublicrecords"</span>, nopublicrecords)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-5-read-in-the-files-that-were-output-to-make-the-composite-combtab-dataset-across-all-families." class="level2">
+<h2 class="anchored" data-anchor-id="step-5-read-in-the-files-that-were-output-to-make-the-composite-combtab-dataset-across-all-families.">Step 5: Read in the files that were output to make the composite “combtab” dataset across all families.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(boldfamilies))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(boldfamilies)){</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        filetemp <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"./family_csvs/"</span>, boldfamilies[i],<span class="st">".csv"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">file.exists</span>(filetemp))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        out3[[i]] <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(filetemp)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-6-obtain-list-of-families-that-downloaded-with-zero-entries." class="level2">
+<h2 class="anchored" data-anchor-id="step-6-obtain-list-of-families-that-downloaded-with-zero-entries.">Step 6: Obtain list of families that downloaded with zero entries.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>zerodata <span class="ot">&lt;-</span> boldfamilies[<span class="fu">which</span>(<span class="fu">lapply</span>(out3, ncol) <span class="sc">!=</span> <span class="dv">81</span>)] <span class="co"># 81 is the column with marker codes - this is selecting elements from boldfamilies where the corresponding elements in out3 do not have 81 columns</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">file =</span> <span class="st">"ListofBoldPhyla_to_Families_zerodata"</span>, zerodata)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>out3<span class="fl">.1</span> <span class="ot">&lt;-</span> out3[<span class="fu">which</span>(<span class="fu">lapply</span>(out3, ncol) <span class="sc">==</span> <span class="dv">81</span>)]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, out3<span class="fl">.1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">file =</span> <span class="st">"BoldPhyla_to_Families.csv"</span>, out4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-7-load-and-merge-out-files-of-interest-dereplicate-and-combine-them-in-ways-that-list-the-markers" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-load-and-merge-out-files-of-interest-dereplicate-and-combine-them-in-ways-that-list-the-markers">Step 7: load and merge “out” files of interest, dereplicate, and combine them in ways that list the markers</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>intab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"BoldPhyla_to_Families.csv"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#intab[which(duplicated(combtab$processid)==T),c(2:3,8,11:26)]</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>combtab <span class="ot">&lt;-</span> intab[,<span class="dv">1</span><span class="sc">:</span><span class="dv">68</span>] <span class="co"># note that in the current combtab we select the following columns listed below, and may need to add additional ones to capture ITS</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## columns to keep: "processid", "institution_storing", "phylum_taxID", "phylum_name", "class_taxID", "class_name", "order_taxID", "order_name", "family_taxID", "family_name", "subfamily_taxID", "subfamily_name", "genus_taxID", "genus_name", "species_taxID", "species_name", "subspecies_taxID", "subspecies_name" </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>combtab <span class="ot">&lt;-</span> combtab[<span class="fu">which</span>(<span class="fu">duplicated</span>(combtab[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">11</span><span class="sc">:</span><span class="dv">26</span>)]) <span class="sc">==</span> F),] </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(intab<span class="sc">$</span>family_name))</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(combtab<span class="sc">$</span>family_name))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>intab_rhamnaceae <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(intab, processid <span class="sc">==</span> <span class="st">"TRIOP125-11"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>combtab_rhamnaceae <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(combtab, processid <span class="sc">==</span> <span class="st">"TRIOP125-11"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-8.-annotate-combtab-to-include-barcodes-associated-with-each-specimen---rbcl-matk-trnl-its." class="level2">
+<h2 class="anchored" data-anchor-id="step-8.-annotate-combtab-to-include-barcodes-associated-with-each-specimen---rbcl-matk-trnl-its.">Step 8. Annotate combtab to include barcodes associated with each specimen - rbcL, matK, trnL, ITS.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>markers <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">nrow</span>(combtab),<span class="at">ncol =</span> <span class="dv">5</span>, <span class="st">""</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(markers) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rbcL"</span>,<span class="st">"matK"</span>,<span class="st">"trnL"</span>, <span class="st">"ITS2"</span>, <span class="st">"multi"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(intab<span class="sc">$</span>markercode)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>markers[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"rbcL"</span>, <span class="st">"rbcLa"</span>)),]<span class="sc">$</span>processid),<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"rbcL"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>markers[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"matK"</span>)),]<span class="sc">$</span>processid),<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"matK"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>markers[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"trnL"</span>, <span class="st">"trnL-F"</span>)),]<span class="sc">$</span>processid),<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"trnL"</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>markers[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ITS"</span>, <span class="st">"ITS2"</span>)),]<span class="sc">$</span>processid),<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">"ITS"</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>markers[,<span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">apply</span>(markers[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] , <span class="dv">1</span>, paste , <span class="at">collapse =</span> <span class="st">"-"</span> )</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>marker_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(markers)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(marker_df<span class="sc">$</span>multi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-9.-save-genbank-information-and-combine-markers-list-to-combtab-object" class="level2">
+<h2 class="anchored" data-anchor-id="step-9.-save-genbank-information-and-combine-markers-list-to-combtab-object">Step 9. Save GENBANK information and combine markers list to combtab object</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save genbank info</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>genbank <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">nrow</span>(combtab),<span class="at">ncol =</span> <span class="dv">4</span>, <span class="st">""</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(genbank) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"gb_rbcL"</span>,<span class="st">"gb_matK"</span>,<span class="st">"gb_trnL"</span>, <span class="st">"gb_ITS"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>genbank[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"rbcL"</span>, <span class="st">"rbcLa"</span>)),]<span class="sc">$</span>processid),<span class="dv">1</span>] <span class="ot">&lt;-</span>intab[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"rbcL"</span>, <span class="st">"rbcLa"</span>)),]<span class="sc">$</span>processid),]<span class="sc">$</span>genbank_accession</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>genbank[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"matK"</span>)),]<span class="sc">$</span>processid),<span class="dv">2</span>] <span class="ot">&lt;-</span> intab[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"matK"</span>)),]<span class="sc">$</span>processid),]<span class="sc">$</span>genbank_accession</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>genbank[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"trnL-F"</span>)),]<span class="sc">$</span>processid),<span class="dv">3</span>] <span class="ot">&lt;-</span> intab[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"trnL"</span>, <span class="st">"trnL-F"</span>)),]<span class="sc">$</span>processid),]<span class="sc">$</span>genbank_accession</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>genbank[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ITS"</span>, <span class="st">"ITS2"</span>)),]<span class="sc">$</span>processid),<span class="dv">4</span>] <span class="ot">&lt;-</span> intab[<span class="fu">which</span>(combtab<span class="sc">$</span>processid <span class="sc">%in%</span> intab[<span class="fu">which</span>(intab<span class="sc">$</span>markercode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ITS"</span>, <span class="st">"ITS2"</span>)),]<span class="sc">$</span>processid),]<span class="sc">$</span>genbank_accession</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine markers list to combtab</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>combtab <span class="ot">&lt;-</span> <span class="fu">cbind</span>(combtab, markers, genbank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-10.-filter-columns-that-make-the-file-unnecessarily-large-and-write-combtab-object" class="level2">
+<h2 class="anchored" data-anchor-id="step-10.-filter-columns-that-make-the-file-unnecessarily-large-and-write-combtab-object">Step 10. Filter columns that make the file unnecessarily large and write combtab object</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(combtab)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>combtabout <span class="ot">&lt;-</span> combtab[, <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">11</span><span class="sc">:</span><span class="dv">26</span>,<span class="dv">35</span><span class="sc">:</span><span class="dv">36</span>,<span class="dv">49</span><span class="sc">:</span><span class="dv">53</span>,<span class="dv">57</span><span class="sc">:</span><span class="dv">61</span>,<span class="dv">69</span><span class="sc">:</span><span class="dv">77</span>)]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(combtabout, <span class="dv">2</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">file =</span> <span class="st">"BoldPhyla_to_Families_combtab_v4.csv"</span>, combtabout)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

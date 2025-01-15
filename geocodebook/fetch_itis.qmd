@@ -4,6 +4,7 @@ format: html
 ---
 
 This notebook contaions code to fetch family names from ITIS and then create lists of species in each family found in ITIS across the total 730 plant families. The final result here is one file called `allFamNames.csv`.
+
 ```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
 ## First check for the required packages, install if needed, and load the libraries.
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -59,6 +60,7 @@ out3 <- vector("list", length(fams))
 ```
 
 ### Combine all data into a single data frame
+
 ```{r eval=FALSE}
 out4 <- do.call(rbind, out3)
 dim(out4)
