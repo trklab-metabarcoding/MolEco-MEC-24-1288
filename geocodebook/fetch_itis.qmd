@@ -2,3 +2,63 @@
 title: "Fetching taxonomic data from ITIS"
 format: html
 ---
+
+```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
+## First check for the required packages, install if needed, and load the libraries.
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("sangerseqR")
+remotes::install_github("ropensci/bold")
+remotes::install_github("ropensci/taxize")
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(maps, ggplot2, dplyr, countrycode, data.table, raster)
+```
+
+## Step 1: Retrieve taxonomic information for families within the plant clade Embryophyta (multicellular plants, excluding green algae) using the ITIS database.
+
+```{r eval=FALSE}
+# Retrieve families under "Embryophyta"
+famnames <- taxize::downstream("Embryophyta", db = "itis", downto = "family") #Embryophyta is multicellular plants (excluding green algae)
+fams <- famnames$Embryophyta$taxonname
+
+# Initialize data structures
+famlist <- vector("list", length(fams))
+famout <- matrix(nrow = length(fams), ncol = 3)
+famout[,1] <- fams
+num_fams <- length(fams)
+```
+
+#### We found 730 families returned from ITIS.
+
+### Next we can loop over these families and generate CSV files with all the species in these familis.
+
+```{r eval=FALSE}
+# Loop over families and save a CSV for each
+	for(i in 1:length(fams)){
+		famlist[[i]] <- taxize::downstream(fams[i], db = "itis", downto = "species")
+		filename <- paste0("../data/family_csvs/",fams[i],".csv",sep = "")
+		famout[i,2] <- filename
+		write.csv(file = filename, do.call(rbind, famlist[[i]]))
+		famout[i,3] <- length(which(do.call(rbind, famlist[[i]])$rankname == "species"))
+	}
+```
+
+### Reassemble data from saved CSV files:
+
+```{r eval=FALSE}
+out3 <- vector("list", length(fams)) 
+  for(i in 1:length(fams)){ 
+    filename <- paste0("./data/family_csvs/",fams[i],".csv",sep="") 
+    if (file.exists(filename)) out3[[i]] <- read.csv(filename) }
+```
+
+### Combine all data into a single data frame
+```{r eval=FALSE}
+out4 <- do.call(rbind, out3)
+dim(out4)
+out4$family<-do.call(rbind, lapply(strsplit(as.character(out4$X), "[.]"), `[[`, 1)) #extract family names
+head(out4, 2)
+write.csv(file="../data/allFamNames.csv", out4) 
+```

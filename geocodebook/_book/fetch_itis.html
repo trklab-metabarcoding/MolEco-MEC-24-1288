@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -202,8 +236,19 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." id="toc-step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." class="nav-link active" data-scroll-target="#step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database.">Step 1: Retrieve taxonomic information for families within the plant clade Embryophyta (multicellular plants, excluding green algae) using the ITIS database.</a>
+  <ul class="collapse">
+  <li><a href="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis." id="toc-next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis." class="nav-link" data-scroll-target="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis.">Next we can loop over these families and generate CSV files with all the species in these familis.</a></li>
+  <li><a href="#reassemble-data-from-saved-csv-files" id="toc-reassemble-data-from-saved-csv-files" class="nav-link" data-scroll-target="#reassemble-data-from-saved-csv-files">Reassemble data from saved CSV files:</a></li>
+  <li><a href="#combine-all-data-into-a-single-data-frame" id="toc-combine-all-data-into-a-single-data-frame" class="nav-link" data-scroll-target="#combine-all-data-into-a-single-data-frame">Combine all data into a single data frame</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -227,8 +272,69 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/taxize"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(maps, ggplot2, dplyr, countrycode, data.table, raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." class="level2">
+<h2 class="anchored" data-anchor-id="step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database.">Step 1: Retrieve taxonomic information for families within the plant clade Embryophyta (multicellular plants, excluding green algae) using the ITIS database.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve families under "Embryophyta"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>famnames <span class="ot">&lt;-</span> taxize<span class="sc">::</span><span class="fu">downstream</span>(<span class="st">"Embryophyta"</span>, <span class="at">db =</span> <span class="st">"itis"</span>, <span class="at">downto =</span> <span class="st">"family"</span>) <span class="co">#Embryophyta is multicellular plants (excluding green algae)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fams <span class="ot">&lt;-</span> famnames<span class="sc">$</span>Embryophyta<span class="sc">$</span>taxonname</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize data structures</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>famlist <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(fams))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>famout <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(fams), <span class="at">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>famout[,<span class="dv">1</span>] <span class="ot">&lt;-</span> fams</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>num_fams <span class="ot">&lt;-</span> <span class="fu">length</span>(fams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="we-found-730-families-returned-from-itis." class="level4">
+<h4 class="anchored" data-anchor-id="we-found-730-families-returned-from-itis.">We found 730 families returned from ITIS.</h4>
+</section>
+<section id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis." class="level3">
+<h3 class="anchored" data-anchor-id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-familis.">Next we can loop over these families and generate CSV files with all the species in these familis.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over families and save a CSV for each</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fams)){</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        famlist[[i]] <span class="ot">&lt;-</span> taxize<span class="sc">::</span><span class="fu">downstream</span>(fams[i], <span class="at">db =</span> <span class="st">"itis"</span>, <span class="at">downto =</span> <span class="st">"species"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/family_csvs/"</span>,fams[i],<span class="st">".csv"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        famout[i,<span class="dv">2</span>] <span class="ot">&lt;-</span> filename</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">write.csv</span>(<span class="at">file =</span> filename, <span class="fu">do.call</span>(rbind, famlist[[i]]))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        famout[i,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">do.call</span>(rbind, famlist[[i]])<span class="sc">$</span>rankname <span class="sc">==</span> <span class="st">"species"</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="reassemble-data-from-saved-csv-files" class="level3">
+<h3 class="anchored" data-anchor-id="reassemble-data-from-saved-csv-files">Reassemble data from saved CSV files:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(fams)) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fams)){ </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"./data/family_csvs/"</span>,fams[i],<span class="st">".csv"</span>,<span class="at">sep=</span><span class="st">""</span>) </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">file.exists</span>(filename)) out3[[i]] <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(filename) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="combine-all-data-into-a-single-data-frame" class="level3">
+<h3 class="anchored" data-anchor-id="combine-all-data-into-a-single-data-frame">Combine all data into a single data frame</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, out3)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(out4)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>out4<span class="sc">$</span>family<span class="ot">&lt;-</span><span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">strsplit</span>(<span class="fu">as.character</span>(out4<span class="sc">$</span>X), <span class="st">"[.]"</span>), <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="dv">1</span>)) <span class="co">#extract family names</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(out4, <span class="dv">2</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">file=</span><span class="st">"../data/allFamNames.csv"</span>, out4) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

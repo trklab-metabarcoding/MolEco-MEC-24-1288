@@ -5,7 +5,7 @@ format: html
 
 This notebook will generate plots of geographic coverage of barcodes available on BOLD, in relation to climatic zones, and for several genetic markers. It also assesses contributions to BOLD by Project ID.
 
-We trim dataframe outputs to the first two rows for demonstartion, but full dataframes will be generated and stored in the R environment when running the code from source. 
+We trim dataframe outputs to the first two rows for demonstartion, but full dataframes will be generated and stored in the R environment when running the code from source.
 
 ```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
 ## First check for the required packages, install if needed, and load the libraries.
@@ -16,7 +16,7 @@ BiocManager::install("sangerseqR")
 remotes::install_github("ropensci/bold")
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(taxize, maps, ggplot2, countrycode, rgbif, data.table, raster, maps, mapproj, sf)
+pacman::p_load(taxize, maps, ggplot2, countrycode, rgbif, data.table, raster, mapproj, sf)
 ```
 
 # Figure 1. Read in combtab dataset of global barcode data from BOLD and summarize.

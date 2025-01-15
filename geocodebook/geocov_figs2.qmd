@@ -14,11 +14,13 @@ BiocManager::install("sangerseqR")
 remotes::install_github("ropensci/bold")
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(taxize, maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, maps, mapproj, sf)
+pacman::p_load(taxize, maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf)
 ```
 
 # SI Figure S1: Map of country counts
+
 Start with some data cleaning.
+
 ```{r warning=FALSE, message=FALSE}
 combtab <- read.csv("../data/BoldPhyla_to_Families_combtab_v4.csv")
 head(combtab, 2)
@@ -54,6 +56,7 @@ myCodes$country[which(myCodes$country=="Eswatini")]<-"Swaziland"
 ```
 
 #### Map country-level barcode intensity.
+
 ```{r}
 # Map for country-level intensity
 myCodes <- myCodes[is.na(myCodes$country)==F,]
@@ -76,6 +79,7 @@ ggpoliticalboundaries
 ```
 
 #### Distribution of country bias - barplot.
+
 ```{r}
 # Barplot with country counts
 countrycounts_bar <- ggplot(myCodes, aes(x = reorder(country, -n), y = n)) +
@@ -86,7 +90,9 @@ countrycounts_bar <- ggplot(myCodes, aes(x = reorder(country, -n), y = n)) +
 countrycounts_bar
 #ggsave("countrycounts_20240626.pdf", countrycounts, width = 13, height = 4, units = "cm")
 ```
+
 #### Distribution of country bias - lineplot.
+
 ```{r}
 # Line plot with country counts
 countrycounts_line <- ggplot(myCodes, aes(x = reorder(country, -n), y = n, group = 1)) +
@@ -99,7 +105,7 @@ countrycounts_line
 #ggsave("countrycounts_20240626.pdf", countrycounts, width = 8, height = 4, units = "cm")
 ```
 
-#### Print dataframe with countries having less than 10 barcodes. 
+#### Print dataframe with countries having less than 10 barcodes.
 
 ```{r}
 # Summarize number of countries with <10 
