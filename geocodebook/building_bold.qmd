@@ -18,28 +18,23 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(maps, ggplot2, dplyr, countrycode, data.table, raster)
 ```
 
-## Set up directory 
+## Set up directory
+
 ```{r eval=FALSE}
 dir.create(file.path("./family_csvs"))
 setDTthreads(threads = 6) # if you are working on cluster, this will allow data.table to multithread
 ```
 
 ## Step 1: Obtain a list of plant phyla in BOLD from which to pull records
+
 ```{r eval=FALSE}
-#determine name of highest level to download from
-# x<-downstream("Magnoliophyta", db="bold", downto="class")
-# nms<-sort(x$Magnoliophyta$name)
-
-#drop nms that are evidently in ITIS but not in BOLD, causing the loop to hang up when zooming in from Embryophyta
-# nms<-nms[which(nms!="Leiosporocerotopsida")]
-# nms<-nms[which(nms!="Tetraphidopsida")]
-
-# name BOLD plant phyla
+# Name BOLD plant phyla
 boldphyla <- c("Anthocerotophyta", "Bryophyta", "Cycadophyta", "Ginkgophyta",  "Magnoliophyta", "Marchantiophyta", "Pinophyta", "Pteridophyta", "Tracheophyta") #"Gnetophyta", "Psilophyta", "Lycopodiophyta" # these were previously listed a families but are now nested under otehr families
 length(boldphyla)
 ```
 
-## Step 2: retrieve all families descending from a vector of phyla. 
+## Step 2: retrieve all families descending from a vector of phyla.
+
 ```{r eval=FALSE}
 out0 <- vector("list", length(boldphyla))
 
@@ -71,6 +66,7 @@ markernames <- c("trnL-F", "rbcL", "matK", "ITS")
 ```
 
 ## Step 3. Run a loop that outputs in each iteration a separate .csv file for each family included in the "boldfamilies" vector. We first split the boldfamilies object into three lists to stay within the request limits for the BOLD API.
+
 ```{r eval=FALSE}
 first_third <- floor((length(boldfamilies)/3))
 second_third <- floor(length(boldfamilies) - floor((length(boldfamilies)/3)))
@@ -106,6 +102,7 @@ boldfamilies3 <- boldfamilies[second_third:last_third]
 ```
 
 ## Step 4: Write BOLD search term lists to keep track of what was included in this batch effort.
+
 ```{r eval=FALSE}
 write.csv(file = "ListofBoldPhyla_to_Families", boldfamilies)
 boldfamilies <- read.csv(file = "ListofBoldPhyla_to_Families")$x
@@ -113,6 +110,7 @@ write.csv(file = "ListofBoldPhyla_to_Families_nopublicrecords", nopublicrecords)
 ```
 
 ## Step 5: Read in the files that were output to make the composite "combtab" dataset across all families.
+
 ```{r eval=FALSE}
 out3 <- vector("list", length(boldfamilies))
 	for(i in 1:length(boldfamilies)){
@@ -123,6 +121,7 @@ out3 <- vector("list", length(boldfamilies))
 ```
 
 ## Step 6: Obtain list of families that downloaded with zero entries.
+
 ```{r eval=FALSE}
 zerodata <- boldfamilies[which(lapply(out3, ncol) != 81)] # 81 is the column with marker codes - this is selecting elements from boldfamilies where the corresponding elements in out3 do not have 81 columns
 write.csv(file = "ListofBoldPhyla_to_Families_zerodata", zerodata)
@@ -132,7 +131,8 @@ out4 <- do.call(rbind, out3.1)
 write.csv(file = "BoldPhyla_to_Families.csv", out4)
 ```
 
-## Step 7: load and merge "out" files of interest, dereplicate, and combine them in ways that list the markers 
+## Step 7: load and merge "out" files of interest, dereplicate, and combine them in ways that list the markers
+
 ```{r eval=FALSE}
 intab <- read.csv("BoldPhyla_to_Families.csv")
 #intab[which(duplicated(combtab$processid)==T),c(2:3,8,11:26)]
@@ -151,6 +151,7 @@ combtab_rhamnaceae <- dplyr::filter(combtab, processid == "TRIOP125-11")
 ```
 
 ## Step 8. Annotate combtab to include barcodes associated with each specimen - rbcL, matK, trnL, ITS.
+
 ```{r eval=FALSE}
 markers <- matrix(nrow = nrow(combtab),ncol = 5, "")
 colnames(markers) <- c("rbcL","matK","trnL", "ITS2", "multi")
@@ -172,6 +173,7 @@ unique(marker_df$multi)
 ```
 
 ## Step 9. Save GENBANK information and combine markers list to combtab object
+
 ```{r eval=FALSE}
 # Save genbank info
 genbank <- matrix(nrow = nrow(combtab),ncol = 4, "")
@@ -189,7 +191,8 @@ genbank[which(combtab$processid %in% intab[which(intab$markercode %in% c("ITS", 
 combtab <- cbind(combtab, markers, genbank)
 ```
 
-## Step 10. Filter columns that make the file unnecessarily large and write combtab object 
+## Step 10. Filter columns that make the file unnecessarily large and write combtab object
+
 ```{r eval=FALSE}
 names(combtab)
 combtabout <- combtab[, c(2:3,8,11:26,35:36,49:53,57:61,69:77)]
