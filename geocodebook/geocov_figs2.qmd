@@ -68,7 +68,7 @@ ggpoliticalboundaries <- ggplot(myCodes) +
   ylab("") + 
   xlab("") + 
   theme(legend.position = "none") +
-  geom_hline(yintercept = 0, color = "black", size = 0.5) + 
+  geom_hline(yintercept = 0, color = "black", linewidth = 0.5) + 
   geom_hline(yintercept = 23.5, color = "black", linetype = "dashed") + 
   geom_hline(yintercept = -23.5, color = "black", linetype = "dashed") 
 ggpoliticalboundaries
