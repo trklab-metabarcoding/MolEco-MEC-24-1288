@@ -1,4 +1,194 @@
 ---
 title: "Mapping global coverage from local sampling"
 format: html
+params: 
+  resolution: 3
+  random_sample_prop: 1 # between 0-1
+  random_sample_n: 1000
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+## First check for the required packages, install if needed, and load the libraries.
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(dplyr, sf, maps, units, raster, rnaturalearth, rnaturalearthdata, rnaturalearthhires, rgbif, ggplot2, wesanderson, tictoc, beepr, crsuggest, reporter)
+
+remotes::install_github("crazycapivara/h3-r", force = TRUE)
+library("h3")
+```
+
+Import the records once the download is finished; this could take a while on a slow connection.
+```{r data_import}
+tic() # starts a timer
+records <- occ_download_get('0066939-241126133413365') # generated in `Fetching plant occurrence records from GBIF`
+data <- occ_download_import(records, select=c("scientificName","species","taxonKey", "speciesKey","year","decimalLongitude","decimalLatitude","countryCode"))
+toc() # ends the timer
+beep(2)
+```
+
+Inspect the lat/long values.
+```{r}
+cat("Longitude extremes:", min(data$decimalLongitude), max(data$decimalLongitude))
+```
+
+```{r}
+cat("Latitude extremes:", min(data$decimalLatitude), max(data$decimalLatitude))
+```
+
+Filter out points at the edges of flat map, they are causes some stretching issues when building hex bins.
+```{r}
+data2 <- data %>%
+  filter(between(decimalLatitude, -85, 85)) %>%
+  filter(between(decimalLongitude, -175, 175))
+```
+
+## Convert 18.5 Mil records into H3 hex shapes
+We use the Uber H3 hexagon system for binning records into spatial areas to plot densities.
+
+### Convert df to sf
+```{r}
+data_sf <- st_as_sf(x = data2,                         
+           coords = c("decimalLongitude", "decimalLatitude"),
+           crs = 4326)
+```
+
+### Check # of species vs # of scientific name
+```{r}
+cat(length(unique(data_sf$scientificName)), length(unique(data_sf$species)), length(unique(data_sf$taxonKey)), length(unique(data_sf$speciesKey)))
+```
+
+```{r}
+species <- as.data.frame(unique(data_sf$species))
+species
+```
+
+Get CRS info.
+```{r}
+raster::crs(data_sf)
+```
+
+This step pairs lat long into a point geometry.
+```{r}
+st_transform(data_sf, 4326)
+```
+
+Toss records without a species assigned and randomly subsample per species.
+```{r}
+data_sf <- data_sf %>%
+  filter(species != "") %>%
+  group_by(species) %>%
+  #slice_sample(n = params$random_sample_n) # number of samples
+  slice_sample(prop = params$random_sample_prop) # proportion of samples
+```
+
+Make a point for the centroid of YNP (middle of Yellowstone Lake), to use for distance calculations.
+```{r}
+YNP_centroid <- st_point(c(-110.40, 44.45)) %>%
+  st_coordinates() %>%
+  as.data.frame() %>%
+  st_as_sf(coords = c("X", "Y"), crs = 4326)
+
+usa = st_as_sf(map('state', plot = FALSE, fill = TRUE))
+
+ggplot() + 
+  geom_sf(data = usa) +
+  geom_sf(data = YNP_centroid, aes(geometry=geometry), pch = 19, color = 'darkturquoise')
+```
+
+This block will calculate the distances from the center of Yellowstone for each row in the dataset.
+```{r}
+tic()
+ data_sf <- data_sf %>%
+  mutate(
+    dist = st_distance(geometry, YNP_centroid) %>%
+  set_units("km"))
+beep(2)
+toc()
+```
+
+### Summarize the distances to get a count, average distance, and sd of distance for each species.
+
+This will output a dataframe where each row in one of the 279 species with occurrence records in GBIF. The geometries are also merged to a multipoint so a minimum convex polygon for a single species could be plotted easily.
+```{r}
+tic()
+species_dist <- data_sf %>%
+  group_by(species) %>%
+  summarise(
+    count = n(),
+    min_dist = min(dist),
+    max_dist = max(dist),
+    mean_dist = mean(dist),
+    sd_dist = sd(dist)
+  )
+beep(2)
+summary(species_dist)
+toc()
+```
+
+Output a file with summary data about distances!
+```{r}
+species_dist %>%
+  st_drop_geometry() %>%
+  write.csv("./distance_from_YNP_by_species.csv")
+```
+
+Use this to get a few CRS codes to try for projection if things look off.
+```{r}
+suggest_crs(data_sf)
+```
+
+Pull geospatial hex locations for each point set.
+```{r}
+data_sf$h3_index <- geo_to_h3(data_sf, params$resolution) 
+```
+
+Group by hex bin and count species in each one.
+```{r}
+# Check that the number of unique bins is much less than the number of rows
+length(unique(data_sf$h3_index))
+
+data_sf2 <- data_sf %>%
+  group_by(h3_index) %>%
+  summarise(distinct_species = n_distinct(species))
+beep(2)
+```
+
+Count the number of records in each hex bin.
+```{r}
+hex_freq <- as.data.frame(table(data_sf2$h3_index))
+```
+
+Get the coordinates of of each hex bin.
+```{r}
+data_hex <- h3_to_geo_boundary_sf(data_sf2$h3_index)
+```
+
+Merge the bin coords with frequency data for plotting.
+```{r}
+plot_data <- merge(as.data.frame(data_sf2), data_hex, by="h3_index")
+```
+
+Report out the number of hexagons, and the min and max number of species in any one hex.
+```{r}
+cat(length(unique(plot_data$h3_index)), min(plot_data$distinct_species), max(plot_data$distinct_species))
+```
+
+Build the map
+```{r}
+worldmap <- ne_countries(scale = 'large', returnclass = 'sf')
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data = worldmap$geometry) +
+  geom_sf(data = plot_data, aes(geometry = geometry.y, fill=distinct_species)) +
+  scale_fill_viridis_c(option="turbo") +
+  ggtitle("Count of species in each cell") +
+  theme_classic() + theme(legend.title = element_blank()) 
+
+ggsave("BOLD_GBIF_12400km2.png") # uncomment to save a copy
+```

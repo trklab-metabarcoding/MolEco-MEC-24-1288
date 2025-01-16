@@ -1,0 +1,164 @@
+---
+title: "Continent-scale barcode coverage of lodgepole pine and big sagebrush"
+format: html
+---
+
+This notebook will pull specimen records for two selected examples to highlight the effect of local sampling on global coverage. 
+
+**NOTE:** Make sure GDAL is installed on the system you are running the notebooks from.
+```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
+## First check for the required packages, install if needed, and load the libraries.
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("sangerseqR")
+remotes::install_github("ropensci/bold")
+remotes::install_github("ropensci/taxize")
+remotes::install_github("r-spatial/sf", configure.args = "--with-proj-lib=$(brew --prefix)/lib/")
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj)
+```
+
+## Figure 2A-B. Get species keys for maps of *Pinus contorta* and *Artemisia tridentata* occurrences.
+
+```{r}
+# Using t.mean raster layer created above with worldclim: Change t.mean so that all cells have zero values 
+t.mean.addvalues <- t.mean
+class(t.mean.addvalues)
+raster::values(t.mean.addvalues)[values(t.mean.addvalues) != "NA"] = 0
+str(t.mean.addvalues)
+plot(t.mean.addvalues) 
+t.mean.addvalues
+t.mean.addvalues_extent_use <- extent(t.mean.addvalues)
+
+# Get taxon keys from GBIF
+key_artemisia_tridentata <- name_suggest(q='Artemisia tridentata', rank='species')
+key_artemisia_tridentata
+
+key_pinus_contorta <- name_suggest(q='Pinus contorta', rank='species')
+key_pinus_contorta
+```
+
+## Figure 2A: Map of _Pinus contorta_ GBIF records
+```{r}
+# Use occ_search() to query gbif records 
+PINCON_occurrences_2 <- occ_search(taxonKey = 5285750, limit = 50000) # number found: 41,033
+head(PINCON_occurrences_2, 2)
+
+# Count matches: 15336
+PINCON_occurrences_2_df <- data.frame(PINCON_occurrences_2$data) 
+
+# Obtain coordinate data and project to desired CRS 
+PinusSP <- data.frame(x_coords = PINCON_occurrences_2_df$decimalLongitude, y_coords = PINCON_occurrences_2_df$decimalLatitude) 
+head(PinusSP, 2)
+PinusSP <- subset(PinusSP, x_coords != "")
+coordinates(PinusSP) <- ~x_coords + y_coords
+proj4string(PinusSP) <- CRS("+proj=longlat +datum=WGS84 +no_defs")
+head(PinusSP, 2)
+
+# Check objects for plotting
+head(t.mean.addvalues, 2)
+PinusSP_raster <- t.mean.addvalues
+
+# Extract cell numbers where coordinates match
+matching_cells <- cellFromXY(PinusSP_raster, coordinates(PinusSP))
+
+# Set the values in PinusSP_raster to 1 where coordinates match
+PinusSP_raster[matching_cells] <- 1
+head(PinusSP_raster, 2)
+plot(PinusSP_raster)
+
+PinusSP_raster_dfpoints <- rasterToPoints(PinusSP_raster)
+
+# Convert to data frame
+PinusSP_raster_df <- as.data.frame(PinusSP_raster_dfpoints)
+head(PinusSP_raster_df, 2)
+
+# Plot using ggplot 
+PinusSP_raster_df <- subset(PinusSP_raster_df, layer > 0)
+#PinusSP_raster_df
+
+# ggplot wrapper for world map 
+world_map <- map_data("world") #ggplot wrapper of map()
+north_america_map <- subset(world_map, region == "Mexico" | region == "Canada" | region == "USA")
+head(north_america_map, 2)
+
+#Yellowstone outline
+aoi_boundary_YNP <- st_read("../data/YellowstonePark/YellowstonePark1995.shp")
+aoi_boundary_YNP #examine features
+st_crs(aoi_boundary_YNP) #check coordinate system 
+aoi_boundary_YNP_WGS84 <- st_transform(aoi_boundary_YNP,CRS("+proj=longlat +datum=WGS84")) #choose a projection and datum that every spatial object we add to the map will be converted to before plotting
+st_crs(aoi_boundary_YNP_WGS84) #check coordinate system to ensure projection worked
+aoi_boundary_YNP_WGS84 #re examine features
+
+#Plot 
+combtab_Pincon <- subset(combtab, species_name == "Pinus contorta")
+aoi_boundary_YNP_WGS84_df <- as.data.frame(aoi_boundary_YNP_WGS84, xy = TRUE)
+pinusmap2 <- ggplot() + 
+  theme_classic() +
+  geom_tile(data = PinusSP_raster_df, aes(x, y, fill = layer)) + 
+  geom_map(data = north_america_map, map = north_america_map, aes(map_id = region), fill = "NA", color = "lightgray", size = 0.2) + 
+  scale_fill_viridis_c(na.value = "white", option = "viridis", direction = 1, begin =0.6) +
+  xlab("") + ylab("") + 
+  scale_y_continuous(breaks = seq(-15, 75, 15), limits = c(20, 70)) +
+  scale_x_continuous(breaks = seq(-160, -60, 40), limits = c(-165, -50)) +
+  theme(legend.position = "none") +
+  geom_point(data = combtab_Pincon, aes(x = lon, y = lat), pch = 3, size = 3, stroke = 0.9, color = alpha("black", 0.9)) + geom_sf(data = aoi_boundary_YNP_WGS84, fill = "transparent", lwd = 0.25, color = "blue")
+pinusmap2
+ggsave("pinusmap20240624_1.pdf", pinusmap2, width = 20, height = 8, units = "cm")
+```
+
+## Figure 2B: Map of _Artemisia tridentata_ gbif records
+```{r}
+# Use occ_search() to query GBIF records 
+ArtTri_occurrences_2 <- occ_search(taxonKey = 9396703, limit = 20000) #16,738 found
+ArtTri_occurrences_2
+
+# Count matches
+ArtTri_occurrences_df <- data.frame(ArtTri_occurrences_2$data) 
+
+# Obtain coordinate data and project to desired CRS 
+ArtemisiaSP <- data.frame(x_coords = ArtTri_occurrences_df$decimalLongitude, y_coords = ArtTri_occurrences_df$decimalLatitude) 
+ArtemisiaSP
+ArtemisiaSP <- subset(ArtemisiaSP, x_coords !="")
+coordinates(ArtemisiaSP) <- ~x_coords + y_coords
+proj4string(ArtemisiaSP) <- CRS("+proj=longlat +datum=WGS84 +no_defs")
+head(ArtemisiaSP, 2)
+
+# Check objects for plotting
+head(t.mean.addvalues, 2)
+ArtemisiaSP_raster <- t.mean.addvalues
+
+# Extract cell numbers where coordinates match
+matching_cells <- cellFromXY(ArtemisiaSP_raster, coordinates(ArtemisiaSP))
+
+# Set the values in PinusSP_raster to 1 where coordinates match
+ArtemisiaSP_raster[matching_cells] <- 1
+head(ArtemisiaSP_raster, 2)
+plot(ArtemisiaSP_raster)
+
+ArtemisiaSP_raster_dfpoints <- rasterToPoints(ArtemisiaSP_raster)
+
+# Convert to data frame
+ArtemisiaSP_raster_df <- as.data.frame(ArtemisiaSP_raster_dfpoints)
+
+# Plot using ggplot 
+ArtemisiaSP_raster_df <- subset(ArtemisiaSP_raster_df, layer > 0)
+head(ArtemisiaSP_raster_df, 2)
+
+#Plot
+combtab_Arttri <- subset(combtab, species_name == "Artemisia tridentata")
+Artemisiamap3 <- ggplot() + 
+  theme_classic() +
+  geom_tile(data = ArtemisiaSP_raster_df, aes(x, y, fill = layer)) + 
+  geom_map(data = north_america_map, map = north_america_map, aes(map_id = region), fill = "NA", color = "lightgray", size = 0.2) + 
+  scale_fill_viridis_c(na.value = "white", option = "inferno", direction = -1, begin = 0.5) +
+  xlab("") + ylab("") + 
+   scale_y_continuous(breaks = seq(-15, 75, 15), limits = c(20, 70)) +
+  scale_x_continuous(breaks = seq(-160, -60, 40), limits = c(-165, -50)) +
+  theme(legend.position = "none") +
+  geom_point(data = combtab_Arttri, aes(x = lon, y = lat), pch = 8, size = 3, stroke = 0.9, color = alpha("black", 0.9)) + geom_sf(data = aoi_boundary_YNP_WGS84, fill = "transparent", lwd = 0.25, color = "blue")
+Artemisiamap3
+ggsave("Artemisiamap4_20240626_1.pdf", Artemisiamap3, width = 20, height = 8, units = "cm")
+```

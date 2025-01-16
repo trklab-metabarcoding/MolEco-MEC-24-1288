@@ -23,6 +23,7 @@ book:
       - taxonomic_coverage.qmd
     - part: "Case-study -- Yellowstone"
       chapters:
+      - geocov_ynp_selected.qmd
       - fetch_gbif.qmd
       - build_geocov_map.qmd
 
