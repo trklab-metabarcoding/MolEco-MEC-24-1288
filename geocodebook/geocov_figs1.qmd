@@ -56,7 +56,7 @@ total_barcodes
 
 # write combtab
 combtab <- combtab 
-write.csv(combtab, "combtab.csv")
+write.csv(combtab, "../data/combtab.csv")
 
 # write out combtab here for supplementary/supporting information 
 length(unique(combtab$species_name))
@@ -260,7 +260,7 @@ sitepix<-cbind(lonr, latr)
 sitepix<-unique(sitepix)
 
 # load worldclim data
-	# use 10 min for testing download directly from worldclim but here are some dropbox links: https://www.dropbox.com/scl/fo/9yl4dt2tli37qj24smitc/h?rlkey=z09vzcz1p6vg49pt48o92pyed&dl=0
+	# use 10 min for testing download directly from worldclim
 t.mean.files <- list.files("../data/wc2.1_10m_tavg/", ".tif", full.names=TRUE)
 p.mean.files <- list.files("../data/wc2.1_10m_prec/", ".tif", full.names=TRUE)
 

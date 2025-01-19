@@ -221,6 +221,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./geocov_ynp_selected.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Continent-scale barcode coverage of lodgepole pine and big sagebrush</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./fetch_gbif.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a>
   </div>
 </li>
@@ -361,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write combtab</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>combtab <span class="ot">&lt;-</span> combtab </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(combtab, <span class="st">"combtab.csv"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(combtab, <span class="st">"../data/combtab.csv"</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write out combtab here for supplementary/supporting information </span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(combtab<span class="sc">$</span>species_name))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1336,7 +1341,7 @@ trnL
 <span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>sitepix<span class="ot">&lt;-</span><span class="fu">unique</span>(sitepix)</span>
 <span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="co"># load worldclim data</span></span>
-<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># use 10 min for testing download directly from worldclim but here are some dropbox links: https://www.dropbox.com/scl/fo/9yl4dt2tli37qj24smitc/h?rlkey=z09vzcz1p6vg49pt48o92pyed&amp;dl=0</span></span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># use 10 min for testing download directly from worldclim</span></span>
 <span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>t.mean.files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"../data/wc2.1_10m_tavg/"</span>, <span class="st">".tif"</span>, <span class="at">full.names=</span><span class="cn">TRUE</span>)</span>
 <span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>p.mean.files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"../data/wc2.1_10m_prec/"</span>, <span class="st">".tif"</span>, <span class="at">full.names=</span><span class="cn">TRUE</span>)</span>
 <span id="cb100-12"><a href="#cb100-12" aria-hidden="true" tabindex="-1"></a></span>
