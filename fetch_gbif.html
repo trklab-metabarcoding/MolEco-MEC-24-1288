@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./build_geocov_map.html" rel="next">
-<link href="./taxonomic_coverage.html" rel="prev">
+<link href="./geocov_ynp_selected.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_gbif.html">Case-study – Yellowstone</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geocov_ynp_selected.html">Case-study – Yellowstone</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -221,6 +221,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./geocov_ynp_selected.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Continent-scale barcode coverage of lodgepole pine and big sagebrush</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./fetch_gbif.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a>
   </div>
 </li>
@@ -244,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#read-in-bold-species-list-and-obtain-gbif-keys" id="toc-read-in-bold-species-list-and-obtain-gbif-keys" class="nav-link active" data-scroll-target="#read-in-bold-species-list-and-obtain-gbif-keys">Read in BOLD species list and obtain GBIF keys</a></li>
   <li><a href="#investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" id="toc-investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" class="nav-link" data-scroll-target="#investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches">Investigate taxon keys for fuzzy matches and higher rank matches</a></li>
   <li><a href="#set-gbif-credentials" id="toc-set-gbif-credentials" class="nav-link" data-scroll-target="#set-gbif-credentials">Set GBIF credentials</a></li>
-  <li><a href="#request-the-occurence-data" id="toc-request-the-occurence-data" class="nav-link" data-scroll-target="#request-the-occurence-data">Request the occurence data</a></li>
+  <li><a href="#request-the-occurrence-data" id="toc-request-the-occurrence-data" class="nav-link" data-scroll-target="#request-the-occurrence-data">Request the occurrence data</a></li>
   <li><a href="#get-metadata-and-wait" id="toc-get-metadata-and-wait" class="nav-link" data-scroll-target="#get-metadata-and-wait">Get metadata and wait</a></li>
   </ul>
 </nav>
@@ -252,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_gbif.html">Case-study – Yellowstone</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geocov_ynp_selected.html">Case-study – Yellowstone</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></h1>
 </div>
@@ -351,8 +356,8 @@ chr (1): Species
 </div>
 </div>
 </section>
-<section id="request-the-occurence-data" class="level3">
-<h3 class="anchored" data-anchor-id="request-the-occurence-data">Request the occurence data</h3>
+<section id="request-the-occurrence-data" class="level3">
+<h3 class="anchored" data-anchor-id="request-the-occurrence-data">Request the occurrence data</h3>
 <p>We’ll further restrict the data returned to records that have reliable coordinate data, and use a simple CSV format to reduce the size of the data. The Darwin Core Archive format will include much more metadata, but we’re only interested in the locations for this analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
@@ -371,26 +376,26 @@ chr (1): Species
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;gbif download&gt;&gt;
   Your download is being processed by GBIF:
-  https://www.gbif.org/occurrence/download/0067216-241126133413365
+  https://www.gbif.org/occurrence/download/0002703-250117142028555
   Most downloads finish within 15 min.
   Check status with
-  occ_download_wait('0067216-241126133413365')
+  occ_download_wait('0002703-250117142028555')
   After it finishes, use
-  d &lt;- occ_download_get('0067216-241126133413365') %&gt;%
+  d &lt;- occ_download_get('0002703-250117142028555') %&gt;%
     occ_download_import()
   to retrieve your download.
 Download Info:
   Username: tdivoll
   E-mail: timothy_divoll@brown.edu
   Format: SIMPLE_CSV
-  Download key: 0067216-241126133413365
-  Created: 2025-01-13T21:36:39.215+00:00
+  Download key: 0002703-250117142028555
+  Created: 2025-01-19T12:26:55.208+00:00
 Citation Info:  
   Please always cite the download DOI when using this data.
   https://www.gbif.org/citation-guidelines
-  DOI: 10.15468/dl.w9bwwx
+  DOI: 10.15468/dl.pde994
   Citation:
-  GBIF Occurrence Download https://doi.org/10.15468/dl.w9bwwx Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-13</code></pre>
+  GBIF Occurrence Download https://doi.org/10.15468/dl.pde994 Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-19</code></pre>
 </div>
 </div>
 <p>Check the status of the download.</p>
@@ -838,8 +843,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./taxonomic_coverage.html" class="pagination-link" aria-label="Correlations between plant species and DNA barcode availability">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Correlations between plant species and DNA barcode availability</span></span>
+      <a href="./geocov_ynp_selected.html" class="pagination-link" aria-label="Continent-scale barcode coverage of lodgepole pine and big sagebrush">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Continent-scale barcode coverage of lodgepole pine and big sagebrush</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
