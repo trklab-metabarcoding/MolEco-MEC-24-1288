@@ -14,7 +14,7 @@
     "href": "intro.html",
     "title": "Introduction",
     "section": "",
-    "text": "Four code notebooks were used in the analyses for this publication.\n\nBuilding the BOLD dataset\nGeographic coverage\nTaxonomic coverage\nCase-study in geographic coverage of site-based reference data",
+    "text": "This codebook is divided into four parts that follow the Methods section of the manuscript and includes eight code notebooks that were used in the analyses for this publication.\nSource code is available in a GitHub repository\nMost input data files can be found in the data/ directory; some larger data files can be downloaded from the Supplemental Materials [placeholder link].\n\n\nBuilding global BOLD data\n\nBuilding the BOLD dataset\n\n\n\nGeographic coverage\n\nCoverage by climatic zones\nCoverage by country\n\n\n\nTaxonomic coverage\n\nFetching data from ITIS\nCorrelations – plant species and available barcodes\n\n\n\nCase-study Yellowstone National Park\n\nContinent-scale barcode coverage of lodgepole pine and big sagebrush\nFetching data from GBIF\nCase-study in geographic coverage of site-based reference data",
     "crumbs": [
       "Introduction"
     ]

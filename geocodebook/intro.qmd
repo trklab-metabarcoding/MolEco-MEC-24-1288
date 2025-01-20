@@ -1,8 +1,29 @@
 # Introduction {.unnumbered}
 
-Four code notebooks were used in the analyses for this publication.
+This codebook is divided into four parts that follow the Methods section of the manuscript and includes eight code notebooks that were used in the analyses for this publication.
+
+Source code is available in a GitHub [repository](%22https://github.com/trklab-metabarcoding/MolEco-MEC-1288%22)
+
+Most input data files can be found in the `data/` directory; some larger data files can be downloaded from the Supplemental Materials \[placeholder link\].
+
+<br>
+
+### Building global BOLD data
 
 1.  [Building the BOLD dataset](building_bold.qmd)
-2.  [Geographic coverage](geographic_coverage.qmd)
-3.  [Taxonomic coverage](taxonomic_coverage.qmd)
-4.  [Case-study in geographic coverage of site-based reference data](case_study.qmd)
+
+### Geographic coverage
+
+2.  [Coverage by climatic zones](geocov_figs1.qmd)
+3.  [Coverage by country](geocov_figs2.qmd)
+
+### Taxonomic coverage
+
+4.  [Fetching data from ITIS](fetch_itis.qmd)
+5.  [Correlations -- plant species and available barcodes](taxonomic_coverage.qmd)
+
+### Case-study Yellowstone National Park
+
+6.  [Continent-scale barcode coverage of lodgepole pine and big sagebrush](geocov_ynp_selected.qmd)
+7.  [Fetching data from GBIF](fetch_gbif.qmd)
+8.  [Case-study in geographic coverage of site-based reference data](build_geocov_map.qmd)

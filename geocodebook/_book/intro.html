@@ -207,8 +207,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#building-global-bold-data" id="toc-building-global-bold-data" class="nav-link active" data-scroll-target="#building-global-bold-data">Building global BOLD data</a></li>
+  <li><a href="#geographic-coverage" id="toc-geographic-coverage" class="nav-link" data-scroll-target="#geographic-coverage">Geographic coverage</a></li>
+  <li><a href="#taxonomic-coverage" id="toc-taxonomic-coverage" class="nav-link" data-scroll-target="#taxonomic-coverage">Taxonomic coverage</a></li>
+  <li><a href="#case-study-yellowstone-national-park" id="toc-case-study-yellowstone-national-park" class="nav-link" data-scroll-target="#case-study-yellowstone-national-park">Case-study Yellowstone National Park</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -232,15 +241,40 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Four code notebooks were used in the analyses for this publication.</p>
+<p>This codebook is divided into four parts that follow the Methods section of the manuscript and includes eight code notebooks that were used in the analyses for this publication.</p>
+<p>Source code is available in a GitHub <a href="&quot;https://github.com/trklab-metabarcoding/MolEco-MEC-1288&quot;">repository</a></p>
+<p>Most input data files can be found in the <code>data/</code> directory; some larger data files can be downloaded from the Supplemental Materials [placeholder link].</p>
+<p><br></p>
+<section id="building-global-bold-data" class="level3">
+<h3 class="anchored" data-anchor-id="building-global-bold-data">Building global BOLD data</h3>
 <ol type="1">
 <li><a href="./building_bold.html">Building the BOLD dataset</a></li>
-<li><a href="geographic_coverage.qmd">Geographic coverage</a></li>
-<li><a href="./taxonomic_coverage.html">Taxonomic coverage</a></li>
-<li><a href="case_study.qmd">Case-study in geographic coverage of site-based reference data</a></li>
+</ol>
+</section>
+<section id="geographic-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-coverage">Geographic coverage</h3>
+<ol start="2" type="1">
+<li><a href="./geocov_figs1.html">Coverage by climatic zones</a></li>
+<li><a href="./geocov_figs2.html">Coverage by country</a></li>
+</ol>
+</section>
+<section id="taxonomic-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="taxonomic-coverage">Taxonomic coverage</h3>
+<ol start="4" type="1">
+<li><a href="./fetch_itis.html">Fetching data from ITIS</a></li>
+<li><a href="./taxonomic_coverage.html">Correlations – plant species and available barcodes</a></li>
+</ol>
+</section>
+<section id="case-study-yellowstone-national-park" class="level3">
+<h3 class="anchored" data-anchor-id="case-study-yellowstone-national-park">Case-study Yellowstone National Park</h3>
+<ol start="6" type="1">
+<li><a href="./geocov_ynp_selected.html">Continent-scale barcode coverage of lodgepole pine and big sagebrush</a></li>
+<li><a href="./fetch_gbif.html">Fetching data from GBIF</a></li>
+<li><a href="./build_geocov_map.html">Case-study in geographic coverage of site-based reference data</a></li>
 </ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
