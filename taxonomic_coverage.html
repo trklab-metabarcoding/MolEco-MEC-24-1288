@@ -456,53 +456,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize families in BOLD not in ITIS</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>boldfamnames <span class="ot">&lt;-</span> <span class="fu">levels</span>(combtab<span class="sc">$</span>family_name)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(boldfamnames) <span class="co">#651</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Families in BOLD not matched by ITIS</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>nomatchnames <span class="ot">&lt;-</span> boldfamnames[<span class="fu">which</span>(boldfamnames <span class="sc">%in%</span> famcountmat<span class="sc">$</span>ITISfamname <span class="sc">==</span> F)]</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>nomatchnames <span class="ot">&lt;-</span> nomatchnames[<span class="fu">which</span>(nomatchnames <span class="sc">!=</span> <span class="st">""</span>)]</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnames) <span class="co">#42</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnames)<span class="sc">/</span><span class="fu">length</span>(boldfamnames) <span class="co">#0.06451613</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NaN</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of specimens in families in BOLD not matched by ITIS</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>family_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(combtab<span class="sc">$</span>family_name)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>integer(0)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))<span class="sc">/</span><span class="fu">nrow</span>(combtab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NA</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of specimens not identified to family</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">==</span> <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(boldfamnames) <span class="co">#651</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Families in BOLD not matched by ITIS</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>nomatchnames <span class="ot">&lt;-</span> boldfamnames[<span class="fu">which</span>(boldfamnames <span class="sc">%in%</span> famcountmat<span class="sc">$</span>ITISfamname <span class="sc">==</span> F)]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>nomatchnames <span class="ot">&lt;-</span> nomatchnames[<span class="fu">which</span>(nomatchnames <span class="sc">!=</span> <span class="st">""</span>)]</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnames) <span class="co">#42</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnames)<span class="sc">/</span><span class="fu">length</span>(boldfamnames) <span class="co">#0.06451613</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of specimens in families in BOLD not matched by ITIS</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>combtab<span class="sc">$</span>family_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(combtab<span class="sc">$</span>family_name)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))<span class="sc">/</span><span class="fu">nrow</span>(combtab)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnames),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of specimens not identified to family</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">==</span> <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="si-appendix-figure-2a-d-plot-panels-a-b" class="level2">
 <h2 class="anchored" data-anchor-id="si-appendix-figure-2a-d-plot-panels-a-b">SI Appendix Figure 2A-D: Plot panels A-B</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot family count by specimens: Panel A</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plotcorrs <span class="ot">&lt;-</span> famcountmat[<span class="fu">complete.cases</span>(famcountmat[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]),] </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>BOLDspecimencount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot family count by specimens: Panel A</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plotcorrs <span class="ot">&lt;-</span> famcountmat[<span class="fu">complete.cases</span>(famcountmat[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]),] </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>BOLDspecimencount)) <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">as.numeric</span>(plotcorrs<span class="sc">$</span>ITISfamcount))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -526,17 +505,17 @@ Residual standard error: 1.301 on 607 degrees of freedom
 Multiple R-squared:  0.6251,    Adjusted R-squared:  0.6245 
 F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecimen_ITISfamily <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(BOLDspecimencount))) <span class="sc">+</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of BOLD specimen count"</span>) <span class="sc">+</span> </span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> </span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecimen_ITISfamily</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecimen_ITISfamily <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(BOLDspecimencount))) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of BOLD specimen count"</span>) <span class="sc">+</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecimen_ITISfamily</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -547,28 +526,28 @@ F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_BOLDspecimen_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecimen_ITISfamily, width = 10, height = 8, units = "cm")</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary stats for panel A</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">sumspecimens =</span> <span class="fu">sum</span>(BOLDspecimencount))</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_BOLDspecimen_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecimen_ITISfamily, width = 10, height = 8, units = "cm")</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary stats for panel A</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">sumspecimens =</span> <span class="fu">sum</span>(BOLDspecimencount))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sumspecimens
 1       277770</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot family count by species: PANEL B</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecies_ITISfamily <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(BOLDspeccount))) <span class="sc">+</span> </span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of BOLD species count"</span>) <span class="sc">+</span> </span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecies_ITISfamily </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot family count by species: PANEL B</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecies_ITISfamily <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(BOLDspeccount))) <span class="sc">+</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of BOLD species count"</span>) <span class="sc">+</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_BOLDspecies_ITISfamily </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -579,11 +558,11 @@ F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_BOLDspecies_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecies_ITISfamily, width = 10, height = 8, units = "cm")</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary stats for panel B</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sumspecies =</span> <span class="fu">sum</span>(BOLDspeccount))</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_BOLDspecies_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecies_ITISfamily, width = 10, height = 8, units = "cm")</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary stats for panel B</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sumspecies =</span> <span class="fu">sum</span>(BOLDspeccount))</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sumspecies
 1     101674</code></pre>
@@ -593,62 +572,62 @@ F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-c-d." class="level2">
 <h2 class="anchored" data-anchor-id="si-appendix-figure-2a-d-read-in-files-and-summarize-for-panels-c-d.">SI Appendix Figure 2A-D: Read in files and summarize for panels C-D.</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>emblp6 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/glob_ref_lib_edit_P6.csv"</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(emblp6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>emblp6 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/glob_ref_lib_edit_P6.csv"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(emblp6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 86192</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the same kind of matrix as above</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>famcountmatp6 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">length</span>(ITISfamcount), <span class="at">ncol =</span> <span class="dv">5</span>)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(famcountmatp6) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rank"</span>, <span class="st">"ITISfamname"</span>, <span class="st">"ITISfamcount"</span>, <span class="st">"p6seqcount"</span>, <span class="st">"p6speccount"</span>)</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>famcountmatp6 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(famcountmatp6)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(ITISfamcount))</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">names</span>(ITISfamcount)</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">3</span>] <span class="ot">&lt;-</span> ITISfamcount</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of specimens by family</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>emblp6count <span class="ot">&lt;-</span> <span class="fu">table</span>(emblp6<span class="sc">$</span>family_name)</span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">4</span>] <span class="ot">&lt;-</span> emblp6count[<span class="fu">match</span>(famcountmatp6[,<span class="dv">2</span>], <span class="fu">names</span>(emblp6count))]</span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(emblp6count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the same kind of matrix as above</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>famcountmatp6 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">length</span>(ITISfamcount), <span class="at">ncol =</span> <span class="dv">5</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(famcountmatp6) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rank"</span>, <span class="st">"ITISfamname"</span>, <span class="st">"ITISfamcount"</span>, <span class="st">"p6seqcount"</span>, <span class="st">"p6speccount"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>famcountmatp6 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(famcountmatp6)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(ITISfamcount))</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">names</span>(ITISfamcount)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">3</span>] <span class="ot">&lt;-</span> ITISfamcount</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of specimens by family</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>emblp6count <span class="ot">&lt;-</span> <span class="fu">table</span>(emblp6<span class="sc">$</span>family_name)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">4</span>] <span class="ot">&lt;-</span> emblp6count[<span class="fu">match</span>(famcountmatp6[,<span class="dv">2</span>], <span class="fu">names</span>(emblp6count))]</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(emblp6count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 633</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(emblp6count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(emblp6count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 86192</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of species by family</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>emblp6speciescount <span class="ot">&lt;-</span> <span class="fu">tapply</span>(emblp6<span class="sc">$</span>species_name, emblp6<span class="sc">$</span>family_name, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">5</span>] <span class="ot">&lt;-</span> emblp6speciescount[<span class="fu">match</span>(famcountmatp6[,<span class="dv">2</span>], <span class="fu">names</span>(emblp6speciescount))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make count of species by family</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>emblp6speciescount <span class="ot">&lt;-</span> <span class="fu">tapply</span>(emblp6<span class="sc">$</span>species_name, emblp6<span class="sc">$</span>family_name, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>famcountmatp6[,<span class="dv">5</span>] <span class="ot">&lt;-</span> emblp6speciescount[<span class="fu">match</span>(famcountmatp6[,<span class="dv">2</span>], <span class="fu">names</span>(emblp6speciescount))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="summarize-the-data-1" class="level4">
 <h4 class="anchored" data-anchor-id="summarize-the-data-1">Summarize the data:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of taxa</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(famcountmatp6)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names in ITIS with barcodes</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount) <span class="sc">==</span> F))</span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount) <span class="sc">==</span> F))<span class="sc">/</span><span class="fu">nrow</span>(famcountmatp6)</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names ITIS without barcodes</span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)))</span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)))<span class="sc">/</span><span class="fu">nrow</span>(famcountmatp6)</span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Characterize the no-barcode families</span></span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>nbcfamsp6 <span class="ot">&lt;-</span> famcountmatp6[<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)),]</span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>nbcfamsp6 <span class="ot">&lt;-</span> nbcfamsp6[<span class="fu">order</span>(nbcfamsp6<span class="sc">$</span>ITISfamcount),] <span class="co"># reorder by ITIS fam size</span></span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>nbcfamsp6</span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(nbcfamsp6)</span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(nbcfamsp6[,<span class="dv">3</span>])</span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6)</span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname) </span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of taxa</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(famcountmatp6)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(famcountmatp6<span class="sc">$</span>ITISfamcount)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names in ITIS with barcodes</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount) <span class="sc">==</span> F))</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount) <span class="sc">==</span> F))<span class="sc">/</span><span class="fu">nrow</span>(famcountmatp6)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of family names ITIS without barcodes</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)))</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)))<span class="sc">/</span><span class="fu">nrow</span>(famcountmatp6)</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Characterize the no-barcode families</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>nbcfamsp6 <span class="ot">&lt;-</span> famcountmatp6[<span class="fu">which</span>(<span class="fu">is.na</span>(famcountmatp6<span class="sc">$</span>p6seqcount)),]</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>nbcfamsp6 <span class="ot">&lt;-</span> nbcfamsp6[<span class="fu">order</span>(nbcfamsp6<span class="sc">$</span>ITISfamcount),] <span class="co"># reorder by ITIS fam size</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>nbcfamsp6</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(nbcfamsp6)</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(nbcfamsp6[,<span class="dv">3</span>])</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6)</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname) </span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -656,81 +635,60 @@ F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">order</span>(nbcfamsp6[,<span class="dv">3</span>]),]</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),]</span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),])</span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfamsp6)</span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),]</span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])</span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfamsp6)</span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname<span class="sc">==</span><span class="st">"Heliophytaceae"</span>),]</span>
-<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname<span class="sc">==</span><span class="st">"Calliergonaceae"</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(nbcfamsp6 <span class="sc">$</span>ITISfamcount)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">order</span>(nbcfamsp6[,<span class="dv">3</span>]),]</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),]</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),])</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">==</span><span class="dv">1</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfamsp6)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),]</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(nbcfamsp6[<span class="fu">which</span>(nbcfamsp6[,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">5</span>),])<span class="sc">/</span><span class="fu">nrow</span>(nbcfamsp6)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname<span class="sc">==</span><span class="st">"Heliophytaceae"</span>),]</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>nbcfamsp6[<span class="fu">which</span>(nbcfamsp6 <span class="sc">$</span>ITISfamname<span class="sc">==</span><span class="st">"Calliergonaceae"</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize families in embl not in ITIS</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>p6famnames <span class="ot">&lt;-</span> <span class="fu">levels</span>(emblp6<span class="sc">$</span>family_name)</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(p6famnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Families in embl not matched by ITIS</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>nomatchnamesp6 <span class="ot">&lt;-</span> p6famnames[<span class="fu">which</span>(p6famnames <span class="sc">%in%</span> famcountmatp6<span class="sc">$</span>ITISfamname <span class="sc">==</span> F)]</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>nomatchnamesp6 <span class="ot">&lt;-</span> nomatchnamesp6[<span class="fu">which</span>(nomatchnamesp6 <span class="sc">!=</span> <span class="st">""</span>)]</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnamesp6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnamesp6)<span class="sc">/</span><span class="fu">length</span>(p6famnames)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NaN</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of specimens in families in embl not matched by ITIS</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>emblp6<span class="sc">$</span>family_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(emblp6<span class="sc">$</span>family_name)</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>integer(0)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))<span class="sc">/</span><span class="fu">nrow</span>(combtab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NA</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of specimens not identified to family</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(emblp6<span class="sc">$</span>family_name <span class="sc">==</span> <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize families in embl not in ITIS</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>p6famnames <span class="ot">&lt;-</span> <span class="fu">levels</span>(emblp6<span class="sc">$</span>family_name)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(p6famnames)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Families in embl not matched by ITIS</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>nomatchnamesp6 <span class="ot">&lt;-</span> p6famnames[<span class="fu">which</span>(p6famnames <span class="sc">%in%</span> famcountmatp6<span class="sc">$</span>ITISfamname <span class="sc">==</span> F)]</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>nomatchnamesp6 <span class="ot">&lt;-</span> nomatchnamesp6[<span class="fu">which</span>(nomatchnamesp6 <span class="sc">!=</span> <span class="st">""</span>)]</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnamesp6)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(nomatchnamesp6)<span class="sc">/</span><span class="fu">length</span>(p6famnames)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of specimens in families in embl not matched by ITIS</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>emblp6<span class="sc">$</span>family_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(emblp6<span class="sc">$</span>family_name)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(emblp6[<span class="fu">which</span>(emblp6 <span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))<span class="sc">/</span><span class="fu">nrow</span>(combtab)</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">sort</span>(<span class="fu">table</span>(<span class="fu">droplevels</span>(combtab[<span class="fu">which</span>(combtab<span class="sc">$</span>family_name <span class="sc">%in%</span> nomatchnamesp6),]<span class="sc">$</span>family_name)), <span class="at">decreasing=</span>T))</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of specimens not identified to family</span></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">which</span>(emblp6<span class="sc">$</span>family_name <span class="sc">==</span> <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="si-appendix-figure-2a-d-plot-panels-c-d" class="level2">
 <h2 class="anchored" data-anchor-id="si-appendix-figure-2a-d-plot-panels-c-d">SI Appendix Figure 2A-D: Plot panels C-D</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot correlations - family count by specimens: Panel C</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>plotcorrs <span class="ot">&lt;-</span> famcountmatp6[<span class="fu">complete.cases</span>(famcountmatp6[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]),]</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequences <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(p6seqcount))) <span class="sc">+</span> </span>
-<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
-<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of trnL-P6 sequence count"</span>) <span class="sc">+</span> </span>
-<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
-<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> </span>
-<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
-<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot correlations - family count by specimens: Panel C</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>plotcorrs <span class="ot">&lt;-</span> famcountmatp6[<span class="fu">complete.cases</span>(famcountmatp6[,<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]),]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequences <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(p6seqcount))) <span class="sc">+</span> </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of trnL-P6 sequence count"</span>) <span class="sc">+</span> </span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> </span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -741,29 +699,29 @@ F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_family_sequences.pdf", plotcorrs_ggplot_family_sequences, width = 10, height = 8, units = "cm")</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize for panel C</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">sumP6sequences =</span> <span class="fu">sum</span>(p6seqcount))</span>
-<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_family_sequences.pdf", plotcorrs_ggplot_family_sequences, width = 10, height = 8, units = "cm")</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize for panel C</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">sumP6sequences =</span> <span class="fu">sum</span>(p6seqcount))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sumP6sequences
 1          84837</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Family count by species: Panel D</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequencespecies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(p6speccount))) <span class="sc">+</span> </span>
-<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
-<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of trnL-P6 species count"</span>) <span class="sc">+</span> </span>
-<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>)  <span class="sc">+</span></span>
-<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> </span>
-<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
-<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequencespecies         </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Family count by species: Panel D</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequencespecies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  plotcorrs, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(ITISfamcount), <span class="at">y=</span><span class="fu">log</span>(p6speccount))) <span class="sc">+</span> </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">pch =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Log of ITIS family count"</span>) <span class="sc">+</span> </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Log of trnL-P6 species count"</span>) <span class="sc">+</span> </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>)  <span class="sc">+</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>)) <span class="sc">+</span> </span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">9</span>, <span class="at">by =</span> <span class="dv">3</span>))</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>plotcorrs_ggplot_family_sequencespecies         </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -774,11 +732,11 @@ F-statistic:  1012 on 1 and 607 DF,  p-value: &lt; 2.2e-16</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_family_sequencespecies.pdf", plotcorrs_ggplot_family_sequencespecies, width = 10, height = 8, units = "cm")</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize for panel D</span></span>
-<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sump6speccount =</span> <span class="fu">sum</span>(p6speccount))</span>
-<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave("plotcorrs_ggplot_family_sequencespecies.pdf", plotcorrs_ggplot_family_sequencespecies, width = 10, height = 8, units = "cm")</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize for panel D</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary <span class="ot">&lt;-</span> plotcorrs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sump6speccount =</span> <span class="fu">sum</span>(p6speccount))</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>plotcorrs_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sump6speccount
 1          45659</code></pre>
