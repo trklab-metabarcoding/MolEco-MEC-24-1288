@@ -116,9 +116,8 @@ nbcfams[which(nbcfams$ITISfamname == "Heliophytaceae"),]
 nbcfams[which(nbcfams$ITISfamname == "Calliergonaceae"),]
 ```
 
-```{r}
+```{r results='hide'}
 # Summarize families in BOLD not in ITIS
-combtab <- combtab
 boldfamnames <- levels(combtab$family_name)
 length(boldfamnames) #651
 
@@ -252,7 +251,7 @@ nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Heliophytaceae"),]
 nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Calliergonaceae"),]
 ```
 
-```{r}
+```{r results='hide'}
 # Summarize families in embl not in ITIS
 p6famnames <- levels(emblp6$family_name)
 length(p6famnames)
