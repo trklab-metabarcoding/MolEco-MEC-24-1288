@@ -18,9 +18,10 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf)
 ```
 
-## SI Appendix Figure 2A-D: Read in files and summarize for panels A-B. 
+## SI Appendix Figure 2A-D: Read in files and summarize for panels A-B.
 
 #### First we read in the data and make some quick plots.
+
 ```{r}
 combtab <- read.csv("../data/BoldPhyla_to_Families_combtab_v4.csv")
 head(combtab, 2)
@@ -33,7 +34,8 @@ combtab$lon <- as.numeric(as.character(combtab$lon))
 barplot(sort(table(combtab$phylum_name), decreasing=T), main = "Most barcoded Phyla")
 
 # Family rank
-sort(table(combtab$family_name), decreasing=T)
+head(sort(table(combtab$family_name), decreasing=T), 10)
+
 barplot(sort(table(combtab$family_name), decreasing=T), main = "Most barcoded Families")
 
 head(table(combtab$family_name, combtab$multi), 2)
@@ -42,7 +44,7 @@ head(table(combtab$family_name, combtab$multi), 2)
 sort(table(combtab$species_name), decreasing=T)[1:5] # by specimens
 ```
 
-#### Plot family abundances in ITIS and compare with barcodes: this section gives us panels A and B of the figure 
+#### Plot family abundances in ITIS and compare with barcodes: this section gives us panels A and B of the figure
 
 ```{r}
 infam <- read.csv("../data/allFamNames.csv")
@@ -70,6 +72,7 @@ famcountmat[,6] <- combtabtrnLcount[match(famcountmat[,2], names(combtabtrnLcoun
 ```
 
 #### Summarize the data:
+
 ```{r results='hide'}
 # Number of taxa
 nrow(famcountmat)
@@ -135,18 +138,24 @@ length(which(combtab$family_name == ""))
 ```
 
 ## SI Appendix Figure 2A-D: Plot panels A-B
+
 ```{r}
 # Plot family count by specimens: Panel A
-plotcorrs <- famcountmat[complete.cases(famcountmat[,3:4]),]	
-			plot(log(as.numeric(plotcorrs$BOLDspecimencount)) ~ log(as.numeric(plotcorrs$ITISfamcount)))
-				abline(lm(log(as.numeric(plotcorrs$BOLDspecimencount)) ~ log(as.numeric(plotcorrs$ITISfamcount))))
-				abline(0,1, col="red")
-				summary(lm(log(as.numeric(plotcorrs$BOLDspecimencount)) ~ log(as.numeric(plotcorrs$ITISfamcount))))
+plotcorrs <- famcountmat[complete.cases(famcountmat[,3:4]),] 
+summary(lm(log(as.numeric(plotcorrs$BOLDspecimencount)) ~ log(as.numeric(plotcorrs$ITISfamcount))))
 
-plotcorrs_ggplot_BOLDspecimen_ITISfamily <- ggplot(plotcorrs, aes(x=log(ITISfamcount), y=log(BOLDspecimencount))) + 
-    geom_point(pch = 1) + theme_classic() + xlab("Log of ITIS family count") + ylab("Log of BOLD specimen count") + geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen") + scale_y_continuous(breaks = seq(0,9, by = 3)) + scale_x_continuous(breaks = seq(0,9, by = 3))
-		plotcorrs_ggplot_BOLDspecimen_ITISfamily
-		ggsave("plotcorrs_ggplot_BOLDspecimen_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecimen_ITISfamily, width = 10, height = 8, units = "cm")
+plotcorrs_ggplot_BOLDspecimen_ITISfamily <- ggplot(
+  plotcorrs, aes(x=log(ITISfamcount), y=log(BOLDspecimencount))) + 
+  geom_point(pch = 1) + 
+  theme_classic() + 
+  xlab("Log of ITIS family count") + 
+  ylab("Log of BOLD specimen count") + 
+  geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + 
+  geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen") +
+  scale_y_continuous(breaks = seq(0,9, by = 3)) + 
+  scale_x_continuous(breaks = seq(0,9, by = 3))
+plotcorrs_ggplot_BOLDspecimen_ITISfamily
+#ggsave("plotcorrs_ggplot_BOLDspecimen_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecimen_ITISfamily, width = 10, height = 8, units = "cm")
 		
 # Summary stats for panel A
 plotcorrs_summary <- plotcorrs %>% dplyr::summarize(sumspecimens = sum(BOLDspecimencount))
@@ -155,17 +164,25 @@ plotcorrs_summary
 
 ```{r}
 # Plot family count by species: PANEL B
-		plotcorrs_ggplot_BOLDspecies_ITISfamily <- ggplot(plotcorrs, aes(x=log(ITISfamcount), y=log(BOLDspeccount))) + 
-    geom_point(pch = 1) + theme_classic() + xlab("Log of ITIS family count") + ylab("Log of BOLD species count")+ geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen") + scale_y_continuous(breaks = seq(0,9, by = 3)) + scale_x_continuous(breaks = seq(0,9, by = 3))
-		plotcorrs_ggplot_BOLDspecies_ITISfamily 
-		ggsave("plotcorrs_ggplot_BOLDspecies_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecies_ITISfamily, width = 10, height = 8, units = "cm")
+plotcorrs_ggplot_BOLDspecies_ITISfamily <- ggplot(
+  plotcorrs, aes(x=log(ITISfamcount), y=log(BOLDspeccount))) + 
+  geom_point(pch = 1) + 
+  theme_classic() + 
+  xlab("Log of ITIS family count") + 
+  ylab("Log of BOLD species count") + 
+  geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + 
+  geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen") +
+  scale_y_continuous(breaks = seq(0,9, by = 3)) + scale_x_continuous(breaks = seq(0,9, by = 3))
+plotcorrs_ggplot_BOLDspecies_ITISfamily 
+#ggsave("plotcorrs_ggplot_BOLDspecies_ITISfamily.pdf", plotcorrs_ggplot_BOLDspecies_ITISfamily, width = 10, height = 8, units = "cm")
 		
 #summary stats for panel B
 plotcorrs_summary <- plotcorrs %>% summarize(sumspecies = sum(BOLDspeccount))
 plotcorrs_summary
 ```
 
-## SI Appendix Figure 2A-D: Read in files and summarize for panels C-D. 
+## SI Appendix Figure 2A-D: Read in files and summarize for panels C-D.
+
 ```{r}
 emblp6 <- read.csv("../data/glob_ref_lib_edit_P6.csv")
 nrow(emblp6)
@@ -190,6 +207,7 @@ famcountmatp6[,5] <- emblp6speciescount[match(famcountmatp6[,2], names(emblp6spe
 ```
 
 #### Summarize the data:
+
 ```{r results='hide'}
 # Number of taxa
 nrow(famcountmatp6)
@@ -255,18 +273,22 @@ length(which(emblp6$family_name == ""))
 ```
 
 ## SI Appendix Figure 2A-D: Plot panels C-D
+
 ```{r}
 # Plot correlations - family count by specimens: Panel C
 plotcorrs <- famcountmatp6[complete.cases(famcountmatp6[,3:4]),]
-plot(log(as.numeric(plotcorrs$p6seqcount)) ~ log(as.numeric(plotcorrs$ITISfamcount)))
-abline(lm(log(as.numeric(plotcorrs$p6seqcount)) ~ log(as.numeric(plotcorrs$ITISfamcount))))
-abline(0,1, col="red")
-summary(lm(log(as.numeric(plotcorrs$p6seqcount)) ~ log(as.numeric(plotcorrs$ITISfamcount))))
-				
-plotcorrs_ggplot_family_sequences <- ggplot(plotcorrs, aes(x=log(ITISfamcount), y=log(p6seqcount))) + 
-geom_point(pch = 1) + theme_classic() + xlab("Log of ITIS family count") + ylab("Log of trnL-P6 sequence count") + geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen") + scale_y_continuous(breaks = seq(0,9, by = 3)) + scale_x_continuous(breaks = seq(0,9, by = 3))
-		plotcorrs_ggplot_family_sequences
-ggsave("plotcorrs_ggplot_family_sequences.pdf", plotcorrs_ggplot_family_sequences, width = 10, height = 8, units = "cm")
+plotcorrs_ggplot_family_sequences <- ggplot(
+  plotcorrs, aes(x=log(ITISfamcount), y=log(p6seqcount))) + 
+  geom_point(pch = 1) + 
+  theme_classic() + 
+  xlab("Log of ITIS family count") + 
+  ylab("Log of trnL-P6 sequence count") + 
+  geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + 
+  geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen") +
+  scale_y_continuous(breaks = seq(0,9, by = 3)) + 
+  scale_x_continuous(breaks = seq(0,9, by = 3))
+plotcorrs_ggplot_family_sequences
+#ggsave("plotcorrs_ggplot_family_sequences.pdf", plotcorrs_ggplot_family_sequences, width = 10, height = 8, units = "cm")
 
 # Summarize for panel C
 plotcorrs_summary <- plotcorrs %>% dplyr::summarize(sumP6sequences = sum(p6seqcount))
@@ -275,18 +297,20 @@ plotcorrs_summary
 
 ```{r}
 # Family count by species: Panel D
-plotcorrs <- famcountmatp6[complete.cases(famcountmatp6[,3:5]),]
-plot(log(as.numeric(plotcorrs$p6speccount)) ~ log(as.numeric(plotcorrs$ITISfamcount)))
-abline(lm(log(as.numeric(plotcorrs$p6speccount)) ~ log(as.numeric(plotcorrs$ITISfamcount))))
-abline(0,1, col="red")
-summary(lm(log(as.numeric(plotcorrs$p6speccount)) ~ log(as.numeric(plotcorrs$ITISfamcount))))
-	
-plotcorrs_ggplot_family_sequencespecies <- ggplot(plotcorrs, aes(x=log(ITISfamcount), y=log(p6speccount))) + 
-geom_point(pch = 1) + theme_classic() + xlab("Log of ITIS family count") + ylab("Log of trnL-P6 species count")+ geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen")  + scale_y_continuous(breaks = seq(0,9, by = 3)) + scale_x_continuous(breaks = seq(0,9, by = 3))
-		plotcorrs_ggplot_family_sequencespecies			
-ggsave("plotcorrs_ggplot_family_sequencespecies.pdf", plotcorrs_ggplot_family_sequencespecies, width = 10, height = 8, units = "cm")
+plotcorrs_ggplot_family_sequencespecies <- ggplot(
+  plotcorrs, aes(x=log(ITISfamcount), y=log(p6speccount))) + 
+  geom_point(pch = 1) + 
+  theme_classic() + 
+  xlab("Log of ITIS family count") + 
+  ylab("Log of trnL-P6 species count") + 
+  geom_abline(intercept = 0, slope = 1, color = "black", linewidth = 1, linetype = "dashed") + 
+  geom_smooth(method = "lm", se=FALSE, linewidth=1, color = "darkgreen")  +
+  scale_y_continuous(breaks = seq(0,9, by = 3)) + 
+  scale_x_continuous(breaks = seq(0,9, by = 3))
+plotcorrs_ggplot_family_sequencespecies			
+#ggsave("plotcorrs_ggplot_family_sequencespecies.pdf", plotcorrs_ggplot_family_sequencespecies, width = 10, height = 8, units = "cm")
 
 # Summarize for panel D
 plotcorrs_summary <- plotcorrs %>% summarize(sump6speccount = sum(p6speccount))
-				plotcorrs_summary
+plotcorrs_summary
 ```
