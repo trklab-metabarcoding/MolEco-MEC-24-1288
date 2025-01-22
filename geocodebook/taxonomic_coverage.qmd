@@ -1,6 +1,7 @@
 ---
 title: "Correlations between plant species and DNA barcode availability"
 format: html
+global: true
 ---
 
 This notebook pulls in data from various sources and makes plots to compare plants species per family to availability of DNA barcodes.
@@ -115,7 +116,7 @@ nbcfams[which(nbcfams$ITISfamname == "Heliophytaceae"),]
 nbcfams[which(nbcfams$ITISfamname == "Calliergonaceae"),]
 ```
 
-```{r}
+```{r cache=TRUE}
 # Summarize families in BOLD not in ITIS
 boldfamnames <- levels(combtab$family_name)
 length(boldfamnames) #651
@@ -250,7 +251,7 @@ nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Heliophytaceae"),]
 nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Calliergonaceae"),]
 ```
 
-```{r}
+```{r cache=TRUE}
 # Summarize families in embl not in ITIS
 p6famnames <- levels(emblp6$family_name)
 length(p6famnames)

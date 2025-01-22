@@ -8,3 +8,5 @@ wc2.1_10m_prec/
 wc2.1_10m_tavg/
 combtab*
 *.pdf
+*.png
+distance*
