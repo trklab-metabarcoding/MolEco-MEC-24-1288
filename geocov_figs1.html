@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -236,6 +256,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -1332,6 +1358,8 @@ trnL
 </section>
 <section id="figure-1d.-plot-mat-and-map-points-with-95-confidence-intervals" class="level1">
 <h1>Figure 1D. Plot MAT and MAP points with 95% confidence intervals</h1>
+<p>To run this next section, you’ll need to download temperature and precipitation data from [Worldclim](“<a href="https://www.worldclim.org/data/index.html">https://www.worldclim.org/data/worldclim21.html</a>). Download both the <code>tavg 10m</code> and <code>prec 10m</code> datasets, unzip, and add to your <code>./data</code> folder at the root of the <code>MolEco-MEC-24-1288</code> repository.<br>
+<span class="citation" data-cites="worldclim_data">Fick and Hijmans (<a href="references.html#ref-worldclim_data" role="doc-biblioref">2017</a>)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="do">#####</span></span>
 <span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Worldclim connect lat lon specimen records (rounded to nearest degree and dereplicated) with temperature and precip</span></span>
@@ -1688,6 +1716,11 @@ values     : 0, 1  (min, max)</code></pre>
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-worldclim_data" class="csl-entry" role="listitem">
+Fick, S. E., and R. J. Hijmans. 2017. <span>“WorldClim 2: New 1km Spatial Resolution Climate Surfaces for Global Land Areas”</span> 37: 4302–15. <a href="https://doi.org/10.1002/joc.5086">https://doi.org/10.1002/joc.5086</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
