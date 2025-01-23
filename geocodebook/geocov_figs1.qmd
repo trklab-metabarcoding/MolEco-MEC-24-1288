@@ -251,6 +251,8 @@ ITS <- subset(combtab_rounded, ITS2 == "ITS")
 
 # Figure 1D. Plot MAT and MAP points with 95% confidence intervals
 
+To run this next section, you'll need to download temperature and precipitation data from \[Worldclim\]("[https://www.worldclim.org/data/worldclim21.html](https://www.worldclim.org/data/index.html)). Download both the `tavg 10m` and `prec 10m` datasets, unzip, and add to your `./data` folder at the root of the `MolEco-MEC-24-1288` repository [@worldclim_data].\
+
 ```{r}
 #####
 # Worldclim connect lat lon specimen records (rounded to nearest degree and dereplicated) with temperature and precip

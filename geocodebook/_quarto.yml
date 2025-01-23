@@ -26,6 +26,7 @@ book:
       - geocov_ynp_selected.qmd
       - fetch_gbif.qmd
       - build_geocov_map.qmd
+    - references.qmd
 
 bibliography: references.bib
 

@@ -315,5 +315,15 @@
       "Case-study -- Yellowstone",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mapping global coverage from local sampling</span>"
     ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Fick, S. E., and R. J. Hijmans. 2017. “WorldClim 2: New 1km\nSpatial Resolution Climate Surfaces for Global Land Areas” 37:\n4302–15. https://doi.org/10.1002/joc.5086.",
+    "crumbs": [
+      "References"
+    ]
   }
 ]
