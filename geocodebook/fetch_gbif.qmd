@@ -23,6 +23,10 @@ pacman::p_load(dplyr, curl, zip, readr, rgbif, usethis, stringr)
 
 This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.
 
+The list of species we used can be accessed from @bold_data, and filtered for *trnL.*
+
+Similarly, and data from a BOLD project could be downloaded and used in this analysis to generate a similar map of global coverage from a localized sampling effort.
+
 ```{r retrieve_keys}
 species_list <- readr::read_csv("../data/BOLD_spplist_20240109.csv") %>%
   pull("Species")
