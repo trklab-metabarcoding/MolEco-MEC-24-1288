@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -298,6 +318,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="read-in-bold-species-list-and-obtain-gbif-keys" class="level3">
 <h3 class="anchored" data-anchor-id="read-in-bold-species-list-and-obtain-gbif-keys">Read in BOLD species list and obtain GBIF keys</h3>
 <p>This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.</p>
+<p>The list of species we used can be accessed from <span class="citation" data-cites="bold_data">Anderson and Hoff (<a href="references.html#ref-bold_data" role="doc-biblioref">2024</a>)</span>, and filtered for <em>trnL.</em></p>
+<p>Similarly, and data from a BOLD project could be downloaded and used in this analysis to generate a similar map of global coverage from a localized sampling effort.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/BOLD_spplist_20240109.csv"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -355,10 +377,8 @@ chr (1): Species
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>☐ Edit '/Users/tdivoll/.Renviron'.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>☐ Restart R for changes to take effect.</code></pre>
+<pre><code>• Edit '/Users/tdivoll/.Renviron'
+• Restart R for changes to take effect</code></pre>
 </div>
 </div>
 </section>
@@ -366,47 +386,47 @@ chr (1): Species
 <h3 class="anchored" data-anchor-id="request-the-occurrence-data">Request the occurrence data</h3>
 <p>We’ll further restrict the data returned to records that have reliable coordinate data, and use a simple CSV format to reduce the size of the data. The Darwin Core Archive format will include much more metadata, but we’re only interested in the locations for this analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="get-metadata-and-wait" class="level3">
 <h3 class="anchored" data-anchor-id="get-metadata-and-wait">Get metadata and wait</h3>
 <p>Get the metadata about the request.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;gbif download&gt;&gt;
   Your download is being processed by GBIF:
-  https://www.gbif.org/occurrence/download/0002703-250117142028555
+  https://www.gbif.org/occurrence/download/0001107-250123221155621
   Most downloads finish within 15 min.
   Check status with
-  occ_download_wait('0002703-250117142028555')
+  occ_download_wait('0001107-250123221155621')
   After it finishes, use
-  d &lt;- occ_download_get('0002703-250117142028555') %&gt;%
+  d &lt;- occ_download_get('0001107-250123221155621') %&gt;%
     occ_download_import()
   to retrieve your download.
 Download Info:
   Username: tdivoll
   E-mail: timothy_divoll@brown.edu
   Format: SIMPLE_CSV
-  Download key: 0002703-250117142028555
-  Created: 2025-01-19T12:26:55.208+00:00
+  Download key: 0001107-250123221155621
+  Created: 2025-01-24T16:53:53.035+00:00
 Citation Info:  
   Please always cite the download DOI when using this data.
   https://www.gbif.org/citation-guidelines
-  DOI: 10.15468/dl.pde994
+  DOI: 10.15468/dl.ja5zre
   Citation:
-  GBIF Occurrence Download https://doi.org/10.15468/dl.pde994 Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-19</code></pre>
+  GBIF Occurrence Download https://doi.org/10.15468/dl.ja5zre Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-01-24</code></pre>
 </div>
 </div>
 <p>Check the status of the download.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066939-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066939-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>status: succeeded</code></pre>
 </div>
@@ -427,6 +447,11 @@ Citation Info:
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-bold_data" class="csl-entry" role="listitem">
+Anderson, Segal, H. M., and H. K Hoff. 2024. <span>“Plant DNA Barcode Data of 572 Specimens from Yellowstone National Park.”</span> BOLD Systems. <a href="https://doi.org/10.5883/DS-YNPBPR2">https://doi.org/10.5883/DS-YNPBPR2</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
