@@ -28,4 +28,4 @@ This resource contains the code used to generate and analyze data for publicatio
 
 ##### **Email:** tyler_kartzinel\@brown.edu.
 
-##### **Data Availability:** All data required to complete the analyses are included in Datasets S1-S3. Raw downloads from public data repositories will be archived as versions of record used in these analyses at Dryad.
+##### **Data Availability:** All data required to complete the analyses are included in Datasets S1-S4 in the Supplement.
