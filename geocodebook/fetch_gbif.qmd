@@ -27,6 +27,7 @@ The list of species we used can be accessed from @bold_data, and filtered for *t
 
 Similarly, and data from a BOLD project could be downloaded and used in this analysis to generate a similar map of global coverage from a localized sampling effort.
 
+The data being read in for this block is data set S4 in the Supplement provided with the publication.
 ```{r retrieve_keys}
 species_list <- readr::read_csv("../data/BOLD_spplist_20240109.csv") %>%
   pull("Species")

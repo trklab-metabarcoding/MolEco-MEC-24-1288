@@ -5,7 +5,7 @@ format: html
 
 This notebook will generate plots of geographic coverage of barcodes available on BOLD, in relation to climatic zones, and for several genetic markers. It also assesses contributions to BOLD by Project ID.
 
-We trim dataframe outputs to the first two rows for demonstartion, but full dataframes will be generated and stored in the R environment when running the code from source.
+We trim dataframe outputs to the first two rows for demonstration, but full dataframes will be generated and stored in the R environment when running the code from source.
 
 ```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
 ## First check for the required packages, install if needed, and load the libraries.
@@ -373,9 +373,8 @@ threshprecip_df_subset <- subset(threshprecip_df, layer > 0 )
 # Plot geography of plant DNA barcodes
 #ggplot wrapper of map()
 world_map <- map_data("world") 
-crs(world_map)
 
-ggmap4 <-ggplot()  + theme_classic() +
+ggmap4 <- ggplot()  + theme_classic() +
  geom_map(dat = world_map, map = world_map, aes(map_id = region), fill = "white", color = "#7f7f7f", size = 0.25)  +
   geom_raster(data = threshtemp_df, aes(x = x, y = y, fill = layer), alpha = 0.9) + 
   scale_fill_gradient(low = "transparent", high = "darkblue", aesthetics = 'fill') + 

@@ -79,19 +79,6 @@ ggpoliticalboundaries
 #ggsave("ggpoliticalboundaries_20240626_1.pdf", ggpoliticalboundaries, width = 13, height = 8.6, units = "cm")
 ```
 
-#### Distribution of country bias - barplot.
-
-```{r}
-# Barplot with country counts
-countrycounts_bar <- ggplot(myCodes, aes(x = reorder(country, -n), y = n)) +
-  geom_bar(stat = "identity", width = 0.9) + 
-  theme_classic() + xlab("") + 
-  ylab("") +
-  theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank())
-countrycounts_bar
-#ggsave("countrycounts_20240626.pdf", countrycounts, width = 13, height = 4, units = "cm")
-```
-
 #### Distribution of country bias - lineplot.
 
 ```{r}

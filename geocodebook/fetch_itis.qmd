@@ -61,10 +61,11 @@ out3 <- vector("list", length(fams))
 
 ### Combine all data into a single data frame
 
+This block generates the data set S2 in the Supplement associated with the publication.
 ```{r eval=FALSE}
 out4 <- do.call(rbind, out3)
 dim(out4)
-out4$family<-do.call(rbind, lapply(strsplit(as.character(out4$X), "[.]"), `[[`, 1)) #extract family names
+out4$family<-do.call(rbind, lapply(strsplit(as.character(out4$X), "[.]"), `[[`, 1)) # extract family names
 head(out4, 2)
 write.csv(file="../data/allFamNames.csv", out4) 
 ```

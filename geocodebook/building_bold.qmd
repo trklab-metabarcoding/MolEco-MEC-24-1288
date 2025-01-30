@@ -29,22 +29,25 @@ setDTthreads(threads = 6) # if you are working on cluster, this will allow data.
 
 ```{r eval=FALSE}
 # Name BOLD plant phyla
-boldphyla <- c("Anthocerotophyta", "Bryophyta", "Cycadophyta", "Ginkgophyta",  "Magnoliophyta", "Marchantiophyta", "Pinophyta", "Pteridophyta", "Tracheophyta") #"Gnetophyta", "Psilophyta", "Lycopodiophyta" # these were previously listed a families but are now nested under otehr families
+boldphyla <- c("Anthocerotophyta", "Bryophyta", "Cycadophyta", "Ginkgophyta",  "Magnoliophyta", "Marchantiophyta", "Pinophyta", "Pteridophyta", "Tracheophyta") #"Gnetophyta", "Psilophyta", "Lycopodiophyta" # these were previously listed a families but are now nested under other families
 length(boldphyla)
 ```
 
-## Step 2: retrieve all families descending from a vector of phyla.
+## Step 2: retrieve all families descending from a vector of Phyla.
 
 ```{r eval=FALSE}
 out0 <- vector("list", length(boldphyla))
 
 for(i in 1:length(boldphyla)){
-	tempx<-downstream(boldphyla[i], db = "bold", downto = "family")
+	tempx<-taxize::downstream(boldphyla[i], db = "bold", downto = "family")
 	out0[[i]] <- tempx[[1]]$name
 	}
 boldfamilies <- sort(unlist(out0))
 
-# Remove classes that return errors (private entries exist in BOLD so they can be found "downstream" of their respective phyla, but don't permit downloads of any barcode data and need to be excluded before the next phase
+# Remove families that return errors (private entries exist in BOLD so they can be found "downstream" of their respective phyla, but don't permit downloads of any barcode data and need to be excluded before the next phase
+
+# As taxonomy gets reclassified, and barcode coverage improves, the families below may need to be updated depending on when this analysis is being run. The families below did not have public records at the time we ran our analysis, but they may as database coverage improves over time
+
 boldfamilies <- boldfamilies[which(boldfamilies != "Chonecoleaceae")]	# in BOLD but nothing public
 boldfamilies <- boldfamilies[which(boldfamilies != "Cytinaceae")]	# in BOLD but nothing public 
 boldfamilies <- boldfamilies[which(boldfamilies != "Eropodiaceae")]	# in BOLD but nothing public
@@ -135,9 +138,8 @@ write.csv(file = "BoldPhyla_to_Families.csv", out4)
 
 ```{r eval=FALSE}
 intab <- read.csv("BoldPhyla_to_Families.csv")
-#intab[which(duplicated(combtab$processid)==T),c(2:3,8,11:26)]
 
-combtab <- intab[,1:68] # note that in the current combtab we select the following columns listed below, and may need to add additional ones to capture ITS
+combtab <- intab[,1:68] # note that in the current combtab we select the following columns listed below
 
 ## columns to keep: "processid", "institution_storing", "phylum_taxID", "phylum_name", "class_taxID", "class_name", "order_taxID", "order_name", "family_taxID", "family_name", "subfamily_taxID", "subfamily_name", "genus_taxID", "genus_name", "species_taxID", "species_name", "subspecies_taxID", "subspecies_name" 
 
@@ -145,9 +147,6 @@ combtab <- combtab[which(duplicated(combtab[c(3,8,11:26)]) == F),]
 
 length(unique(intab$family_name))
 length(unique(combtab$family_name))
-
-intab_rhamnaceae <- dplyr::filter(intab, processid == "TRIOP125-11")
-combtab_rhamnaceae <- dplyr::filter(combtab, processid == "TRIOP125-11")
 ```
 
 ## Step 8. Annotate combtab to include barcodes associated with each specimen - rbcL, matK, trnL, ITS.
@@ -193,6 +192,7 @@ combtab <- cbind(combtab, markers, genbank)
 
 ## Step 10. Filter columns that make the file unnecessarily large and write combtab object
 
+This block will generate the same file structure as dataset S1 in the Supplement.
 ```{r eval=FALSE}
 names(combtab)
 combtabout <- combtab[, c(2:3,8,11:26,35:36,49:53,57:61,69:77)]
