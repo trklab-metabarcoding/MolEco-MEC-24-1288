@@ -2,7 +2,7 @@
 
 This codebook is divided into four parts that follow the Methods section of the manuscript and includes eight code notebooks that were used in the analyses for this publication.
 
-Source code is available in a GitHub [repository](%22https://github.com/trklab-metabarcoding/MolEco-MEC-1288%22)
+Source code is available in a GitHub [repository](https://github.com/trklab-metabarcoding/MolEco-MEC-1288)
 
 Supplementary data sets (S1-S4) can be downloaded from the supplement available with the published paper. Move those four files into the `/data` folder in the GitHub repository when running the code notebooks.
 
