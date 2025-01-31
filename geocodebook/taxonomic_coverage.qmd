@@ -185,8 +185,9 @@ plotcorrs_summary
 ## SI Appendix Figure 2A-D: Read in files and summarize for panels C-D.
 
 Now read in the data from downloading all *trnL* P6 data from the European Nucleotide Archive at [EMBL-EBI](https://www.ebi.ac.uk/ena/browser/home). More details for the download can be found in the "Building the datasets" section of the Methods in the publication. This data corresponds to dataset S3 in the Supplement.
+
 ```{r}
-emblp6 <- read.csv("../data/glob_ref_lib_edit_P6.csv")
+emblp6 <- read.csv("../data/20240710_P6_set_1.tab.csv")
 nrow(emblp6)
 
 # Build the same kind of matrix as above

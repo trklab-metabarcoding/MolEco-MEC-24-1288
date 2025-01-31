@@ -3,9 +3,10 @@ title: "Continent-scale barcode coverage of lodgepole pine and big sagebrush"
 format: html
 ---
 
-This notebook will pull specimen records for two selected examples to highlight the effect of local sampling on global coverage. 
+This notebook will pull specimen records for two selected examples to highlight the effect of local sampling on global coverage.
 
 **NOTE:** Make sure GDAL is installed on the system you are running the notebooks from. This may require setting the "PROJ_LIB" and "GDAL_HOME" environment variables for your system.
+
 ```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
 ## First check for the required packages, install if needed, and load the libraries.
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -48,7 +49,8 @@ key_pinus_contorta <- name_suggest(q='Pinus contorta', rank='species')
 key_pinus_contorta
 ```
 
-## Figure 2A: Map of _Pinus contorta_ GBIF records
+## Figure 2A: Map of *Pinus contorta* GBIF records
+
 ```{r warning=FALSE}
 # Use occ_search() to query gbif records 
 PINCON_occurrences_2 <- occ_search(taxonKey = 5285750, limit = 50000) # number found: 41,033
@@ -127,7 +129,8 @@ pinusmap2
 #ggsave("pinusmap20240624_1.pdf", pinusmap2, width = 20, height = 8, units = "cm")
 ```
 
-## Figure 2B: Map of _Artemisia tridentata_ gbif records
+## Figure 2B: Map of *Artemisia tridentata* gbif records
+
 ```{r}
 # Use occ_search() to query GBIF records 
 ArtTri_occurrences_2 <- occ_search(taxonKey = 9396703, limit = 20000) #16,738 found
