@@ -220,7 +220,7 @@ famcountmatp6[,1] <- seq(1,length(ITISfamcount))
 famcountmatp6[,2] <- names(ITISfamcount)
 famcountmatp6[,3] <- ITISfamcount
 length(unique(emblp6$family_name))
-#unique(emblp6$family_name) # uncomment to pringt out all the family names
+#unique(emblp6$family_name) # uncomment to print out all the family names
 
 write.csv(famcountmatp6, "../data/DatasetS2_P6_additions.csv")
 
@@ -279,12 +279,6 @@ nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Heliophytaceae"),]
 nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Calliergonaceae"),]
 ```
 
-#### Write out the Supplemental Dataset S2
-```{r}
-ds_s2 <- merge(famcountmat, famcountmatp6, by=c("rank","ITISfamname","ITISfamcount"))
-write.csv(ds_s2, "../data/Dataset_S2.csv")
-```
-
 ```{r results='hide'}
 # Summarize families in embl not in ITIS
 p6famnames <- levels(emblp6$family_name)
@@ -305,6 +299,12 @@ median(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames
 
 # Number of specimens not identified to family
 length(which(emblp6$family_name == ""))
+```
+
+#### Write out the Supplemental Dataset S2
+```{r}
+ds_s2 <- merge(famcountmat, famcountmatp6, by=c("rank","ITISfamname","ITISfamcount"))
+write.csv(ds_s2, "../data/Dataset_S2.csv")
 ```
 
 ## SI Appendix Figure 2A-D: Plot panels C-D
