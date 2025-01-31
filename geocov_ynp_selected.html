@@ -377,13 +377,13 @@ $meta$offset
 [1] 41100
 
 $meta$limit
-[1] 136
+[1] 223
 
 $meta$endOfRecords
-[1] FALSE
+[1] TRUE
 
 $meta$count
-[1] 41237
+[1] 41323
 
 
 $hierarchy
@@ -406,8 +406,8 @@ $hierarchy[[1]]
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(PinusSP, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   x_coords y_coords
-1 -112.8809 42.76652
-2 -123.9814 49.15059</code></pre>
+1 -123.9814 49.15059
+2 -117.5496 48.30912</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>PinusSP <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">vect</span>(PinusSP, <span class="at">geom=</span><span class="fu">c</span>(<span class="st">"x_coords"</span>, <span class="st">"y_coords"</span>), <span class="at">crs=</span><span class="st">"epsg:4326"</span>)  <span class="co"># WGS84</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(PinusSP, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -502,7 +502,7 @@ PROJCRS["NAD83 / Montana",
         PRIMEM["Greenwich",0,
             ANGLEUNIT["degree",0.0174532925199433]],
         ID["EPSG",4269]],
-    CONVERSION["SPCS83 Montana zone (meter)",
+    CONVERSION["SPCS83 Montana zone (meters)",
         METHOD["Lambert Conic Conformal (2SP)",
             ID["EPSG",9802]],
         PARAMETER["Latitude of false origin",44.25,
@@ -642,16 +642,16 @@ Geodetic CRS:  GEOGCRS["unknown",
 <div class="cell-output cell-output-stdout">
 <pre><code>$meta
 $meta$offset
-[1] 18900
+[1] 19200
 
 $meta$limit
-[1] 258
+[1] 65
 
 $meta$endOfRecords
 [1] TRUE
 
 $meta$count
-[1] 19158
+[1] 19265
 
 
 $hierarchy
