@@ -47,7 +47,6 @@ boldfamilies <- sort(unlist(out0))
 # Remove families that return errors (private entries exist in BOLD so they can be found "downstream" of their respective phyla, but don't permit downloads of any barcode data and need to be excluded before the next phase
 
 # As taxonomy gets reclassified, and barcode coverage improves, the families below may need to be updated depending on when this analysis is being run. The families below did not have public records at the time we ran our analysis, but they may as database coverage improves over time
-
 boldfamilies <- boldfamilies[which(boldfamilies != "Chonecoleaceae")]	# in BOLD but nothing public
 boldfamilies <- boldfamilies[which(boldfamilies != "Cytinaceae")]	# in BOLD but nothing public 
 boldfamilies <- boldfamilies[which(boldfamilies != "Eropodiaceae")]	# in BOLD but nothing public
@@ -88,7 +87,7 @@ boldfamilies3 <- boldfamilies[second_third:last_third]
 	}
 
 # Download data for the second third of families
-	for(i in 1:length(boldfamilies2)){
+	for(i in 2:length(boldfamilies2)){
 		out1[[i]] <- bold_seqspec(boldfamilies2[i], marker = markernames)
 		filename <- paste("./family_csvs/",boldfamilies2[i],".csv",sep = "")
 		outnames[i,2] <- filename
@@ -96,7 +95,7 @@ boldfamilies3 <- boldfamilies[second_third:last_third]
 	}
 
 # Download data for the last third of families
-	for(i in 1:length(boldfamilies3)){
+	for(i in 2:length(boldfamilies3)){
 		out1[[i]] <- bold_seqspec(boldfamilies3[i], marker = markernames)
 		filename <- paste("./family_csvs/",boldfamilies3[i],".csv",sep = "")
 		outnames[i,2] <- filename
@@ -193,6 +192,7 @@ combtab <- cbind(combtab, markers, genbank)
 ## Step 10. Filter columns that make the file unnecessarily large and write combtab object
 
 This block will generate the same file structure as dataset S1 in the Supplement.
+
 ```{r eval=FALSE}
 names(combtab)
 combtabout <- combtab[, c(2:3,8,11:26,35:36,49:53,57:61,69:77)]
