@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Fetching taxonomic data from ITIS – Code Resources for MEC-24-1288</title>
+<title>Fetching plant occurrence records from GBIF – Code Resources for MEC-24-1288</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,8 +84,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./taxonomic_coverage.html" rel="next">
-<link href="./geocov_figs2.html" rel="prev">
+<link href="./build_geocov_map.html" rel="next">
+<link href="./geocov_ynp_selected.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_itis.html">Taxonomic coverage</a></li><li class="breadcrumb-item"><a href="./fetch_itis.html"><span class="chapter-title">Fetching taxonomic data from ITIS</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geocov_ynp_selected.html">Case-study – Yellowstone</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -200,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fetch_itis.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Fetching taxonomic data from ITIS</span></a>
+  <a href="./fetch_itis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fetching taxonomic data from ITIS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -226,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fetch_gbif.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a>
+  <a href="./fetch_gbif.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -252,21 +272,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." id="toc-step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." class="nav-link active" data-scroll-target="#step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database.">Step 1: Retrieve taxonomic information for families within the plant clade Embryophyta (multicellular plants, excluding green algae) using the ITIS database.</a>
-  <ul class="collapse">
-  <li><a href="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families." id="toc-next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families." class="nav-link" data-scroll-target="#next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families.">Next we can loop over these families and generate CSV files with all the species in these families.</a></li>
-  <li><a href="#reassemble-data-from-saved-csv-files" id="toc-reassemble-data-from-saved-csv-files" class="nav-link" data-scroll-target="#reassemble-data-from-saved-csv-files">Reassemble data from saved CSV files:</a></li>
-  <li><a href="#combine-all-data-into-a-single-data-frame" id="toc-combine-all-data-into-a-single-data-frame" class="nav-link" data-scroll-target="#combine-all-data-into-a-single-data-frame">Combine all data into a single data frame</a></li>
-  </ul></li>
+  <li><a href="#read-in-bold-species-list-and-obtain-gbif-keys" id="toc-read-in-bold-species-list-and-obtain-gbif-keys" class="nav-link active" data-scroll-target="#read-in-bold-species-list-and-obtain-gbif-keys">Read in BOLD species list and obtain GBIF keys</a></li>
+  <li><a href="#investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" id="toc-investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" class="nav-link" data-scroll-target="#investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches">Investigate taxon keys for fuzzy matches and higher rank matches</a></li>
+  <li><a href="#set-gbif-credentials" id="toc-set-gbif-credentials" class="nav-link" data-scroll-target="#set-gbif-credentials">Set GBIF credentials</a></li>
+  <li><a href="#request-the-occurrence-data" id="toc-request-the-occurrence-data" class="nav-link" data-scroll-target="#request-the-occurrence-data">Request the occurrence data</a></li>
+  <li><a href="#get-metadata-and-wait" id="toc-get-metadata-and-wait" class="nav-link" data-scroll-target="#get-metadata-and-wait">Get metadata and wait</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fetch_itis.html">Taxonomic coverage</a></li><li class="breadcrumb-item"><a href="./fetch_itis.html"><span class="chapter-title">Fetching taxonomic data from ITIS</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geocov_ynp_selected.html">Case-study – Yellowstone</a></li><li class="breadcrumb-item"><a href="./fetch_gbif.html"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">Fetching taxonomic data from ITIS</span></h1>
+<h1 class="title"><span class="chapter-title">Fetching plant occurrence records from GBIF</span></h1>
 </div>
 
 
@@ -283,7 +302,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This notebook contaions code to fetch family names from ITIS and then create lists of species in each family found in ITIS across the total 730 plant families. The final result here is one file called <code>allFamNames.csv</code>.</p>
+<p>This notebook contains code used to pull plant species occurrence records from the <a href="https://techdocs.gbif.org/en/openapi/">GBIF API</a>.</p>
+<p>We use <code>pacman</code> to mange the R packages and load libraries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First check for the required packages, install if needed, and load the libraries.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
@@ -291,65 +311,157 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"sangerseqR"</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/bold"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/taxize"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(maps, ggplot2, dplyr, countrycode, data.table, raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, curl, zip, readr, rgbif, usethis, stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database." class="level2">
-<h2 class="anchored" data-anchor-id="step-1-retrieve-taxonomic-information-for-families-within-the-plant-clade-embryophyta-multicellular-plants-excluding-green-algae-using-the-itis-database.">Step 1: Retrieve taxonomic information for families within the plant clade Embryophyta (multicellular plants, excluding green algae) using the ITIS database.</h2>
+<section id="read-in-bold-species-list-and-obtain-gbif-keys" class="level3">
+<h3 class="anchored" data-anchor-id="read-in-bold-species-list-and-obtain-gbif-keys">Read in BOLD species list and obtain GBIF keys</h3>
+<p>This block uses a site-specific list of species from the Yellowstone BOLD project to pull any taxon keys for those species hosted on GBIF, matched by exact scientific names.</p>
+<p>The list of species we used can be accessed from <span class="citation" data-cites="bold_data">Anderson and Hoff (<a href="references.html#ref-bold_data" role="doc-biblioref">2024</a>)</span>, and filtered for <em>trnL.</em></p>
+<p>Similarly, and data from a BOLD project could be downloaded and used in this analysis to generate a similar map of global coverage from a localized sampling effort.</p>
+<p>The data being read in for this block is data set S4 in the Supplement provided with the publication.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve families under "Embryophyta"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>famnames <span class="ot">&lt;-</span> taxize<span class="sc">::</span><span class="fu">downstream</span>(<span class="st">"Embryophyta"</span>, <span class="at">db =</span> <span class="st">"itis"</span>, <span class="at">downto =</span> <span class="st">"family"</span>) </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Embryophyta is multicellular plants (excluding green algae)</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fams <span class="ot">&lt;-</span> famnames<span class="sc">$</span>Embryophyta<span class="sc">$</span>taxonname</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove family with problematic records</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fams <span class="ot">&lt;-</span> fams[fams <span class="sc">!=</span> <span class="st">"Kahukaloaceae"</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize data structures</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>famlist <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(fams))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>famout <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(fams), <span class="at">ncol =</span> <span class="dv">3</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>famout[,<span class="dv">1</span>] <span class="ot">&lt;-</span> fams</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(fams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../data/Kartzinel_et_al_Dataset_S4_20241030.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 570 Columns: 62
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (36): Project Code, Process ID, Sample ID, Field ID, rbcL Seq. Length, r...
+dbl  (7): rbcL Trace Count, matK Trace Count, trnL-F Trace Count, trnH-psbA ...
+lgl (19): BIN, Catalog Num, Image Count, Contamination, Stop Codon, Flagged ...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<section id="we-found-730-families-returned-from-itis." class="level4">
-<h4 class="anchored" data-anchor-id="we-found-730-families-returned-from-itis.">We found 730 families returned from ITIS.</h4>
-</section>
-<section id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families." class="level3">
-<h3 class="anchored" data-anchor-id="next-we-can-loop-over-these-families-and-generate-csv-files-with-all-the-species-in-these-families.">Next we can loop over these families and generate CSV files with all the species in these families.</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over families and save a CSV for each</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fams)){</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        famlist[[i]] <span class="ot">&lt;-</span> taxize<span class="sc">::</span><span class="fu">downstream</span>(fams[i], <span class="at">db =</span> <span class="st">"itis"</span>, <span class="at">downto =</span> <span class="st">"species"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"../data/family_csvs/"</span>,fams[i],<span class="st">".csv"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        famout[i,<span class="dv">2</span>] <span class="ot">&lt;-</span> filename</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">write.csv</span>(<span class="at">file =</span> filename, <span class="fu">do.call</span>(rbind, famlist[[i]]))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        famout[i,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">which</span>(<span class="fu">do.call</span>(rbind, famlist[[i]])<span class="sc">$</span>rankname <span class="sc">==</span> <span class="st">"species"</span>))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="reassemble-data-from-saved-csv-files" class="level3">
-<h3 class="anchored" data-anchor-id="reassemble-data-from-saved-csv-files">Reassemble data from saved CSV files:</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>out3 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(fams)) </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fams)){ </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    filename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"./data/family_csvs/"</span>,fams[i],<span class="st">".csv"</span>,<span class="at">sep=</span><span class="st">""</span>) </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">file.exists</span>(filename)) out3[[i]] <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(filename) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all backbone results (without filtering)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>all_matches <span class="ot">&lt;-</span> <span class="fu">name_backbone_checklist</span>(species_list, <span class="at">kingdom =</span> <span class="st">"plants"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>exact_key_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">==</span> <span class="st">"EXACT"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(usageKey) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.list</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Find taxa that didn't match at species level.</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>not_exact_matches <span class="ot">&lt;-</span> all_matches <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(matchType <span class="sc">!=</span> <span class="st">"EXACT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="combine-all-data-into-a-single-data-frame" class="level3">
-<h3 class="anchored" data-anchor-id="combine-all-data-into-a-single-data-frame">Combine all data into a single data frame</h3>
-<p>This block generates the list of families used in the <a href="./taxonomic_coverage.html">Correlations between plant species and DNA barcode availability</a> notebook.</p>
+<section id="investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches" class="level3">
+<h3 class="anchored" data-anchor-id="investigate-taxon-keys-for-fuzzy-matches-and-higher-rank-matches">Investigate taxon keys for fuzzy matches and higher rank matches</h3>
+<p>Some keys may indicate that local species are sharing a taxon key, or the keys returned were backed off to higher taxonomic levels. Beware that these can result in many more occurrence records matched at higher taxonomic levels. This can happen for hyper-local species with no occurrence records in GBIF. For our purposes, we kept only exact species matches.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>out4 <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, out3)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(out4)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>out4<span class="sc">$</span>family<span class="ot">&lt;-</span><span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">strsplit</span>(<span class="fu">as.character</span>(out4<span class="sc">$</span>X), <span class="st">"[.]"</span>), <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="dv">1</span>)) <span class="co"># extract family names</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(out4, <span class="dv">2</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">file=</span><span class="st">"../data/allFamNames.csv"</span>, out4) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>not_exact_matches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 53 × 26
+   usageKey scientificName       canonicalName rank  status confidence matchType
+      &lt;int&gt; &lt;chr&gt;                &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;    
+ 1  3033620 Pulsatilla Mill.     Pulsatilla    GENUS ACCEP…         99 HIGHERRA…
+ 2  2704858 Calamagrostis Adans. Calamagrostis GENUS ACCEP…         96 HIGHERRA…
+ 3     3064 Amaranthaceae        Amaranthaceae FAMI… ACCEP…         99 HIGHERRA…
+ 4  3171742 Erythranthe Spach    Erythranthe   GENUS ACCEP…         99 HIGHERRA…
+ 5  8148051 Bistorta (L.) Scop.  Bistorta      GENUS ACCEP…         99 HIGHERRA…
+ 6  8148051 Bistorta (L.) Scop.  Bistorta      GENUS ACCEP…         99 HIGHERRA…
+ 7  8148051 Bistorta (L.) Scop.  Bistorta      GENUS ACCEP…         99 HIGHERRA…
+ 8       NA &lt;NA&gt;                 &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;          100 NONE     
+ 9       NA &lt;NA&gt;                 &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;          100 NONE     
+10       NA &lt;NA&gt;                 &lt;NA&gt;          &lt;NA&gt;  &lt;NA&gt;          100 NONE     
+# ℹ 43 more rows
+# ℹ 19 more variables: kingdom &lt;chr&gt;, phylum &lt;chr&gt;, order &lt;chr&gt;, family &lt;chr&gt;,
+#   genus &lt;chr&gt;, species &lt;chr&gt;, kingdomKey &lt;int&gt;, phylumKey &lt;int&gt;,
+#   classKey &lt;int&gt;, orderKey &lt;int&gt;, familyKey &lt;int&gt;, genusKey &lt;int&gt;,
+#   speciesKey &lt;int&gt;, synonym &lt;lgl&gt;, class &lt;chr&gt;, acceptedUsageKey &lt;int&gt;,
+#   verbatim_name &lt;chr&gt;, verbatim_index &lt;dbl&gt;, verbatim_kingdom &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>We had 6 species that did not match a species key, resulting in 98% of the species having data we can use from GBIF to explore global geographic coverage of these species.</p>
+</section>
+<section id="set-gbif-credentials" class="level3">
+<h3 class="anchored" data-anchor-id="set-gbif-credentials">Set GBIF credentials</h3>
+<p>The following block will open your .Renviron file. Register an account with GBIF on their website and then add these environment variables to the .Renviron and save: GBIF_USER=“user” GBIF_PWD=“password” GBIF_EMAIL=“email”.</p>
+<p>After requesting the data based on our list of taxon keys, we will get millions of occurrence records that we can download; the data will be help in your GBIF portal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>☐ Edit '/Users/tdivoll/.Renviron'.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>☐ Restart R for changes to take effect.</code></pre>
+</div>
+</div>
+</section>
+<section id="request-the-occurrence-data" class="level3">
+<h3 class="anchored" data-anchor-id="request-the-occurrence-data">Request the occurrence data</h3>
+<p>We’ll further restrict the data returned to records that have reliable coordinate data, and use a simple CSV format to reduce the size of the data. The Darwin Core Archive format will include much more metadata, but we’re only interested in the locations for this analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="ot">&lt;-</span> <span class="fu">occ_download</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred_in</span>(<span class="st">"taxonKey"</span>, exact_key_matches<span class="sc">$</span>usageKey),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasCoordinate"</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pred</span>(<span class="st">"hasGeospatialIssue"</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">"SIMPLE_CSV"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="get-metadata-and-wait" class="level3">
+<h3 class="anchored" data-anchor-id="get-metadata-and-wait">Get metadata and wait</h3>
+<p>Get the metadata about the request.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gbif_data_BOLDlist <span class="co"># this will print some info, including the download ID we need to check on the job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;gbif download&gt;&gt;
+  Your download is being processed by GBIF:
+  https://www.gbif.org/occurrence/download/0007289-250127130748423
+  Most downloads finish within 15 min.
+  Check status with
+  occ_download_wait('0007289-250127130748423')
+  After it finishes, use
+  d &lt;- occ_download_get('0007289-250127130748423') %&gt;%
+    occ_download_import()
+  to retrieve your download.
+Download Info:
+  Username: tdivoll
+  E-mail: timothy_divoll@brown.edu
+  Format: SIMPLE_CSV
+  Download key: 0007289-250127130748423
+  Created: 2025-02-01T12:16:59.420+00:00
+Citation Info:  
+  Please always cite the download DOI when using this data.
+  https://www.gbif.org/citation-guidelines
+  DOI: 10.15468/dl.7bdmx3
+  Citation:
+  GBIF Occurrence Download https://doi.org/10.15468/dl.7bdmx3 Accessed from R via rgbif (https://github.com/ropensci/rgbif) on 2025-02-01</code></pre>
+</div>
+</div>
+<p>Check the status of the download.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">occ_download_wait</span>(<span class="st">'0066939-241126133413365'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>status: succeeded</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>download is done, status: succeeded</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;gbif download metadata&gt;&gt;
+  Status: SUCCEEDED
+  DOI: 10.15468/dl.48qedg
+  Format: SIMPLE_CSV
+  Download key: 0066939-241126133413365
+  Created: 2025-01-13T17:50:02.365+00:00
+  Modified: 2025-01-13T18:02:18.702+00:00
+  Download link: https://api.gbif.org/v1/occurrence/download/request/0066939-241126133413365.zip
+  Total records: 20510078</code></pre>
+</div>
 </div>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-bold_data" class="csl-entry" role="listitem">
+Anderson, Segal, H. M., and H. K Hoff. 2024. <span>“Plant DNA Barcode Data of 572 Specimens from Yellowstone National Park.”</span> BOLD Systems. <a href="https://doi.org/10.5883/DS-YNPBPR2">https://doi.org/10.5883/DS-YNPBPR2</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -772,13 +884,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./geocov_figs2.html" class="pagination-link" aria-label="Coverage by country">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Coverage by country</span></span>
+      <a href="./geocov_ynp_selected.html" class="pagination-link" aria-label="Continent-scale barcode coverage of lodgepole pine and big sagebrush">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Continent-scale barcode coverage of lodgepole pine and big sagebrush</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./taxonomic_coverage.html" class="pagination-link" aria-label="Correlations between plant species and DNA barcode availability">
-        <span class="nav-page-text"><span class="chapter-title">Correlations between plant species and DNA barcode availability</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./build_geocov_map.html" class="pagination-link" aria-label="Mapping global coverage from local sampling">
+        <span class="nav-page-text"><span class="chapter-title">Mapping global coverage from local sampling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
