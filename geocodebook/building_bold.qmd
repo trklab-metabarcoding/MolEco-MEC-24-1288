@@ -197,5 +197,5 @@ This block will generate the same file structure as dataset S1 in the Supplement
 names(combtab)
 combtabout <- combtab[, c(2:3,8,11:26,35:36,49:53,57:61,69:77)]
 head(combtabout, 2)
-write.csv(file = "BoldPhyla_to_Families_combtab_v4.csv", combtabout)
+write.csv(file = "../data/Kartzinel_et_al_Dataset_S1_20240725.csv", combtabout)
 ```

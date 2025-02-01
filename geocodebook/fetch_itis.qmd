@@ -61,7 +61,8 @@ out3 <- vector("list", length(fams))
 
 ### Combine all data into a single data frame
 
-This block generates the data set S2 in the Supplement associated with the publication.
+This block generates the list of families used in the \[Correlations between plant species and DNA barcode availability\] notebook.
+
 ```{r eval=FALSE}
 out4 <- do.call(rbind, out3)
 dim(out4)
