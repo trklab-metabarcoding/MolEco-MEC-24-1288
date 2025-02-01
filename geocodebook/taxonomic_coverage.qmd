@@ -24,6 +24,7 @@ pacman::p_load(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, map
 #### First we read in the data and make some quick plots.
 
 The `combtab` data corresponds to the Supplemental Dataset S1 from the publication.
+
 ```{r}
 combtab <- read.csv("../data/BoldPhyla_to_Families_combtab_v4.csv")
 head(combtab, 2)
@@ -48,8 +49,8 @@ sort(table(combtab$species_name), decreasing=T)[1:5] # by specimens
 
 #### Plot family abundances in ITIS and compare with barcodes: this section gives us panels A and B of the figure
 
-
 The `infam` data corresponds to the Supplemental Dataset S2 from the publication.
+
 ```{r}
 infam <- read.csv("../data/allFamNames.csv")
 ITISfamcount <- sort(table(infam$family), decreasing=T)
@@ -302,9 +303,10 @@ length(which(emblp6$family_name == ""))
 ```
 
 #### Write out the Supplemental Dataset S2
+
 ```{r}
 ds_s2 <- merge(famcountmat, famcountmatp6, by=c("rank","ITISfamname","ITISfamcount"))
-write.csv(ds_s2, "../data/Dataset_S2.csv")
+write.csv(ds_s2, "../data/Kartzinel_et_al_Dataset_S2_20250129.csv")
 ```
 
 ## SI Appendix Figure 2A-D: Plot panels C-D

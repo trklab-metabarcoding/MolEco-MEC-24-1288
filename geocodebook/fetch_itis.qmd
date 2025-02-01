@@ -61,7 +61,7 @@ out3 <- vector("list", length(fams))
 
 ### Combine all data into a single data frame
 
-This block generates the list of families used in the \[Correlations between plant species and DNA barcode availability\] notebook.
+This block generates the list of families used in the [Correlations between plant species and DNA barcode availability](taxonomic_coverage.qmd) notebook.
 
 ```{r eval=FALSE}
 out4 <- do.call(rbind, out3)
