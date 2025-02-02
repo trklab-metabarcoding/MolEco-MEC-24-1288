@@ -28,25 +28,25 @@ pacman::p_load(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, map
 The `combtab` data corresponds to the Supplemental Dataset S1 from the publication.
 
 ```{r}
-combtab <- read.csv("../data/BoldPhyla_to_Families_combtab_v4.csv")
+combtab <- read.csv("../data/Kartzinel_et_al_Dataset_S1_20240725.csv")
 head(combtab, 2)
 
 # Round coordiantes to nearest 1 degree
-combtab$lat <- as.numeric(as.character(combtab$lat))
-combtab$lon <- as.numeric(as.character(combtab$lon))
+combtab$lat <- as.numeric(as.character(combtab$Latitude))
+combtab$lon <- as.numeric(as.character(combtab$Longitude))
 
 # Phylum rank
-barplot(sort(table(combtab$phylum_name), decreasing=T), main = "Most barcoded Phyla")
+barplot(sort(table(combtab$Phylum), decreasing=T), main = "Most barcoded Phyla")
 
 # Family rank
-head(sort(table(combtab$family_name), decreasing=T), 10)
+head(sort(table(combtab$Family), decreasing=T), 10)
 
-barplot(sort(table(combtab$family_name), decreasing=T), main = "Most barcoded Families")
+barplot(sort(table(combtab$Family), decreasing=T), main = "Most barcoded Families")
 
-head(table(combtab$family_name, combtab$multi), 2)
+head(table(combtab$family_name, combtab$Multiple.markers), 2)
 
 # the most barcoded plant species in the world
-sort(table(combtab$species_name), decreasing=T)[1:5] # by specimens
+sort(table(combtab$Species), decreasing=T)[1:5] # by specimens
 ```
 
 #### Plot family abundances in ITIS and compare with barcodes: this section gives us panels A and B of the figure
@@ -66,27 +66,27 @@ colnames(famcountmat)<-c("rank", "ITISfamname", "ITISfamcount", "BOLDspecimencou
   famcountmat[,3]<-ITISfamcount
 
 # Make count of specimens by family 
-combtabfamilycount <- table(combtab$family_name)
+combtabfamilycount <- table(combtab$Family)
 famcountmat[,4] <- combtabfamilycount[match(famcountmat[,2], names(combtabfamilycount))]
 
 # Make count of species by family
-combtabspeciescount <- tapply(combtab$species_name, combtab$family_name, function(x) length(unique(x)))
+combtabspeciescount <- tapply(combtab$Species, combtab$Family, function(x) length(unique(x)))
 famcountmat[,5] <- combtabspeciescount[match(famcountmat[,2], names(combtabspeciescount))]
 
 # Make count of trnL by family
-combtabtrnLcount <- tapply(combtab$trnL, combtab$family_name, function(x) length(which(x == "trnL")))
+combtabtrnLcount <- tapply(combtab$trnL, combtab$Family, function(x) length(which(x == "trnL")))
 famcountmat[,6] <- combtabtrnLcount[match(famcountmat[,2], names(combtabtrnLcount))]
   
 # Make count of rbcL by family
-combtabrbcLcount <- tapply(combtab$rbcL, combtab$family_name, function(x) length(which(x=="rbcL")))
+combtabrbcLcount <- tapply(combtab$rbcL, combtab$Family, function(x) length(which(x=="rbcL")))
 famcountmat[,7] <- combtabrbcLcount[match(famcountmat[,2], names(combtabrbcLcount))]
   
 # Make count of matK by family
-combtabmatKcount <- tapply(combtab$matK, combtab$family_name, function(x) length(which(x=="matK")))
+combtabmatKcount <- tapply(combtab$matK, combtab$Family, function(x) length(which(x=="matK")))
 famcountmat[,8] <- combtabmatKcount[match(famcountmat[,2], names(combtabmatKcount))]
   
 # Make count of ITS by family
-combtabITScount <- tapply(combtab$ITS2, combtab$family_name, function(x) length(which(x=="ITS")))
+combtabITScount <- tapply(combtab$ITS2, combtab$Family, function(x) length(which(x=="ITS")))
 famcountmat[,9] <- combtabITScount[match(famcountmat[,2], names(combtabITScount))]
 
 write.csv(famcountmat, "../data/DatasetS2_trnL_rbcL_matK_ITS.csv")
@@ -94,7 +94,7 @@ write.csv(famcountmat, "../data/DatasetS2_trnL_rbcL_matK_ITS.csv")
 
 #### Summarize the data:
 
-```{r results='hide'}
+```{r}
 # Number of taxa
 nrow(famcountmat)
 sum(famcountmat$ITISfamcount)
@@ -113,32 +113,32 @@ length(which(is.na(famcountmat$BOLDspecimencount)))/nrow(famcountmat)
 # Characterize the no-barcode families (i.e., "nbc" families)
 nbcfams <- famcountmat[which(is.na(famcountmat$BOLDspecimencount)),]
 nbcfams <- nbcfams[order(nbcfams$ITISfamcount),] # reorder by ITIS fam size
-nbcfams
-tail(nbcfams)
+head(nbcfams, 2)
+tail(nbcfams, 2)
 sum(nbcfams[,3])
 dim(nbcfams)
-sort(nbcfams$ITISfamname) 
+head(sort(nbcfams$ITISfamname), 2) 
 range(nbcfams$ITISfamcount)
 hist(nbcfams$ITISfamcount)
 median(nbcfams$ITISfamcount)
 
-nbcfams[order(nbcfams[,3]),]
+head(nbcfams[order(nbcfams[,3]),], 2)
 
-nbcfams[which(nbcfams[,3] == 1),]
+head(nbcfams[which(nbcfams[,3] == 1),], 2)
 dim(nbcfams[which(nbcfams[,3] == 1),])
 nrow(nbcfams[which(nbcfams[,3] == 1),])/nrow(nbcfams)
 
-nbcfams[which(nbcfams[,3]<5),]
+head(nbcfams[which(nbcfams[,3]<5),], 2)
 dim(nbcfams[which(nbcfams[,3]<5),])
 nrow(nbcfams[which(nbcfams[,3]<5),])/nrow(nbcfams)
 
-nbcfams[which(nbcfams$ITISfamname == "Heliophytaceae"),]
-nbcfams[which(nbcfams$ITISfamname == "Calliergonaceae"),]
+head(nbcfams[which(nbcfams$ITISfamname == "Heliophytaceae"),], 2)
+head(nbcfams[which(nbcfams$ITISfamname == "Calliergonaceae"),], 2)
 ```
 
-```{r results='hide'}
+```{r}
 # Summarize families in BOLD not in ITIS
-boldfamnames <- levels(combtab$family_name)
+boldfamnames <- unique(combtab$Family)
 length(boldfamnames) #651
 
 # Families in BOLD not matched by ITIS
@@ -148,14 +148,17 @@ length(nomatchnames) #42
 length(nomatchnames)/length(boldfamnames) #0.06451613
 
 # Counts of specimens in families in BOLD not matched by ITIS
-combtab$family_name <- factor(combtab$family_name)
-sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T)
-sum(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T))
-sum(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T))/nrow(combtab)
-median(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T))
+combtab$family_name <- factor(combtab$Family)
+head(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T), 2)
+
+sum(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T))
+
+sum(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T))/nrow(combtab)
+
+median(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T))
 
 # Number of specimens not identified to family
-length(which(combtab$family_name == ""))
+length(which(combtab$Family == ""))
 ```
 
 ## SI Appendix Figure 2A-D: Plot panels A-B
@@ -240,7 +243,7 @@ famcountmatp6[,5] <- emblp6speciescount[match(famcountmatp6[,2], names(emblp6spe
 
 #### Summarize the data:
 
-```{r results='hide'}
+```{r}
 # Number of taxa
 nrow(famcountmatp6)
 sum(famcountmatp6$ITISfamcount)
@@ -259,30 +262,30 @@ length(which(is.na(famcountmatp6$p6seqcount)))/nrow(famcountmatp6)
 # Characterize the no-barcode families
 nbcfamsp6 <- famcountmatp6[which(is.na(famcountmatp6$p6seqcount)),]
 nbcfamsp6 <- nbcfamsp6[order(nbcfamsp6$ITISfamcount),] # reorder by ITIS fam size
-nbcfamsp6
-tail(nbcfamsp6)
+head(nbcfamsp6, 2)
+tail(nbcfamsp6, 2)
 sum(nbcfamsp6[,3])
 dim(nbcfamsp6)
-sort(nbcfamsp6 $ITISfamname) 
+head(sort(nbcfamsp6 $ITISfamname), 2)
 range(nbcfamsp6 $ITISfamcount)
 hist(nbcfamsp6 $ITISfamcount)
 median(nbcfamsp6 $ITISfamcount)
 
-nbcfamsp6[order(nbcfamsp6[,3]),]
+head(nbcfamsp6[order(nbcfamsp6[,3]),], 2)
 
-nbcfamsp6[which(nbcfamsp6[,3]==1),]
+head(nbcfamsp6[which(nbcfamsp6[,3]==1),], 2)
 dim(nbcfamsp6[which(nbcfamsp6[,3]==1),])
 nrow(nbcfamsp6[which(nbcfamsp6[,3]==1),])/nrow(nbcfamsp6)
 
-nbcfamsp6[which(nbcfamsp6[,3]<5),]
+head(nbcfamsp6[which(nbcfamsp6[,3]<5),], 2)
 dim(nbcfamsp6[which(nbcfamsp6[,3]<5),])
 nrow(nbcfamsp6[which(nbcfamsp6[,3]<5),])/nrow(nbcfamsp6)
 
-nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Heliophytaceae"),]
-nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Calliergonaceae"),]
+head(nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Heliophytaceae"),], 2)
+head(nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Calliergonaceae"),], 2)
 ```
 
-```{r results='hide'}
+```{r}
 # Summarize families in embl not in ITIS
 p6famnames <- unique(emblp6$Family)
 length(p6famnames)
@@ -295,9 +298,12 @@ length(nomatchnamesp6)/length(p6famnames)
 
 # Counts of specimens in families in embl not matched by ITIS
 emblp6$family_name <- factor(emblp6$Family)
-sort(table(droplevels(emblp6[which(emblp6 $family_name %in% nomatchnamesp6),]$family_name)), decreasing=T)
+head(sort(table(droplevels(emblp6[which(emblp6 $family_name %in% nomatchnamesp6),]$family_name)), decreasing=T), 2)
+
 sum(sort(table(droplevels(emblp6[which(emblp6 $family_name %in% nomatchnamesp6),]$family_name)), decreasing=T))
+
 sum(sort(table(droplevels(emblp6[which(emblp6 $family_name %in% nomatchnamesp6),]$family_name)), decreasing=T))/nrow(combtab)
+
 median(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnamesp6),]$family_name)), decreasing=T))
 
 # Number of specimens not identified to family
