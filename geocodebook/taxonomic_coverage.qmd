@@ -43,7 +43,7 @@ head(sort(table(combtab$Family), decreasing=T), 10)
 
 barplot(sort(table(combtab$Family), decreasing=T), main = "Most barcoded Families")
 
-head(table(combtab$family_name, combtab$Multiple.markers), 2)
+head(table(combtab$Family, combtab$Multiple.markers), 2)
 
 # the most barcoded plant species in the world
 sort(table(combtab$Species), decreasing=T)[1:5] # by specimens
@@ -86,7 +86,7 @@ combtabmatKcount <- tapply(combtab$matK, combtab$Family, function(x) length(whic
 famcountmat[,8] <- combtabmatKcount[match(famcountmat[,2], names(combtabmatKcount))]
   
 # Make count of ITS by family
-combtabITScount <- tapply(combtab$ITS2, combtab$Family, function(x) length(which(x=="ITS")))
+combtabITScount <- tapply(combtab$ITS, combtab$Family, function(x) length(which(x=="ITS")))
 famcountmat[,9] <- combtabITScount[match(famcountmat[,2], names(combtabITScount))]
 
 write.csv(famcountmat, "../data/DatasetS2_trnL_rbcL_matK_ITS.csv")
@@ -149,16 +149,16 @@ length(nomatchnames)/length(boldfamnames) #0.06451613
 
 # Counts of specimens in families in BOLD not matched by ITIS
 combtab$family_name <- factor(combtab$Family)
-head(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T), 2)
+head(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T), 2)
 
-sum(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T))
+sum(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T))
 
-sum(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T))/nrow(combtab)
+sum(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T))/nrow(combtab)
 
-median(sort(table(droplevels(combtab[which(combtab$Family %in% nomatchnames),]$Family)), decreasing=T))
+median(sort(table(droplevels(combtab[which(combtab$family_name %in% nomatchnames),]$family_name)), decreasing=T))
 
 # Number of specimens not identified to family
-length(which(combtab$Family == ""))
+length(which(combtab$family_name == ""))
 ```
 
 ## SI Appendix Figure 2A-D: Plot panels A-B
