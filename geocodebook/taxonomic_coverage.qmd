@@ -2,6 +2,8 @@
 title: "Correlations between plant species and DNA barcode availability"
 format: html
 global: true
+params:
+  today: '!r format(Sys.Date(), "%Y%m%d")'
 ---
 
 This notebook pulls in data from various sources and makes plots to compare plants species per family to availability of DNA barcodes.
@@ -16,7 +18,7 @@ remotes::install_github("ropensci/bold")
 remotes::install_github("ropensci/taxize")
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf)
+pacman::p_load(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf, glue)
 ```
 
 ## SI Appendix Figure 2A-D: Read in files and summarize for panels A-B.
@@ -205,13 +207,13 @@ plotcorrs_summary
 Now read in the data from downloading all *trnL* P6 data from the European Nucleotide Archive at [EMBL-EBI](https://www.ebi.ac.uk/ena/browser/home). More details for the download can be found in the "Building the datasets" section of the Methods in the publication. This data corresponds to dataset S3 in the Supplement.
 
 ```{r}
-emblp6 <- read.csv("../data/20240710_P6_set_1.tab.csv")
+emblp6 <- read.csv("../data/Kartzinel_et_al_Dataset_S3_20240725.csv")
 nrow(emblp6)
-length(unique(emblp6$sequence)) # number of unique sequences 
-#levels(factor(emblp6$family_name)) # uncomment and run to print out all the family names
-length(unique(emblp6$family_name))
+length(unique(emblp6$trnL.P6.sequence)) # number of unique sequences 
+#levels(factor(emblp6$Family)) # uncomment and run to print out all the family names
+length(unique(emblp6$Family))
 157020/5324 # fold difference between number in BOLD vs EMBL
-emblp6_nofamily <- subset(emblp6, family_name == "")
+emblp6_nofamily <- subset(emblp6, Family == "")
 
 # Build the same kind of matrix as above
 famcountmatp6 <- matrix(0, nrow = length(ITISfamcount), ncol = 5)
@@ -220,19 +222,19 @@ famcountmatp6 <- data.frame(famcountmatp6)
 famcountmatp6[,1] <- seq(1,length(ITISfamcount))
 famcountmatp6[,2] <- names(ITISfamcount)
 famcountmatp6[,3] <- ITISfamcount
-length(unique(emblp6$family_name))
+length(unique(emblp6$Family))
 #unique(emblp6$family_name) # uncomment to print out all the family names
 
 write.csv(famcountmatp6, "../data/DatasetS2_P6_additions.csv")
 
 # Make count of specimens by family
-emblp6count <- table(emblp6$family_name)
+emblp6count <- table(emblp6$Family)
 famcountmatp6[,4] <- emblp6count[match(famcountmatp6[,2], names(emblp6count))]
 length(emblp6count)
 sum(emblp6count)
 
 # Make count of species by family
-emblp6speciescount <- tapply(emblp6$species_name, emblp6$family_name, function(x) length(unique(x)))
+emblp6speciescount <- tapply(emblp6$Species, emblp6$Family, function(x) length(unique(x)))
 famcountmatp6[,5] <- emblp6speciescount[match(famcountmatp6[,2], names(emblp6speciescount))]
 ```
 
@@ -282,7 +284,7 @@ nbcfamsp6[which(nbcfamsp6 $ITISfamname=="Calliergonaceae"),]
 
 ```{r results='hide'}
 # Summarize families in embl not in ITIS
-p6famnames <- levels(emblp6$family_name)
+p6famnames <- unique(emblp6$Family)
 length(p6famnames)
 
 # Families in embl not matched by ITIS
@@ -292,7 +294,7 @@ length(nomatchnamesp6)
 length(nomatchnamesp6)/length(p6famnames)
 
 # Counts of specimens in families in embl not matched by ITIS
-emblp6$family_name <- factor(emblp6$family_name)
+emblp6$family_name <- factor(emblp6$Family)
 sort(table(droplevels(emblp6[which(emblp6 $family_name %in% nomatchnamesp6),]$family_name)), decreasing=T)
 sum(sort(table(droplevels(emblp6[which(emblp6 $family_name %in% nomatchnamesp6),]$family_name)), decreasing=T))
 sum(sort(table(droplevels(emblp6[which(emblp6 $family_name %in% nomatchnamesp6),]$family_name)), decreasing=T))/nrow(combtab)
@@ -306,7 +308,7 @@ length(which(emblp6$family_name == ""))
 
 ```{r}
 ds_s2 <- merge(famcountmat, famcountmatp6, by=c("rank","ITISfamname","ITISfamcount"))
-write.csv(ds_s2, "../data/Kartzinel_et_al_Dataset_S2_20250129.csv")
+write.csv(ds_s2, glue("../data/Kartzinel_et_al_Dataset_S2_{params$today}.csv"))
 ```
 
 ## SI Appendix Figure 2A-D: Plot panels C-D
