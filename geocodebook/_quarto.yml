@@ -2,7 +2,9 @@ project:
   type: book
 execute:
   freeze: auto
-
+resources:
+    - images/
+    - figures/
 book:
   title: "Code Resources for MEC-24-1288"
   author: ""

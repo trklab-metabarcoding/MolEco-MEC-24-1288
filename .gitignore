@@ -3,5 +3,4 @@
 .Rhistory
 .Rproj.user/
 _freeze/
-!data/
-data/*
+

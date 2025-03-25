@@ -9,6 +9,9 @@ params:
 This notebook pulls in data from various sources and makes plots to compare plants species per family to availability of DNA barcodes.
 
 ```{r install_pkgs, results='hide', message=FALSE, warning=FALSE}
+# Set a specific CRAN mirror
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+
 ## First check for the required packages, install if needed, and load the libraries.
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
@@ -93,6 +96,47 @@ write.csv(famcountmat, "../data/DatasetS2_trnL_rbcL_matK_ITS.csv")
 ```
 
 #### Summarize the data:
+
+```{r}
+get_genera_from_family <- function(family_name) {
+  tsn <- get_tsn(family_name, rows = 1, db = "itis")
+  
+  if (!is.na(tsn)) {
+    result <- downstream(tsn, downto = "genus", db = "wfo")
+    if (!is.null(result[[1]])) {
+      return(result[[1]]$taxonname)
+    }
+  }
+  return(NULL)
+}
+```
+
+```{r}
+install.packages("rgbif")
+library(rgbif)
+
+# Function to get genera from GBIF
+get_genera_gbif <- function(family) {
+  res <- name_backbone(name = family, rank = "family")  # Get family details
+  if (!is.null(res$usageKey)) {
+    # Search for genera within this family
+    genera_data <- name_usage(key = res$usageKey, rank = "genus", limit = 100)
+    return(unique(genera_data$data$scientificName))
+  } else {
+    return(NULL)
+  }
+}
+
+# Example list of plant families
+plant_families <- c("Poaceae", "Fabaceae", "Asteraceae", "Orchidaceae", "Rosaceae")
+
+# Retrieve genera for each family
+all_genera <- lapply(plant_families, get_genera_gbif)
+names(all_genera) <- plant_families
+
+# Print results
+print(all_genera)
+```
 
 ```{r}
 # Number of taxa
