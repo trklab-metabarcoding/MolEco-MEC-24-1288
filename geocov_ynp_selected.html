@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ropensci/taxize"</span>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf, terra, raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(maps, ggplot2, dplyr, countrycode, rgbif, data.table, raster, mapproj, sf, terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="figure-2a-b.-get-species-keys-for-maps-of-pinus-contorta-and-artemisia-tridentata-occurrences." class="level2">
 <h2 class="anchored" data-anchor-id="figure-2a-b.-get-species-keys-for-maps-of-pinus-contorta-and-artemisia-tridentata-occurrences.">Figure 2A-B. Get species keys for maps of <em>Pinus contorta</em> and <em>Artemisia tridentata</em> occurrences.</h2>
@@ -374,16 +374,16 @@ Args [q=Pinus contorta, limit=100, rank=species, fields1=key,
 <div class="cell-output cell-output-stdout">
 <pre><code>$meta
 $meta$offset
-[1] 41100
+[1] 42000
 
 $meta$limit
-[1] 223
+[1] 50
 
 $meta$endOfRecords
-[1] TRUE
+[1] FALSE
 
 $meta$count
-[1] 41323
+[1] 42063
 
 
 $hierarchy
@@ -502,7 +502,7 @@ PROJCRS["NAD83 / Montana",
         PRIMEM["Greenwich",0,
             ANGLEUNIT["degree",0.0174532925199433]],
         ID["EPSG",4269]],
-    CONVERSION["SPCS83 Montana zone (meters)",
+    CONVERSION["SPCS83 Montana zone (meter)",
         METHOD["Lambert Conic Conformal (2SP)",
             ID["EPSG",9802]],
         PARAMETER["Latitude of false origin",44.25,
@@ -642,16 +642,16 @@ Geodetic CRS:  GEOGCRS["unknown",
 <div class="cell-output cell-output-stdout">
 <pre><code>$meta
 $meta$offset
-[1] 19200
+[1] 19800
 
 $meta$limit
-[1] 65
+[1] 200
 
 $meta$endOfRecords
-[1] TRUE
+[1] FALSE
 
 $meta$count
-[1] 19265
+[1] 20276
 
 
 $hierarchy
