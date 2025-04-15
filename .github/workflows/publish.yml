@@ -28,7 +28,7 @@ jobs:
         run: |
           # Install BiocManager and Bioconductor packages
           if(!requireNamespace("BiocManager", quietly = TRUE))
-            install.packages("BiocManager", repos = "https://cloud.r-project.org")
+            install.packages("BiocManager")
           BiocManager::install(c("bold", "sangerseqR"), update = FALSE, ask = FALSE)
           
           # Install rnaturalearthhires from GitHub
