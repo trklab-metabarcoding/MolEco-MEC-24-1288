@@ -24,19 +24,24 @@ jobs:
         with:
           r-version: 'release'
 
+      - name: Install CRAN packages
+        run: |
+          Rscript -e 'install.packages(c("rmarkdown", "knitr", "dplyr", "data.table", "stringr", "readr", "glue", "countrycode", "units", "reporter", "tictoc", "beepr", "maps", "ggplot2", "mapproj", "sf", "terra", "raster", "rgbif", "curl", "zip", "usethis", "rnaturalearthdata", "crsuggest", "wesanderson"), repos = "https://cloud.r-project.org")'
+
       - name: Install BiocManager and Bioconductor packages
         run: |
           Rscript -e 'if(!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
           Rscript -e 'BiocManager::install(c("sangerseqR", "bold"), update = FALSE, ask = FALSE)'
-          
-      - name: Install CRAN packages
-        run: |
-          Rscript -e 'install.packages(c("rmarkdown", "knitr", "dplyr", "data.table", "stringr", "readr", "glue", "countrycode", "units", "reporter", "tictoc", "beepr", "maps", "ggplot2", "mapproj", "sf", "terra", "raster", "rgbif", "curl", "zip", "usethis", "rnaturalearthdata", "crsuggest", "wesanderson", "remotes"), repos = "https://cloud.r-project.org")'
 
-      - name: Install GitHub packages
+      - name: Download rnaturalearthhires manually
         run: |
-          Rscript -e 'remotes::install_github("ropensci/rnaturalearthhires")'
-          
+          mkdir -p rnaturalearthhires
+          cd rnaturalearthhires
+          curl -L -o rnaturalearthhires.zip https://github.com/ropensci/rnaturalearthhires/archive/refs/heads/master.zip
+          unzip rnaturalearthhires.zip
+          cd rnaturalearthhires-master
+          Rscript -e 'install.packages(".", repos = NULL, type = "source")'
+
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
