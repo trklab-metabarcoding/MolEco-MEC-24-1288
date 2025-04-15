@@ -24,6 +24,11 @@ jobs:
         with:
           r-version: 'release'
 
+      - name: Install BiocManager separately
+        run: |
+          Rscript -e 'install.packages("BiocManager", repos = "https://cloud.r-project.org")'
+          Rscript -e 'BiocManager::install(c("sangerseqR", "bold"), ask=FALSE)'
+
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -54,11 +59,6 @@ jobs:
             any::curl
             any::zip
             any::usethis
-            bioc::BiocManager
-
-      - name: Install Bioconductor packages
-        run: |
-          Rscript -e 'BiocManager::install(c("bold", "sangerseqR"), ask=FALSE)'
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
