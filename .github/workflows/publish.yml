@@ -13,6 +13,52 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        
+      - name: Install system dependencies for spatial packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgdal-dev libproj-dev libgeos-dev libudunits2-dev
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::rmarkdown
+            any::knitr
+            any::dplyr
+            any::data.table
+            any::stringr
+            any::readr
+            any::glue
+            any::countrycode
+            any::units
+            any::reporter
+            any::tictoc
+            any::beepr
+            any::maps
+            any::ggplot2
+            any::mapproj
+            any::sf
+            any::terra
+            any::raster
+            any::rnaturalearthdata
+            any::rnaturalearthhires
+            any::crsuggest
+            any::wesanderson
+            any::rgbif
+            any::curl
+            any::zip
+            any::usethis
+            bioc::BiocManager
+
+      - name: Install Bioconductor packages
+        run: |
+          Rscript -e 'BiocManager::install(c("bold", "sangerseqR"), ask=FALSE)'
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
