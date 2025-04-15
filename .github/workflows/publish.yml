@@ -28,15 +28,15 @@ jobs:
         run: |
           Rscript -e 'if(!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
           Rscript -e 'BiocManager::install(c("sangerseqR", "bold"), update = FALSE, ask = FALSE)'
-
-      - name: Install GitHub packages
-        run: |
-          Rscript -e 'remotes::install_github("ropensci/rnaturalearthhires")'
           
       - name: Install CRAN packages
         run: |
           Rscript -e 'install.packages(c("rmarkdown", "knitr", "dplyr", "data.table", "stringr", "readr", "glue", "countrycode", "units", "reporter", "tictoc", "beepr", "maps", "ggplot2", "mapproj", "sf", "terra", "raster", "rgbif", "curl", "zip", "usethis", "rnaturalearthdata", "crsuggest", "wesanderson", "remotes"), repos = "https://cloud.r-project.org")'
 
+      - name: Install GitHub packages
+        run: |
+          Rscript -e 'remotes::install_github("ropensci/rnaturalearthhires")'
+          
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
