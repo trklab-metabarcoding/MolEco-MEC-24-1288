@@ -14,7 +14,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         
-      - name: Install system dependencies for spatial packages
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libgdal-dev libproj-dev libgeos-dev libudunits2-dev
@@ -24,41 +24,30 @@ jobs:
         with:
           r-version: 'release'
 
-      - name: Install BiocManager separately
+      - name: Install R packages
         run: |
-          Rscript -e 'install.packages("BiocManager", repos = "https://cloud.r-project.org")'
-          Rscript -e 'BiocManager::install(c("sangerseqR", "bold"), ask=FALSE)'
-
-      - name: Install R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            any::rmarkdown
-            any::knitr
-            any::dplyr
-            any::data.table
-            any::stringr
-            any::readr
-            any::glue
-            any::countrycode
-            any::units
-            any::reporter
-            any::tictoc
-            any::beepr
-            any::maps
-            any::ggplot2
-            any::mapproj
-            any::sf
-            any::terra
-            any::raster
-            any::rnaturalearthdata
-            any::rnaturalearthhires
-            any::crsuggest
-            any::wesanderson
-            any::rgbif
-            any::curl
-            any::zip
-            any::usethis
+          # Install BiocManager and Bioconductor packages
+          if(!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager", repos = "https://cloud.r-project.org")
+          BiocManager::install(c("bold", "sangerseqR"), update = FALSE, ask = FALSE)
+          
+          # Install rnaturalearthhires from GitHub
+          remotes::install_github("ropensci/rnaturalearthhires")
+          # Install CRAN packages
+          install_packages <- function(packages) {
+            new_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+            if(length(new_packages)) install.packages(new_packages, repos = "https://cloud.r-project.org")
+          }
+          
+          # Install standard CRAN packages
+          cran_packages <- c(
+            "rmarkdown", "knitr", "dplyr", "data.table", "stringr", 
+            "readr", "glue", "countrycode", "units", "reporter", 
+            "tictoc", "beepr", "maps", "ggplot2", "mapproj", 
+            "sf", "terra", "raster", "rgbif", "curl", "zip", "usethis",
+            "rnaturalearthdata", "crsuggest", "wesanderson", "remotes"
+          )
+          install_packages(cran_packages)
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
