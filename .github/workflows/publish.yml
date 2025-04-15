@@ -26,7 +26,7 @@ jobs:
 
       - name: Install CRAN packages
         run: |
-          Rscript -e 'install.packages(c("rmarkdown", "knitr", "dplyr", "data.table", "stringr", "readr", "glue", "countrycode", "units", "reporter", "tictoc", "beepr", "maps", "ggplot2", "mapproj", "sf", "terra", "raster", "rgbif", "curl", "zip", "usethis", "rnaturalearthdata", "crsuggest", "wesanderson", "remotes""), repos = "https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c("rmarkdown", "knitr", "dplyr", "data.table", "stringr", "readr", "glue", "countrycode", "units", "reporter", "tictoc", "beepr", "maps", "ggplot2", "mapproj", "sf", "terra", "raster", "rgbif", "curl", "zip", "usethis", "rnaturalearthdata", "crsuggest", "wesanderson", "remotes"), repos = "https://cloud.r-project.org")'
 
       - name: Install BiocManager and Bioconductor packages
         run: |
